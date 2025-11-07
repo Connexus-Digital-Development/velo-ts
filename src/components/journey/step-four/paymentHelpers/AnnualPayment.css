@@ -1,0 +1,175 @@
+.hr-divider {
+    line-height: 1em;
+    position: relative;
+    outline: 0;
+    border: 0;
+    color: black;
+    background-color: white;
+    text-align: center;
+    height: 24px !important;
+    opacity: .5;
+}
+
+.hr-divider:before {
+    content: '';
+    background: linear-gradient(to right, transparent, #818078, transparent);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+}
+
+.hr-divider:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: black;
+    padding: 0 .5em;
+    line-height: 1.5em;
+    color: #818078;
+    background-color: #fcfcfa;
+}
+
+.apple-pay-button {
+    display: inline-block;
+    -webkit-appearance: -apple-pay-button;
+    -apple-pay-button-type: donate;
+    /* Use any supported button type. */
+}
+
+.apple-pay-button-black {
+    -apple-pay-button-style: black;
+}
+
+.apple-pay-button-white {
+    -apple-pay-button-style: white;
+}
+
+.apple-pay-button-white-with-line {
+    -apple-pay-button-style: white-outline;
+}
+
+.blocking-overlay {
+    position: absolute !important;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: Block;
+    top: 0;
+    left: 0;
+    transition: all 0.3s ease-in-out;
+    background-color: rgba(25, 25, 25, 0.3);
+    z-index: 99999998;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+/* @media (min-width:481px) {
+    .blocking-overlay {
+        position: absolute !important;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+} */
+
+.blocking-overlay-close {
+    transition: all 0.5s ease-in-out;
+    opacity: 1;
+    float: left;
+    position: absolute;
+    /* left: 50%; */
+    margin-left: -8px;
+    z-index: 99999999;
+    top: "30px";
+}
+
+/* @media (min-width:481px) {
+    .blocking-overlay-close {
+        float: right;
+        top: 20px;
+        left: initial;
+        margin-left: 0px;
+        right: 20px;
+    }
+} */
+
+ .popup-challenge-payments {
+    height: 400px;
+    width: 400px;
+    z-index: 99999999;
+    position: absolute;
+    transition: transform 0.5s ease-in-out;
+    transform: scale(1.2);
+    left: 33%;
+    border-radius: 10px;
+ } 
+
+
+.pay-button {
+    position: relative;
+    top: 145px;
+    right: -60%;
+}
+
+@media (max-width: 768px){
+    /* .pay-button {
+        position: relative;
+        top: 110px;
+        right: -20px;
+    } */
+    .popup-challenge-payments {
+        height: 400px;
+        width: 250px;
+        z-index: 99999999;
+        position: absolute;
+        left: 15%;
+        transition: transform 0.5s ease-in-out;
+        /* transform: scale(1.2); */
+    }
+}
+
+@media (max-width:481px) {
+
+    .popup-challenge-payments {
+        height: 400px;
+        width: 250px;
+        z-index: 99999999;
+        position: absolute;
+        left: 15%;
+        transition: transform 0.5s ease-in-out;
+           /* transform: scale(1.2); */
+    }
+}
+
+.quick-pay-title {
+    width: 48%;
+}
+
+.quick-pay-container {
+    width: 48%;
+}
+
+.paypal-button {
+    width: 100%;
+}
+
+.paypal-button-tagline {
+    display: none;
+}
+
+.google-pay-button-container {
+    width: 100%;
+}
+
+
+.gpay-card-info-container.black {
+    width: 100% !important;
+}
+
+.card-error-message {
+    position: absolute;
+    margin-top: 20px;
+    color: red;
+}

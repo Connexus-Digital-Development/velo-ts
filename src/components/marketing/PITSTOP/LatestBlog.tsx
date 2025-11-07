@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Spinner from "@/components/shared/Spinner";
-import type { LatestBlogProps } from "@models/MarketingComponentTypes";
+import type { LatestBlogProps } from "@/models/MarketingComponentTypes";
 
 const LatestBlog = (props: LatestBlogProps) => {
   if (!props.latestBlog) return null;

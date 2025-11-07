@@ -6,7 +6,7 @@ import type {
   QuoteRequestData,
   QuoteEmailSendRequest,
   PolicyInceptionRequest,
-} from "@models/ServiceTypes";
+} from "@/models/ServiceTypes";
 
 export const transactorService = {
   // Get all the relevant Sources of Business as an array

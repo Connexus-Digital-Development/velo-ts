@@ -1,9 +1,9 @@
-import helper from "@/utils/ModelAdaptorHelper";
+import helper from "@/utils/modelAdaptorHelper";
 import { veloAPIService } from "./veloAPIService";
 import type {
   SanctionsSearchRequest,
   SanctionsSearchResponse,
-} from "@models/ServiceTypes";
+} from "@/models/ServiceTypes";
 
 export const sanctionsSearchService = {
   async SanctionSearch(gState: any): Promise<SanctionsSearchResponse> {

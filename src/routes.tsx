@@ -44,44 +44,44 @@ const AppRoutes = () => {
       {/* =======================================JOURNEY ROUTES =============================*/}
 
       {/*<Route exact path="/get-a-quote">
-        <JourneyStore>
+        <journeyStore>
           <StepOne />
-        </JourneyStore>
+        </journeyStore>
       </Route>
       <Route exact path="/StepOne">
-        <JourneyStore>
+        <journeyStore>
           <StepOne />
-        </JourneyStore>
+        </journeyStore>
       </Route>
       <Route exact path="/StepTwo">
-        <JourneyStore>
+        <journeyStore>
           <StepTwo />
-        </JourneyStore>
+        </journeyStore>
       </Route>
       <Route exact path="/StepThree">
-        <JourneyStore>
+        <journeyStore>
           <StepThree />
-        </JourneyStore>
+        </journeyStore>
       </Route>
       <Route exact path="/StepFour">
-        <JourneyStore>
+        <journeyStore>
           <StepFour />
-        </JourneyStore>
+        </journeyStore>
       </Route>
       <Route exact path="/PolicyConfirmation">
-        <JourneyStore>
+        <journeyStore>
           <PolicyConfirmation />
-        </JourneyStore>
+        </journeyStore>
       </Route>
       <Route exact path="/QuoteReferred">
-        <JourneyStore>
+        <journeyStore>
           <QuoteReferred />
-        </JourneyStore>
+        </journeyStore>
       </Route>
       <Route exact path="/PaymentError">
-        <JourneyStore>
+        <journeyStore>
           <PaymentError />
-        </JourneyStore>
+        </journeyStore>
       </Route>
       <Route exact path="/InceptFailed">
         <InceptFailed />
@@ -89,33 +89,33 @@ const AppRoutes = () => {
 
       {/* =======================================Aggregator ROUTES =============================*/}
       {/*<Route exact path="/aggregator/:id">
-        <JourneyStore>
+        <journeyStore>
           <QuoteSummary />
-        </JourneyStore>
+        </journeyStore>
       </Route>
 
       <Route exact path="/payment">
-        <JourneyStore>
+        <journeyStore>
           <Payment />
-        </JourneyStore>
+        </journeyStore>
       </Route>*/}
       {/* =======================================QR ROUTES =============================*/}
       {/*
       <Route exact path="/QuoteRetrieval">
-        <JourneyStore>
+        <journeyStore>
           <QRLandingPage />
-        </JourneyStore>
+        </journeyStore>
       </Route>
       <Route exact path="/QuoteRetrievalSummary">
-        <JourneyStore>
+        <journeyStore>
           <QRQuoteSummary />
-        </JourneyStore>
+        </journeyStore>
       </Route>
 
       <Route exact path="/QuoteRetrievalPayment">
-        <JourneyStore>
+        <journeyStore>
           <QRPayment />
-        </JourneyStore>
+        </journeyStore>
       </Route>*/}
       {/* =======================================MAIN SITE ROUTES =============================*/}
       {/*<Route exact path="/about">

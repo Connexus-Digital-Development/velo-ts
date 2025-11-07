@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { initialJourneyState } from "./journeyStoreInitalState";
 import { JourneyContext } from "./journeyStoreContext";
 
-export interface JourneyStoreProps {
+export interface journeyStoreProps {
   children: React.ReactNode;
 }
 
-export const JourneyStore: React.FC<JourneyStoreProps> = ({ children }) => {
+export const journeyStore: React.FC<journeyStoreProps> = ({ children }) => {
   const sob = sessionStorage.getItem("sourceOfBusinessId");
   if (sob && sob.length > 0 && sob !== "null" && sob !== null) {
     initialJourneyState.sourceOfBusinessId = sob;

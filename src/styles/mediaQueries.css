@@ -154,7 +154,7 @@
   .HeroSingle {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HomePageHero800w.jpg);
+    background-image: url(../assets/images/HomePageHero800w.jpg);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -164,7 +164,7 @@
   .HeroMulti {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/MultiHero1000.jpg);
+    background-image: url(../assets/images/MultiHero1000.jpg);
     background-repeat: no-repeat;
     min-height: 350px;
     background-size: 100%;
@@ -174,7 +174,7 @@
   .HeroElectric {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/EbikeHero1000.jpg);
+    background-image: url(../assets/images/EbikeHero1000.jpg);
     background-repeat: no-repeat;
     min-height: 350px;
     background-size: 100%;
@@ -184,7 +184,7 @@
   .HeroTravel {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroTravel1000.jpg);
+    background-image: url(../assets/images/HeroTravel1000.jpg);
     background-repeat: no-repeat;
     min-height: 350px;
     background-size: 100%;
@@ -194,7 +194,7 @@
   .HeroJonny {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroJonny1000.jpg);
+    background-image: url(../assets/images/HeroJonny1000.jpg);
     background-repeat: no-repeat;
     min-height: 350px;
     background-size: 100%;
@@ -728,10 +728,10 @@
     margin-left: -66px;
   }
   .singleBikeImageMobileOnly {
-    background-image: url(../Images/leisureBike-w1200.png);
+    background-image: url(../assets/images/leisureBike-w1200.png);
   }
   .ebikeImageMobileOnly {
-    background-image: url(../Images/e-bike-black2.png);
+    background-image: url(../assets/images/e-bike-black2.png);
   }
   .CTAHeroSmall {
     width: 190px;
@@ -913,7 +913,7 @@
   .HeroSingle {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HomePageHero800w.jpg);
+    background-image: url(../assets/images/HomePageHero800w.jpg);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -923,7 +923,7 @@
   .HeroMulti {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/MultiHero1000.jpg);
+    background-image: url(../assets/images/MultiHero1000.jpg);
     background-repeat: no-repeat;
     min-height: 350px;
     background-size: 100%;
@@ -933,7 +933,7 @@
   .HeroElectric {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/EbikeHero1000.jpg);
+    background-image: url(../assets/images/EbikeHero1000.jpg);
     background-repeat: no-repeat;
     min-height: 350px;
     background-size: 100%;
@@ -943,7 +943,7 @@
   .HeroTravel {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroTravel1000.jpg);
+    background-image: url(../assets/images/HeroTravel1000.jpg);
     background-repeat: no-repeat;
     min-height: 350px;
     background-size: 100%;
@@ -953,7 +953,7 @@
   .HeroJonny {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroJonny1000.jpg);
+    background-image: url(../assets/images/HeroJonny1000.jpg);
     background-repeat: no-repeat;
     min-height: 350px;
     background-size: 100%;
@@ -1488,10 +1488,10 @@
     margin-left: -66px;
   }
   .singleBikeImageMobileOnly {
-    background-image: url(../Images/leisureBike-w1200.png);
+    background-image: url(../assets/images/leisureBike-w1200.png);
   }
   .ebikeImageMobileOnly {
-    background-image: url(../Images/e-bike-black2.png);
+    background-image: url(../assets/images/e-bike-black2.png);
   }
   .CTAHeroSmall {
     width: 190px;
@@ -1588,7 +1588,7 @@
   .HeroSingle {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HomePageHero800w.jpg);
+    background-image: url(../assets/images/HomePageHero800w.jpg);
     background-repeat: no-repeat;
 
     min-height: 410px;
@@ -1599,7 +1599,7 @@
   .HeroMulti {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/MultiHero1000.jpg);
+    background-image: url(../assets/images/MultiHero1000.jpg);
     background-repeat: no-repeat;
     min-height: 410px;
     background-size: 100%;
@@ -1609,7 +1609,7 @@
   .HeroElectric {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/EbikeHero1000.jpg);
+    background-image: url(../assets/images/EbikeHero1000.jpg);
     background-repeat: no-repeat;
     min-height: 410px;
     background-size: 100%;
@@ -1619,7 +1619,7 @@
   .HeroTravel {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroTravel1000.jpg);
+    background-image: url(../assets/images/HeroTravel1000.jpg);
     background-repeat: no-repeat;
     min-height: 410px;
     background-size: 100%;
@@ -1629,7 +1629,7 @@
   .HeroJonny {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroJonny1000.jpg);
+    background-image: url(../assets/images/HeroJonny1000.jpg);
     background-repeat: no-repeat;
     min-height: 410px;
     background-size: 100%;
@@ -2121,10 +2121,10 @@
     margin-left: -125px;
   }
   .singleBikeImageMobileOnly {
-    background-image: url(../Images/leisureBike-w1200.png);
+    background-image: url(../assets/images/leisureBike-w1200.png);
   }
   .ebikeImageMobileOnly {
-    background-image: url(../Images/e-bike-black2.png);
+    background-image: url(../assets/images/e-bike-black2.png);
   }
 
   .coreBikeGirlMobile {
@@ -2242,7 +2242,7 @@
   .HeroSingle {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HomePageHero1000w.jpg);
+    background-image: url(../assets/images/HomePageHero1000w.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: bottom;
@@ -2252,7 +2252,7 @@
   .HeroMulti {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/MultiHero1400.jpg);
+    background-image: url(../assets/images/MultiHero1400.jpg);
     background-repeat: no-repeat;
     min-height: 550px;
     background-size: 100%;
@@ -2262,7 +2262,7 @@
   .HeroElectric {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/EbikeHero1400.jpg);
+    background-image: url(../assets/images/EbikeHero1400.jpg);
     background-repeat: no-repeat;
     min-height: 550px;
     background-size: 100%;
@@ -2272,7 +2272,7 @@
   .HeroTravel {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroTravel1400.jpg);
+    background-image: url(../assets/images/HeroTravel1400.jpg);
     background-repeat: no-repeat;
     min-height: 550px;
     background-size: 100%;
@@ -2282,7 +2282,7 @@
   .HeroJonny {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroJonny1400.jpg);
+    background-image: url(../assets/images/HeroJonny1400.jpg);
     background-repeat: no-repeat;
     min-height: 550px;
     background-size: 100%;
@@ -2838,7 +2838,7 @@
   .HeroSingle {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HomePageHero1400w.jpg);
+    background-image: url(../assets/images/HomePageHero1400w.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: bottom;
@@ -2848,7 +2848,7 @@
   .HeroMulti {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/MultiHero2000.jpg);
+    background-image: url(../assets/images/MultiHero2000.jpg);
     background-repeat: no-repeat;
     min-height: 720px;
     background-size: 100%;
@@ -2858,7 +2858,7 @@
   .HeroElectric {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/EbikeHero2000.jpg);
+    background-image: url(../assets/images/EbikeHero2000.jpg);
     background-repeat: no-repeat;
     min-height: 720px;
     background-size: 100%;
@@ -2868,7 +2868,7 @@
   .HeroTravel {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroTravel2000.jpg);
+    background-image: url(../assets/images/HeroTravel2000.jpg);
     background-repeat: no-repeat;
     min-height: 720px;
     background-size: 100%;
@@ -2878,7 +2878,7 @@
   .HeroJonny {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroJonny2000.jpg);
+    background-image: url(../assets/images/HeroJonny2000.jpg);
     background-repeat: no-repeat;
     min-height: 720px;
     background-size: 100%;
@@ -3431,7 +3431,7 @@
   .HeroSingle {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HomePageHero1400w.jpg);
+    background-image: url(../assets/images/HomePageHero1400w.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: bottom;
@@ -3441,7 +3441,7 @@
   .HeroMulti {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/MultiHero1400.jpg);
+    background-image: url(../assets/images/MultiHero1400.jpg);
     background-repeat: no-repeat;
     min-height: 720px;
     background-size: 100%;
@@ -3451,7 +3451,7 @@
   .HeroElectric {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/EbikeHero1400.jpg);
+    background-image: url(../assets/images/EbikeHero1400.jpg);
     background-repeat: no-repeat;
     min-height: 720px;
     background-size: 100%;
@@ -3461,7 +3461,7 @@
   .HeroTravel {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroTravel1400.jpg);
+    background-image: url(../assets/images/HeroTravel1400.jpg);
     background-repeat: no-repeat;
     min-height: 720px;
     background-size: 100%;
@@ -3471,7 +3471,7 @@
   .HeroJonny {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroJonny2000.jpg);
+    background-image: url(../assets/images/HeroJonny2000.jpg);
     background-repeat: no-repeat;
     min-height: 720px;
     background-size: 100%;
@@ -3995,7 +3995,7 @@
   .HeroSingle {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HomePageHero2000w.jpg);
+    background-image: url(../assets/images/HomePageHero2000w.jpg);
     background-repeat: no-repeat;
     min-height: 900px;
     background-size: 100%;
@@ -4005,7 +4005,7 @@
   .HeroMulti {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/MultiHero2000.jpg);
+    background-image: url(../assets/images/MultiHero2000.jpg);
     background-repeat: no-repeat;
     min-height: 900px;
     background-size: 100%;
@@ -4015,7 +4015,7 @@
   .HeroElectric {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/EbikeHero2000.jpg);
+    background-image: url(../assets/images/EbikeHero2000.jpg);
     background-repeat: no-repeat;
     min-height: 900px;
     background-size: 100%;
@@ -4025,7 +4025,7 @@
   .HeroTravel {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroTravel2000.jpg);
+    background-image: url(../assets/images/HeroTravel2000.jpg);
     background-repeat: no-repeat;
     min-height: 900px;
     background-position: bottom;
@@ -4034,7 +4034,7 @@
   .HeroJonny {
     width: 100%;
     background-color: var(--velo-blue);
-    background-image: url(../Images/HeroJonny2000.jpg);
+    background-image: url(../assets/images/HeroJonny2000.jpg);
     background-repeat: no-repeat;
     min-height: 900px;
     background-size: 85%;

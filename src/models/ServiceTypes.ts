@@ -20,7 +20,7 @@ export interface TransactorNoteResponse {
   [key: string]: any; // Define based on actual usage
 }
 
-// PaymentService Types
+// paymentService Types
 export interface PaymentValidationPayload {
   [key: string]: any; // Define based on actual payment structure
 }
@@ -89,7 +89,7 @@ export interface PolicyInceptionResponse {
   [key: string]: any; // Additional policy properties
 }
 
-// RestApiCommBaseService Types
+// restApiCommBaseService Types
 export interface ApiError {
   message?: string;
   error_description?: string;
@@ -112,12 +112,12 @@ export interface RecaptchaResponse {
   challenge_ts?: string;
   hostname?: string;
   score?: number;
-  'error-codes'?: string[];
+  "error-codes"?: string[];
 }
 
-// LoggingService Types (if used)
+// loggingService Types (if used)
 export interface LogEntry {
-  level: 'error' | 'warn' | 'info' | 'debug';
+  level: "error" | "warn" | "info" | "debug";
   message: string;
   timestamp?: Date;
   [key: string]: any;

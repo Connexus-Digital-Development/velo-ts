@@ -2,7 +2,7 @@ import type {
   OfferData,
   TransactorNoteRequest,
   TransactorNoteResponse,
-} from "@models/ServiceTypes";
+} from "@/models/ServiceTypes";
 
 export const veloAPIService = {
   CheckAndApplyOfferFull: async (code = ""): Promise<void> => {

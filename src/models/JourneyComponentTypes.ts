@@ -148,7 +148,7 @@ export interface AddressPreviewProps {
 
 // AddressDropdown component types
 export interface AddressDropdownProps {
-  addressList: AddressLookupResponse;
+  addressList: AddressLookupResponse | null;
 }
 
 // MarketingPreferences component types
@@ -215,7 +215,7 @@ export interface SummaryOfCoverProps {
 
 // SimpleBikeList component types
 export interface SimpleBikeListProps {
-  bikes: import("@models/JourneyTypes").Bike[];
+  bikes: import("@/models/JourneyTypes").Bike[];
 }
 
 // QuoteReferral component types
@@ -288,7 +288,7 @@ export interface IndividualBikeRowProps {
 
 // BikeListWithLockInfo component types
 export interface BikeListWithLockInfoProps {
-  bikes: import("@models/JourneyTypes").Bike[];
+  bikes: import("@/models/JourneyTypes").Bike[];
   updateLockChecked: (bikeId: number, checked: boolean) => void;
 }
 

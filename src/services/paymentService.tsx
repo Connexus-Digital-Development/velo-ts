@@ -1,13 +1,13 @@
 //Service for processing payments
 
 import { restApiCommBaseService } from "./restApiCommBaseService";
-import ModelAdaptorHelper from "@/utils/ModelAdaptorHelper";
+import modelAdaptorHelper from "@/utils/modelAdaptorHelper";
 
 import type {
   PaymentValidationPayload,
   AccessTokenPayload,
   CycleInsurancePurchase,
-} from "@models/ServiceTypes";
+} from "@/models/ServiceTypes";
 
 export const paymentService = {
   validatePayment: (payload: PaymentValidationPayload): Promise<any> => {
@@ -81,14 +81,14 @@ export const paymentService = {
     //console.log("purchaseData");
 
     return {
-      houseNameNumber: ModelAdaptorHelper.removeBrackets(purchaseData.houseNo),
-      addressLine1: ModelAdaptorHelper.removeBrackets(
+      houseNameNumber: modelAdaptorHelper.removeBrackets(purchaseData.houseNo),
+      addressLine1: modelAdaptorHelper.removeBrackets(
         purchaseData.addressLine1,
       ),
-      addressLine2: ModelAdaptorHelper.removeBrackets(
+      addressLine2: modelAdaptorHelper.removeBrackets(
         purchaseData.addressLine2,
       ),
-      townCity: ModelAdaptorHelper.removeBrackets(purchaseData.addressLine3),
+      townCity: modelAdaptorHelper.removeBrackets(purchaseData.addressLine3),
       postCode: purchaseData.postcode,
       email: purchaseData.email,
       telephone: purchaseData.telephoneNo,

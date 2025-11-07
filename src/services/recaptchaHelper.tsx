@@ -1,4 +1,4 @@
-import { type RecaptchaResponse } from "@models/ServiceTypes";
+import { type RecaptchaResponse } from "@/models/ServiceTypes";
 
 export const recaptchaHelper = {
   ProcessToken: (token: string): Promise<number> => {

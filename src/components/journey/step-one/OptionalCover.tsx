@@ -1,0 +1,219 @@
+import { useContext, useState } from "react";
+import { JourneyContext } from "@/context/journeyStore";
+import { Checkbox } from "@mantine/core";
+import { Tooltip } from "@mantine/core";
+import { type OptionalCoverProps } from "@/models/JourneyComponentTypes";
+const OptionalCover = ({
+  handleSCCheckbox,
+  handlePCCheckbox,
+}: OptionalCoverProps) => {
+  const [gState, setGState] = useContext(JourneyContext);
+  const [opened, setOpened] = useState(0);
+  const popUp = (description: string) => (
+    <div className="m-3 rounded-pill">
+      <p>{description}</p>
+    </div>
+  );
+  const infoIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="17"
+      viewBox="0 0 24 17"
+    >
+      <circle
+        id="Ellipse_81"
+        data-name="Ellipse 81"
+        cx="8"
+        cy="8"
+        r="8"
+        transform="translate(8 1)"
+        fill="#00a8ff"
+      />
+      <text
+        id="i"
+        transform="translate(14 13)"
+        fill="#fff"
+        fontSize="10"
+        fontFamily="SegoeUI, Segoe UI"
+      >
+        <tspan x="1" y="0">
+          i
+        </tspan>
+      </text>
+    </svg>
+  );
+  return (
+    <section className="container container_narrow mt-3">
+      <div className="content_section">
+        <h3 className="journey-section-titles">
+          Optional<span className="blueFont"> extras</span>.
+        </h3>
+        <div className="row">
+          <div className="col-md-10">
+            <p className="lufga-regular">
+              Please tick if you would like any of these optional extras:
+            </p>
+            <div className="row">
+              <div className="col-12 col-sm-6 mb-3" style={{ display: "flex" }}>
+                <Checkbox
+                  radius="md"
+                  size="lg"
+                  color="velo-blue"
+                  className="mr-1"
+                  checked={gState.accessoryCover}
+                  onChange={(e) => handleACCheckbox(e)}
+                />
+                <span
+                  className="additionalCoverSpan"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleACCheckbox(!gState.accessoryCover);
+                  }}
+                >
+                  Accessory cover
+                </span>
+
+                <Tooltip
+                  multiline
+                  radius="xl"
+                  color="velo-blue"
+                  opened={opened === 1}
+                  label={popUp(
+                    "Covers up to £1,000 worth of cycle accessories, such as equipment attached to your cycle, specialist clothing and bike boxes.",
+                  )}
+                >
+                  <span
+                    className="coverFeatures"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setOpened(opened === 1 ? 0 : 1);
+                    }}
+                  >
+                    {infoIcon}
+                  </span>
+                </Tooltip>
+              </div>
+              <div className="col-12 col-sm-6 mb-3" style={{ display: "flex" }}>
+                <Checkbox
+                  radius="md"
+                  size="lg"
+                  color="velo-blue"
+                  className="mr-1"
+                  checked={gState.worldwideCover}
+                  onChange={(e) => handleWCCheckbox(e)}
+                />{" "}
+                <span
+                  className="additionalCoverSpan"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleWCCheckbox(!gState.worldwideCover);
+                  }}
+                >
+                  Worldwide cover
+                </span>
+                <Tooltip
+                  multiline
+                  radius="xl"
+                  color="velo-blue"
+                  opened={opened === 2}
+                  label={popUp(
+                    "Covers travel worldwide up to a maximum of 90 consecutive days.",
+                  )}
+                >
+                  <span
+                    className="coverFeatures"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setOpened(opened === 2 ? 0 : 2);
+                    }}
+                  >
+                    {infoIcon}
+                  </span>
+                </Tooltip>
+              </div>
+              <div className="col-12 col-sm-6 mb-3" style={{ display: "flex" }}>
+                <Checkbox
+                  radius="md"
+                  size="lg"
+                  color="velo-blue"
+                  className="mr-1"
+                  checked={gState.sportsCover}
+                  onChange={(e) => handleSCCheckbox(e)}
+                />{" "}
+                <span
+                  className="additionalCoverSpan"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSCCheckbox(!gState.sportsCover);
+                  }}
+                >
+                  Sports cover
+                </span>
+                <Tooltip
+                  multiline
+                  radius="xl"
+                  color="velo-blue"
+                  opened={opened === 3}
+                  label={popUp(
+                    "Covers all organised events, such as Sportives, Road races and Triathlons.",
+                  )}
+                >
+                  <span
+                    className="coverFeatures"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setOpened(opened === 3 ? 0 : 3);
+                    }}
+                  >
+                    {infoIcon}
+                  </span>
+                </Tooltip>
+              </div>
+              <div className="col-12 col-sm-6 mb-3" style={{ display: "flex" }}>
+                <Checkbox
+                  radius="md"
+                  size="lg"
+                  color="velo-blue"
+                  className="mr-1"
+                  checked={gState.personalAccident}
+                  onChange={(e) => handlePCCheckbox(e)}
+                />{" "}
+                <span
+                  className="additionalCoverSpan"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePCCheckbox(!gState.personalAccident);
+                  }}
+                >
+                  Personal accident &#38; road rage
+                </span>
+                <Tooltip
+                  multiline
+                  radius="xl"
+                  color="velo-blue"
+                  opened={opened === 4}
+                  label={popUp(
+                    "Covers accidents resulting in loss of limb, loss of sight, permanent total disablement or death. Covers you following assault and offers: £100 hospital daily benefit, £250 emergency dental treatment, £150 clothing & personal effects and 5 sessions of stress counselling.",
+                  )}
+                >
+                  <span
+                    className="coverFeatures"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setOpened(opened === 4 ? 0 : 4);
+                    }}
+                  >
+                    {infoIcon}
+                  </span>
+                </Tooltip>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default OptionalCover;

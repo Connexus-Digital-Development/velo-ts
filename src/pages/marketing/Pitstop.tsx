@@ -9,7 +9,7 @@ import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import { seoTags } from "@/components/shared/SeoEdit";
 import WhatOurCustomersSay from "@/components/shared/WhatOurCustomersSay";
 import { Helmet } from "react-helmet";
-import { type BlogPost } from "@models/MarketingComponentTypes";
+import { type BlogPost } from "@/models/MarketingComponentTypes";
 
 const Pitstop = () => {
   const [structuredData, setStructuredData] = useState<any[]>([]);

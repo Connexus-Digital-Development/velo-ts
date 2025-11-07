@@ -1,6 +1,6 @@
 // Service for communicating with REST APIs
 import { loggingService } from "./loggingService";
-import { type ApiError } from "@models/ServiceTypes";
+import { type ApiError } from "@/models/ServiceTypes";
 
 export const restApiCommBaseService = {
   // Deserialize JSON response received from API and handle errors

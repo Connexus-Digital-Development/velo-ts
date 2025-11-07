@@ -1,7 +1,5 @@
 import CTAButton from "./CTAButton";
 import { useLocation } from "react-router-dom";
-import { Select } from "@mantine/core";
-import CTAButtonHash from "./CTAButtonHash";
 
 interface HeroBannerProps {
   image: number;
@@ -12,30 +10,30 @@ interface HeroBannerProps {
 
 const HeroBanner = (props: HeroBannerProps) => {
   const { search } = useLocation();
-  let ImageClass = "";
+  let imageClass = "";
 
   switch (props.image) {
     case 1:
-      ImageClass = "HeroSingle";
+      imageClass = "HeroSingle";
       break;
     case 2:
-      ImageClass = "HeroMulti";
+      imageClass = "HeroMulti";
       break;
     case 3:
-      ImageClass = "HeroElectric";
+      imageClass = "HeroElectric";
       break;
     case 4:
-      ImageClass = "HeroTravel";
+      imageClass = "HeroTravel";
       break;
     case 5:
-      ImageClass = "HeroJonny";
+      imageClass = "HeroJonny";
       break;
     default:
-      ImageClass = "HeroSingle";
+      imageClass = "HeroSingle";
   }
 
   return (
-    <div className={`container-fluid bgBlue oh pr ${ImageClass}`}>
+    <div className={`container-fluid bgBlue oh pr ${imageClass}`}>
       <div className="container pt-150">
         <div className="headerBlockCopy heroPadding">
           <h1 className="align-content-lg-start heroText">{props.heading1}</h1>

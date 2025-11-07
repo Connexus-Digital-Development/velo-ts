@@ -20,7 +20,7 @@ export const SOBQueryParamHandler = () => {
   }
 
   if (checkedForOffer === null) {
-    // LoggingService.logInfo("Entered site on : " + window.location.href);
+    // loggingService.logInfo("Entered site on : " + window.location.href);
     veloAPIService.CheckAndApplyOfferFull(query.get("sourcebusid") ?? null);
   }
 };

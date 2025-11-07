@@ -1,4 +1,4 @@
-import { type LogEntry } from "@models/ServiceTypes";
+import { type LogEntry } from "@/models/ServiceTypes";
 
 export const loggingService = {
   logError: (message: unknown): Promise<Response> => {

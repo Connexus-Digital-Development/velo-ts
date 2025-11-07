@@ -1,6 +1,6 @@
 // Collection of helper functions used to process the Global state object in order to produce
 // a data object that can be passed to transactor.
-import { type Bike } from "@models/JourneyTypes";
+import { type Bike } from "@/models/JourneyTypes";
 
 interface BikeCollectionItem {
   make: string;
@@ -28,7 +28,7 @@ interface SanctionsResult {
   Error: boolean;
 }
 
-const ModelAdaptorHelper = {
+export const modelAdaptorHelper = {
   getTitleId: (title: string | undefined | null): string | number => {
     if (title === undefined || title === "" || title == null) return 0;
     switch (title) {
@@ -182,5 +182,3 @@ const ModelAdaptorHelper = {
     };
   },
 };
-
-export default ModelAdaptorHelper;
