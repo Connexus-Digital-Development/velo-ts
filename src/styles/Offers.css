@@ -1,0 +1,174 @@
+/* CSS especially for any 'offer' elements such as ribbons/ cogs / header banners etc  */
+
+
+
+
+
+
+/* super teeney */
+@media (max-width: 339.5px) {
+
+    /* March 2023 Offer COG SVG styling for placemtn on top of hero image on homepage */
+    .offerCogPosition {
+        position: absolute;
+        right: -60px;
+        bottom: 120px;
+        transform: scale(.5)
+    }
+
+    #offerHeader h2 {
+        color: var(--velo-blue);
+        font-family: "Lufga-Medium", Arial;
+        font-size: 9px;
+        padding-bottom: 5px
+    }
+}
+
+@media (min-width: 340px) and (max-width: 399px) {
+
+    /* March 2023 Offer COG SVG styling for placemtn on top of hero image on homepage */
+    .offerCogPosition {
+        position: absolute;
+        right: -60px;
+        bottom: 100px;
+        transform: scale(.45)
+    }
+    .offerHeader{
+        padding-bottom: 5px;
+    }
+    #offerHeader h2 {
+        color: var(--velo-blue);
+        font-family: "Lufga-Medium", Arial;
+        font-size: 9px;
+        padding-right: 5px;
+        padding-bottom: 5px
+    }
+}
+
+/* XS only ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+@media (min-width: 400px) and (max-width: 575.98px) {
+
+    /* March 2023 Offer COG SVG styling for placemtn on top of hero image on homepage */
+    .offerCogPosition {
+        position: absolute;
+        right: -60px;
+        bottom: 120px;
+        transform: scale(.5)
+    }
+    .offerHeader{
+        padding-bottom: 5px;
+    }
+    #offerHeader h2 {
+        color: var(--velo-blue);
+        font-family: "Lufga-Medium", Arial;
+        font-size: 10px;
+        padding-right: 5px;
+    
+    }
+}
+
+/* SM only =================================================================================================================================*/
+@media (min-width: 576px) and (max-width: 767.48px) {
+
+    /* March 2023 Offer COG SVG styling for placemtn on top of hero image on homepage */
+    .offerCogPosition {
+        position: absolute;
+        right: -60px;
+        bottom: 120px;
+        transform: scale(.6)
+    }
+    .offerHeader{
+        padding-bottom: 5px;
+    }
+    #offerHeader h2 {
+        color: var(--velo-blue);
+        font-family: "Lufga-Medium", Arial;
+        font-size: 12px;
+        margin-left: 0px;
+        margin-right: 20px;
+    }
+}
+
+/* MD only ==================================================================================================================================*/
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+    /* March 2023 Offer COG SVG styling for placemtn on top of hero image on homepage */
+    .offerCogPosition {
+        position: absolute;
+        right: -60px;
+        bottom: 190px;
+        transform: scale(.7)
+    }
+
+    #offerHeader h2 {
+        color: var(--velo-blue);
+        font-family: "Lufga-Medium", Arial;
+        font-size: 22px;
+
+        margin-right: 20px;
+    }
+}
+
+/* LG only ==============================================================================================================LG============================ */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+    /* March 2023 Offer COG SVG styling for placemtn on top of hero image on homepage */
+    .offerCogPosition {
+        position: absolute;
+        right: 50px;
+        bottom: 320px;
+        transform: scale(.9)
+    }
+
+    #offerHeader h2 {
+        color: var(--velo-blue);
+        font-family: "Lufga-Medium", Arial;
+        font-size: 20px;
+
+        margin-right: 20px;
+    }
+}
+
+/* XL only ============================================================================================================================================*/
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+
+    /* March 2023 Offer COG SVG styling for placemtn on top of hero image on homepage */
+    .offerCogPosition {
+        position: absolute;
+        right: 100px;
+        bottom: 350px;
+        transform: scale(.9)
+    }
+
+    #offerHeader h2 {
+        color: var(--velo-blue);
+        font-family: "Lufga-Medium", Arial;
+        font-size: 20px;
+        margin-right: 20px;
+    }
+}
+
+/* XXL only =========================================================================================================================================*/
+@media (min-width: 1400px) {
+
+    /* March 2023 Offer COG SVG styling for placemtn on top of hero image on homepage */
+    .offerCogPosition {
+        position: absolute;
+        right: 200px;
+        bottom: 500px;
+
+    }
+
+    #offerHeader {
+        /* border:1px solid red; */
+        display: inline-block;
+
+    }
+
+    #offerHeader h2 {
+        color: var(--velo-blue);
+        font-family: "Lufga-Medium", Arial;
+        font-size: 25px;
+        margin-right: 20px;
+    }
+}

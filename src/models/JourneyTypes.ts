@@ -1,0 +1,123 @@
+export interface Bike {
+  id?: number;
+  make: string;
+  model: string;
+  value: string | number;
+  isElectric: boolean;
+  AccessoryCover: boolean;
+  SportsCover: boolean;
+  WorldWideCover: boolean;
+  PublicAccidentRoadRage: boolean;
+  lockChecked?: boolean;
+}
+
+export interface JourneyState {
+  combinedHomeValue: number;
+  awayValue: number;
+  isElectric: boolean | null;
+  accessoryCover: boolean;
+  worldwideCover: boolean;
+  sportsCover: boolean;
+  personalAccident: boolean;
+  personalAccidentCore: boolean;
+  personalAccidentPerformance: boolean;
+  bikes: Bike[];
+  hasPreviousClaim: boolean | null;
+  title: string;
+  titleId: number | null;
+  forename: string;
+  surname: string;
+  dob: string;
+  dob_d: string;
+  dob_m: string;
+  dob_y: string;
+  telephoneNo: string;
+  email: string;
+  houseNo: string;
+  houseName: string;
+  houseSubName: string;
+  organisation: string;
+  postcode: string;
+  addressLine1: string;
+  addressLine2: string;
+  addressLine3: string;
+  addressLine4: string;
+  keptAtHome: boolean;
+  coverStartDate: Date | null;
+  storageLocation: number;
+  assumptionsTicked: boolean;
+  annualGrossPremium: number;
+  annualGrossPremiumCore: number;
+  basePremium: number;
+  basePremiumCore: number;
+  commission: number;
+  commissionCore: number;
+  declineReason: string | null;
+  deposit: number;
+  instalmentsApr: number;
+  instalmentsAprCore: number;
+  instalmentsFirstPayment: number;
+  instalmentsFirstPaymentCore: number;
+  instalmentsGrossPremium: number;
+  instalmentsGrossPremiumCore: number;
+  instalmentsInterestPc: number;
+  instalmentsInterestPcCore: number;
+  instalmentsServiceCharge: number;
+  instalmentsServiceChargeCore: number;
+  instalmentsSubsequentPayments: number;
+  instalmentsSubsequentPaymentsCore: number;
+  ipt: number;
+  iptCore: number;
+  netPremium: number;
+  netPremiumCore: number;
+  quoteReference: string;
+  referralReason: string | null;
+  schemeId: string;
+  schemeTable: number;
+  yourCoverCrumb: number;
+  yourDetailsCrumb: number;
+  yourQuoteCrumb: number;
+  paymentCrumb: number;
+  showAddressPreview: boolean;
+  currentlyAddingABike: boolean;
+  currentlyEditingABike: boolean;
+  AboutYourBikeFormIsValid: boolean;
+  AboutYouFormIsValid: boolean;
+  hideAddressForm: boolean;
+  paymentTypeIsAnnual: boolean;
+  accountName: string;
+  accountNumber: string;
+  accountSortCode: string;
+  accountBankName: string;
+  paymentSuccessful: boolean;
+  marketingReference: string | null;
+  sourceOfBusinessId: string | null;
+  customSource: boolean;
+  resetAwayValue: boolean;
+  DDFormIsValid: boolean;
+  optIn: boolean;
+  groupOptIn: boolean;
+  iConfirm: boolean;
+  preferredMethodOfContact: string;
+  recieveByEmailOnly: boolean;
+  preferTelephone: boolean;
+  preferEmail: boolean;
+  adminPhone: boolean;
+  adminEmail: boolean;
+  thirdPartyPhone: boolean;
+  thirdPartyEmail: boolean;
+  clickedPayNow: boolean;
+  coreQuote: any; // TODO: Type this properly
+  performanceQuote: any; // TODO: Type this properly
+  initQuote: any; // TODO: Type this properly
+  selectedCoreScheme: any; // TODO: Type this properly
+  aggregatorQuoteId: string | null;
+  validatedRules: any; // TODO: Type this properly
+  paymentAttempts: number;
+  adminOptOut: boolean;
+  disableSOB?: boolean;
+  generateQuote?: boolean; // Added for StepOne usage // Added when missing
+  eBikeTicked: boolean;
+  storageLocationTicked: boolean;
+  readDocumentsTicked: boolean;
+}

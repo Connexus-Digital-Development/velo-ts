@@ -1,0 +1,133 @@
+﻿/*custom colours*/
+
+:root {
+  --velo-blue: #00a8ff;
+  --velo-white: #fff;
+  --velo-lightblueBG: #e5f6ff;
+  --velo-green: #86bb2f;
+  --velo-lightgreenBG: #f1f9e6; /*rgba(123, 193, 11, 0.1);  */
+  --velo-red: #d20000;
+  --velo-orange: #ff9100;
+  --velo-lightgrey: #f1f1f1;
+  --velo-darkgrey: #bbb;
+  --velo-footer-darkgrey: #333;
+  --velo-footer-lightgrey: #505050;
+  --velo-black: #000;
+  --velo-mustard: #edc306;
+  --velo-lightMustard: #fdf6d9;
+  --velo-grey: #707070;
+
+  --velo-greenShadow: #c7dda6;
+  --velo-blueShadow: #97d5f5;
+  --velo-orangeShadow: #f8d7ab;
+  --velo-mustardShadow: #f5e59e;
+
+  --velo-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+/* font helpers */
+.footer-darkgrey{
+  color: var(--velo-footer-darkgrey) !important;
+}
+.blueFont {
+  color: var(--velo-blue) !important;
+}
+.whiteFont {
+  color: var(--velo-white) !important;
+}
+.greenFont {
+  color: var(--velo-green) !important;
+}
+.orangeFont {
+  color: var(--velo-orange) !important;
+}
+.mustardFont {
+  color: var(--velo-mustard) !important;
+}
+.blackFont {
+  color: var(--velo-black) !important;
+}
+.redFont {
+  color: var(--velo-red) !important;
+}
+.greyFont {
+  color: #777 !important;
+}
+.darkGreyFont {
+  color: #373737 !important;
+}
+.lightgreyFont {
+  color: #bbb !important;
+}
+.lighterGreyFont {
+  color:#7a7a7a !important;
+}
+/* background helpers */
+
+.bg-lightblue {
+  background-color: var(--velo-lightblueBG) !important;
+}
+
+.bg-lightgreen {
+  background-color: var(--velo-lightgreenBG) !important;
+}
+
+.lightBlueBG {
+  background-color: var(--velo-lightblueBG) !important;
+}
+
+.blueBG {
+  background-color: var(--velo-blue) !important;
+  color: white !important;
+}
+
+.greyBG {
+  background-color: var(--velo-lightgrey) !important;
+}
+
+.greenBG {
+  background-color: var(--velo-green) !important;
+  color: white;
+}
+.mustardWhiteBG {
+  background-color: var(--velo-mustard) !important;
+  color: #fff;
+}
+.mustardBG {
+  background-color: var(--velo-lightMustard) !important;
+  color: #333;
+}
+
+.whiteButton {
+   background-color: rgba(255, 255, 255, .7);
+  color:var(--velo-blue) !important;
+}
+.whiteButton:hover {
+  color: #fff;
+  filter: brightness(50%) !important;
+}
+
+
+.whiteBG {
+  background-color: var(--velo-white) !important;
+}
+
+.blueButton:focus {
+  background-color: var(--velo-blue) !important;
+  border: ipx solid var(--velo-blue) !important;
+  color: white;
+}
+
+.greenButton:focus,
+.greenButton:hover {
+  background-color: var(--velo-green) !important;
+  border: 1px solid var(--velo-green) !important;
+  color: white;
+}
+
+.orangeButton:focus,
+.orangeButton:hover {
+  background-color: var(--velo-orange) !important;
+  border: 1px solid var(--velo-orange) !important;
+  color: white;
+}

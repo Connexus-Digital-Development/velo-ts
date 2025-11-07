@@ -1,0 +1,113 @@
+﻿@import url("colours.css");
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900,900italic,300italic,300,100italic,100);
+
+footer {
+  bottom: 0;
+  width: 100%;
+}
+
+.blueDividerBar {
+  background-color: var(--velo-blue);
+  width: 100%;
+  height: 18px;
+}
+
+.socials-list {
+  padding-left: 2rem;
+  list-style: none;
+}
+
+#section1 {
+  background-color: var(--velo-footer-darkgrey);
+  min-height: 330px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+
+#section2 {
+  background-color: var(--velo-footer-lightgrey);
+  /* height: 320px; */
+}
+
+footer ul {
+  list-style: none;
+  font-family: Roboto;
+  font-size: 15px;
+}
+
+ul li a {
+  text-decoration: none;
+  color: var(--velo-white);
+}
+
+h5 {
+  font-family: Lufga;
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--velo-blue);
+}
+
+
+@media (max-width: 400px) {
+  .velo-log {
+    transform: scale(0.7) !important;
+    margin-left: -27px !important;
+  }
+
+  .socials-small {
+    margin-top: 1px;
+    margin-left: -65px !important;
+    float: left;
+  }
+}
+
+.velo-log {
+  transform: scale(0.85);
+  margin-left: -15px;
+}
+
+.socialsNarrow {
+  float: left;
+  transform: translate(-31px, 154px);
+}
+
+.socials-small {
+  margin-top: 1px;
+  margin-left: -55px;
+  float: left;
+}
+
+#socials ul li {
+  float: right;
+  margin-right: 10px;
+}
+
+#socials ul li:first-child {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+#section2 p {
+  color: var(--velo-darkgrey);
+  font-family: Roboto, Arial;
+  font-size: 14px;
+}
+
+.footersection2link h5,
+.footersection2link {
+  text-decoration: none;
+  color: var(--velo-white);
+  font-family: Roboto, Arial;
+  font-size: 15px;
+  margin: 20px 0 20px 0;
+}
+.legalFooter {
+  font-family: Roboto, Arial;
+  font-size: 14px;
+}
+
+#section1 a:hover,
+#section2 a:hover {
+  text-decoration: underline;
+  color: var(--velo-white);
+}

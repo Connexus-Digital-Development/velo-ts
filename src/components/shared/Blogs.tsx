@@ -1,0 +1,76 @@
+const Blogs = () => {
+  return [
+    {
+      Id: 2,
+      Status: 3,
+      Author: "Beatrix Potter",
+      Headline: "One-way ticket to Rwanda for some UK asylum seekers",
+      SubHeading:
+        "Some asylum seekers who cross the Channel to the UK will be given a one-way ticket to Rwanda under new government plans.",
+      Category: 1,
+      ImageUrl: "https://connexus-cdn.azureedge.net/actito-audi/1767480493.jpg",
+      Body: "<p><strong>Some asylum seekers who cross the Channel to the UK will be given a one-way ticket to Rwanda under new government plans.</strong></p><p>The pilot scheme will focus on single men arriving on boats or lorries.</p><p>Prime Minister Boris Johnson said the &pound;120m scheme would save countless lives from human trafficking.</p><p>Refugee organisations have criticised the plan as cruel. They questioned its cost and impact and raised concerns about Rwanda's human rights record.</p><p>Mr Johnson said action was needed to stop vile people smugglers turning the ocean into a watery graveyard, with the plan designed to break their business model.</p>",
+      SortOrderIndex: 2,
+      ConnexusBrand: 1,
+      CreatedDate: "2022-04-14 15:08:14.0000000",
+      PublishedDate: "2022-04-14",
+    },
+    {
+      Id: 3,
+      Status: 3,
+      Author: "Beatrix Potter",
+      Headline: "Russia says warship still afloat after Ukraine claims strike",
+      SubHeading:
+        "Updates from BBC correspondents: Yogita Limaye, Mark Lowen, Joel Gunter and Anna Foster in Kyiv.",
+      Category: 2,
+      ImageUrl: "https://connexus-cdn.azureedge.net/actito-audi/1767480493.jpg",
+      Body: "<p><strong>More claims of Ukrainian attacks on Russian border</strong></p><p>More now on claims Ukraine has been attacking border areas in Russia.</p><p>According to the governor of Russia's Belgorod region, the village of Spodaryushino was shelled by Ukraine, prompting its evacuation along with a neighbouring village.</p><p>Writing on Telegram, Vyacheslav Gladkov said no one was injured and no residential buildings were damaged.</p><p>The claim comes after Russian officials accused Ukraine of carrying out air strikes on another residential area in the town of Klimovo in the Bryansk region.</p><p>Two weeks ago, an oil depot was also set on fire in Belgorod - Russia claimed Ukraine was responsible for this too.</p><p>The BBC is unable to verify who is responsible for these incidents, but Ukraine denied hitting the Belgorod oil depot earlier this month.</p>",
+      SortOrderIndex: 3,
+      ConnexusBrand: 1,
+      CreatedDate: "2022-04-14 15:08:14.0000000",
+      PublishedDate: "2022-04-12",
+    },
+    {
+      Id: 4,
+      Status: 3,
+      Headline: "Blog post 1",
+      SubHeading: "Sub heading 1",
+      Category: 3,
+      ImageUrl: "https://connexus-cdn.azureedge.net/actito-audi/1767480493.jpg",
+      Body: "<h3>The standard Lorem Ipsum passage, used since the 1500s</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><h3>Section 1.10.32 of de Finibus Bonorum et Malorum, written by Cicero in 45 BC</h3><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p><h3>1914 translation by H. Rackham</h3><p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?</p><h3>Section 1.10.33 of de Finibus Bonorum et Malorum, written by Cicero in 45 BC</h3><p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p><h3>1914 translation by H. Rackham</h3><p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.</p>",
+      SortOrderIndex: 4,
+      ConnexusBrand: 1,
+      CreatedDate: "2022-03-25 13:28:33.0000000",
+      PublishedDate: "2022-04-14",
+    },
+    {
+      Id: 5,
+      Status: 3,
+      Headline: "Allyson Felix: US Olympic great to retire at end of season",
+      SubHeading:
+        "Allyson Felix, the most decorated female track and field Olympian of all time, will retire at the end of the season.",
+      Category: 4,
+      ImageUrl: "https://connexus-cdn.azureedge.net/actito-audi/1767480493.jpg",
+      Body: "<p>The 36-year-old American has won 11 Olympic medals, including seven golds, as well as 13 world titles.</p><p>&nbsp;</p><p>She competed at her fifth and final Olympics in Tokyo last summer.</p><p>&nbsp;</p><p>As a little girl they called chicken legs - never in my wildest dreams would I have imagined I'd have a career like this, said Felix.</p><p>&nbsp;</p><p>I have so much gratitude for this sport that has changed my life. I have given everything I have to running and for the first time I'm not sure if I have anything left to give.</p><p>&nbsp;</p><p>I want to say goodbye and thank you to the sport and people who have helped shape me the only way I know how - with one last run.</p><p>&nbsp;</p><p>This season isn't about the time on the clock, it's simply about joy. If you see me on the track this year I hope to share a moment, a memory and my appreciation with you.</p><p>&nbsp;</p><p>Felix has won four Olympic golds in the 4x400m relay, two in the 4x100m relay, and one in the 200m.</p>",
+      SortOrderIndex: 5,
+      ConnexusBrand: 1,
+      CreatedDate: "2022-04-14 15:08:14.0000000",
+      PublishedDate: "2022-04-14",
+    },
+    {
+      Id: 6,
+      Status: 3,
+      Headline: "Covid levels starting to fall in UK, says ONS",
+      SubHeading:
+        "Updates from BBC correspondents: Yogita Limaye, Mark Lowen, Joel Gunter and Anna Foster in Kyiv",
+      Category: 2,
+      ImageUrl: "https://connexus-cdn.azureedge.net/actito-audi/1767480493.jpg",
+      Body: "<p>About 4.4 million people had the virus in their body in the week up to 9 April, down from nearly 4.9 million the week before.</p><p>That's about one in 15 people testing positive for the virus.</p><p>The study, which uses its own testing, gives the clearest indication of the virus's spread since free testing ended in England.</p><p>It tests thousands of people at random - whether or not they have symptoms - to estimate how much virus there is in the country.</p><p>The number infected still remains very high, despite the 10% drop recorded by the ONS.</p><p>The BA.2 form of the Omicron variant helped push up the number infected with the virus to record levels in recent weeks, and is only now starting to decline.</p><p>Sarah Crofts, from the ONS, said: Across most parts of the UK, infections have thankfully begun to decrease.</p><p>It is too early to say if we have passed the peak of infections, and infections overall remain high.</p>",
+      SortOrderIndex: 6,
+      ConnexusBrand: 1,
+      CreatedDate: "2022-04-14 15:08:14.0000000",
+      PublishedDate: "2022-04-14",
+    },
+  ];
+};
+export default Blogs;
