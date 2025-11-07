@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { JourneyContext } from "@/context/journeyStore";
 import FeatureListCore from "./FeatureList_CORE";
 import FeatureListPerformance from "./FeatureList_PERFORMANCE";

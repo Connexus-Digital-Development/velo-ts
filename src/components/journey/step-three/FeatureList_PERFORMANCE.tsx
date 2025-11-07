@@ -2,8 +2,8 @@ import { Checkbox } from "@mantine/core";
 import currency from "currency.js";
 import { useContext, useEffect, useState } from "react";
 import { JourneyContext } from "@/context/journeyStore";
-import useRiskModelAdaptor from "@hooks/useRiskModelAdaptor";
-import loggingService from "@/services/loggingService";
+import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
+import { loggingService } from "@/services/loggingService";
 import TransactorService from "@/services/transactorService";
 import { type FeatureListPerformanceProps } from "@/models/JourneyComponentTypes";
 

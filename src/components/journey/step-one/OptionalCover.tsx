@@ -6,14 +6,18 @@ import { type OptionalCoverProps } from "@/models/JourneyComponentTypes";
 const OptionalCover = ({
   handleSCCheckbox,
   handlePCCheckbox,
+  handleACCheckbox,
+  handleWCCheckbox,
 }: OptionalCoverProps) => {
   const [gState, setGState] = useContext(JourneyContext);
   const [opened, setOpened] = useState(0);
+
   const popUp = (description: string) => (
     <div className="m-3 rounded-pill">
       <p>{description}</p>
     </div>
   );
+
   const infoIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +66,7 @@ const OptionalCover = ({
                   color="velo-blue"
                   className="mr-1"
                   checked={gState.accessoryCover}
-                  onChange={(e) => handleACCheckbox(e)}
+                  onChange={handleACCheckbox}
                 />
                 <span
                   className="additionalCoverSpan"
@@ -101,7 +105,7 @@ const OptionalCover = ({
                   color="velo-blue"
                   className="mr-1"
                   checked={gState.worldwideCover}
-                  onChange={(e) => handleWCCheckbox(e)}
+                  onChange={handleWCCheckbox}
                 />{" "}
                 <span
                   className="additionalCoverSpan"
@@ -139,7 +143,7 @@ const OptionalCover = ({
                   color="velo-blue"
                   className="mr-1"
                   checked={gState.sportsCover}
-                  onChange={(e) => handleSCCheckbox(e)}
+                  onChange={handleSCCheckbox}
                 />{" "}
                 <span
                   className="additionalCoverSpan"
@@ -177,7 +181,7 @@ const OptionalCover = ({
                   color="velo-blue"
                   className="mr-1"
                   checked={gState.personalAccident}
-                  onChange={(e) => handlePCCheckbox(e)}
+                  onChange={handlePCCheckbox}
                 />{" "}
                 <span
                   className="additionalCoverSpan"

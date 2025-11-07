@@ -139,7 +139,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
   //     );
   //   }
   //   const updatedState =
-  //     ModelAdaptorHelper.resetAssumptionsAndDeclarations(gState);
+  //     modelAdaptorHelper.resetAssumptionsAndDeclarations(gState);
   //   setGState({
   //     ...updatedState,
   //     generateQuote: true,

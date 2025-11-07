@@ -32,6 +32,8 @@ export interface BikeSecurityProps {
 export interface OptionalCoverProps {
   handleSCCheckbox: (checked: boolean) => void;
   handlePCCheckbox: (checked: boolean) => void;
+  handleACCheckbox: (checked: boolean) => void;
+  handleWCCheckbox: (checked: boolean) => void;
 }
 
 export interface QRPaymentProps {

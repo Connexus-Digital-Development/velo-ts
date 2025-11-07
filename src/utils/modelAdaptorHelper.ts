@@ -60,16 +60,13 @@ export const modelAdaptorHelper = {
       return "";
     return String(textToStrip).replace(/null/g, " ");
   },
-  getHomeValue: (bikeList: Record<string, Bike>): number => {
+  getHomeValue: (bikeList: Bike[]): number => {
     if (!bikeList) return 0;
     let total = 0;
 
-    for (const bike in bikeList) {
-      if (Object.prototype.hasOwnProperty.call(bikeList, bike)) {
-        const bikeItem = bikeList[bike];
-        if (bikeItem) {
-          total = total + Number(bikeItem.value || 0);
-        }
+    for (const bikeItem of bikeList) {
+      if (bikeItem) {
+        total = total + Number(bikeItem.value || 0);
       }
     }
 

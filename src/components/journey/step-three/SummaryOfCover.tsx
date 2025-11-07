@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Moment from "react-moment";
 import { JourneyContext } from "@/context/journeyStore";
-import ModelAdaptorHelper from "@utils/ModelAdaptorHelper";
+import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import SimpleBikeList from "./SimpleBikeList";
 import { type SummaryOfCoverProps } from "@/models/JourneyComponentTypes";
 
@@ -41,12 +41,12 @@ const SummaryOfCover: React.FC<SummaryOfCoverProps> = ({
         <address>
           {gState.organisation !== null && (
             <p className="summaryDetail">
-              {ModelAdaptorHelper.removeNullText(gState.organisation)}
+              {modelAdaptorHelper.removeNullText(gState.organisation)}
             </p>
           )}
           <p className="summaryDetail">
             {gState.subHouseName !== null && (
-              <>{ModelAdaptorHelper.removeNullText(gState.subHouseName)} </>
+              <>{modelAdaptorHelper.removeNullText(gState.subHouseName)} </>
             )}
             {gState.houseName !== null && <>{gState.houseName}</>}
             {(gState.houseName == null || gState.houseName?.length < 1) &&
@@ -54,22 +54,22 @@ const SummaryOfCover: React.FC<SummaryOfCoverProps> = ({
           </p>
           {gState.addressLine1 !== null && (
             <p className="summaryDetail">
-              {ModelAdaptorHelper.removeNullText(gState.addressLine1)}{" "}
+              {modelAdaptorHelper.removeNullText(gState.addressLine1)}{" "}
             </p>
           )}
           {gState.addressLine2 !== null && (
             <p className="summaryDetail">
-              {ModelAdaptorHelper.removeNullText(gState.addressLine2)}{" "}
+              {modelAdaptorHelper.removeNullText(gState.addressLine2)}{" "}
             </p>
           )}
           {gState.addressLine3 !== null && (
             <p className="summaryDetail">
-              {ModelAdaptorHelper.removeNullText(gState.addressLine3)}{" "}
+              {modelAdaptorHelper.removeNullText(gState.addressLine3)}{" "}
             </p>
           )}
           {gState.addressLine4 !== null && (
             <p className="summaryDetail">
-              {ModelAdaptorHelper.removeNullText(gState.addressLine4)}{" "}
+              {modelAdaptorHelper.removeNullText(gState.addressLine4)}{" "}
             </p>
           )}
           <p className="summaryDetail">{gState.postcode}</p>
@@ -97,14 +97,14 @@ const SummaryOfCover: React.FC<SummaryOfCoverProps> = ({
         <p className="summaryDetail">
           £
           {gState.awayValue == 0
-            ? ModelAdaptorHelper.getHomeValue(gState.bikes)
+            ? modelAdaptorHelper.getHomeValue(gState.bikes)
             : gState.awayValue}
         </p>
         <p className="lowerOpacity lufga-light summaryTitle">Bike/s storage</p>
         <p className="summaryDetail">
           {fromExternalLink
             ? "Home (Not an Outbuilding, Communal area or Other)"
-            : ModelAdaptorHelper.getStorageLocationFromId(
+            : modelAdaptorHelper.getStorageLocationFromId(
                 gState.storageLocation,
               )}
         </p>

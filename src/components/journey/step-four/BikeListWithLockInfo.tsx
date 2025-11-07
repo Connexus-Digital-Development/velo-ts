@@ -1,5 +1,5 @@
 import IndividualBikeRow from "./IndividualBikeRow";
-import ModelAdaptorHelper from "@utils/ModelAdaptorHelper";
+import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import { type BikeListWithLockInfoProps } from "@/models/JourneyComponentTypes";
 
 const BikeListWithLockInfo: React.FC<BikeListWithLockInfoProps> = ({
@@ -14,7 +14,7 @@ const BikeListWithLockInfo: React.FC<BikeListWithLockInfoProps> = ({
             <IndividualBikeRow
               bikeMake={bike.make}
               bikeModel={bike.model}
-              lockName={ModelAdaptorHelper.getLockName(bike.value)}
+              lockName={modelAdaptorHelper.getLockName(bike.value)}
               bikeId={bike.id ?? 0}
               lockChecked={bike.lockChecked ?? false}
               updateLockChecked={updateLockChecked}

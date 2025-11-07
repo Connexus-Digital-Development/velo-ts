@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { JourneyContext } from "@/context/journeyStore";
 import { useNavigate, useLocation } from "react-router-dom";
 import TransactorService from "@/services/transactorService";
-import useRiskModelAdaptor from "@hooks/useRiskModelAdaptor";
+import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
 import DDForm from "./DDForm";
 import DDGuarantee from "./DDGuarantee";
 import loggingService from "@/services/loggingService";
@@ -175,9 +175,7 @@ const Payments: React.FC<PaymentsProps> = ({
       SanctionsSearchService.SanctionSearch(gState)
         .then((data) => {
           if (data.Error) {
-            navigate(
-              "/QuoteReferred?quoteReference=" + gState.quoteReference,
-            );
+            navigate("/QuoteReferred?quoteReference=" + gState.quoteReference);
             return;
           }
           if (data.Failure) {
@@ -204,9 +202,7 @@ const Payments: React.FC<PaymentsProps> = ({
           }
         })
         .catch(() => {
-          navigate(
-            "/QuoteReferred?quoteReference=" + gState.quoteReference,
-          );
+          navigate("/QuoteReferred?quoteReference=" + gState.quoteReference);
           return;
         });
     } else {

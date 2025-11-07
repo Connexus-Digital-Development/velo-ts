@@ -1,12 +1,16 @@
-import helper from "@utils/ModelAdaptorHelper";
+import { JourneyState } from "@/models/JourneyTypes";
+import {
+  CoreQuote,
+  PerformanceQuote,
+  SelectedCoreScheme,
+} from "@/models/QuoteTypes";
+import { modelAdaptorHelper as helper } from "@/utils/modelAdaptorHelper";
 import moment from "moment";
-import { JourneyState } from "@models/JourneyTypes";
-import { CoreQuote, PerformanceQuote, SelectedCoreScheme } from "@models/QuoteTypes";
 const useGlobalStateAdaptor = (
   coreQuote: CoreQuote,
   performanceQuote: PerformanceQuote,
   selectedCoreScheme: SelectedCoreScheme,
-  aggregatorQuoteId: string
+  aggregatorQuoteId: string,
 ): JourneyState => {
   // convert the aggregator model accepted by transactor API to the globalState data
 
@@ -15,7 +19,7 @@ const useGlobalStateAdaptor = (
   console.log(
     "performance",
 
-    performanceQuote
+    performanceQuote,
   );
   if (!!!coreQuote) {
     return {
@@ -45,7 +49,7 @@ const useGlobalStateAdaptor = (
         isElectric:
           coreQuote.bicycles.length === 1
             ? coreQuote?.isElectric
-            : m?.isElectric ?? false,
+            : (m?.isElectric ?? false),
       };
     }),
     hasPreviousClaim: false,
@@ -70,7 +74,7 @@ const useGlobalStateAdaptor = (
     addressLine4: coreQuote.county,
     keptAtHome: true,
     coverStartDate: moment(new Date(coreQuote.coverStartDate)).isBefore(
-      new Date()
+      new Date(),
     )
       ? new Date()
       : new Date(coreQuote.coverStartDate),
@@ -113,7 +117,7 @@ const useGlobalStateAdaptor = (
   console.log("useGlobalStateAdaptor", state);
   sessionStorage.setItem(
     "sourceOfBusinessId",
-    coreQuote.sourceBusinessId.toUpperCase()
+    coreQuote.sourceBusinessId.toUpperCase(),
   );
   sessionStorage.setItem("fromExternalLink", "true");
   return state;

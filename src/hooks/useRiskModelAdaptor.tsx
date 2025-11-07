@@ -1,8 +1,8 @@
-import helper from "@utils/ModelAdaptorHelper";
+import { modelAdaptorHelper as helper } from "@/utils/modelAdaptorHelper";
 import moment from "moment";
 // convert the collected globalState data into a model accepted by transactor API
-import { JourneyState } from "@models/JourneyTypes";
-import { RiskModel } from "@models/QuoteTypes";
+import { JourneyState } from "@/models/JourneyTypes";
+import { RiskModel } from "@/models/QuoteTypes";
 
 const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | {} => {
   if (!!!globalState.coverStartDate) {
@@ -72,7 +72,7 @@ const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | {} => {
       dateOfBirth: helper.getFormattedDOBFromDateParts(
         globalState.dob_d,
         globalState.dob_m - 1,
-        globalState.dob_y
+        globalState.dob_y,
       ),
       gender: "",
       address: {
@@ -137,8 +137,8 @@ const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | {} => {
       sourceBusinessId: !globalState.sourceOfBusinessId?.length
         ? "0"
         : globalState.sourceOfBusinessId == "null"
-        ? "0"
-        : globalState.sourceOfBusinessId,
+          ? "0"
+          : globalState.sourceOfBusinessId,
       allowMailFromAdmin: globalState.adminEmail,
       allowMailFromThirdParty: globalState.thirdPartyEmail,
       allowTelephoneFromAdmin: globalState.adminPhone,
@@ -150,11 +150,11 @@ const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | {} => {
       reference: globalState.customSource
         ? globalState.marketingReference
         : globalState.marketingReference?.startsWith("Retailer")
-        ? globalState.marketingReference
-            ?.replace("Retailer -", "")
-            ?.replace("Retailer", "")
-            ?.trim()
-        : "0",
+          ? globalState.marketingReference
+              ?.replace("Retailer -", "")
+              ?.replace("Retailer", "")
+              ?.trim()
+          : "0",
       contactByPostAndEmail: globalState.recieveByEmailOnly ? true : false,
     },
     paymentDetails: {

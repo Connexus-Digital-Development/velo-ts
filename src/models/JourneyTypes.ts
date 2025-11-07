@@ -12,6 +12,8 @@ export interface Bike {
 }
 
 export interface JourneyState {
+  id?: number;
+  loading?: boolean;
   combinedHomeValue: number;
   awayValue: number;
   isElectric: boolean | null;

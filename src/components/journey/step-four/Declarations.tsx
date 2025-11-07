@@ -1,8 +1,8 @@
 import { Checkbox } from "@mantine/core";
 import { useContext, useEffect, useRef } from "react";
 import { JourneyContext } from "@/context/journeyStore";
-import { editClassName, removeClassName } from "@utils/ClassNameEditor";
-import ModelAdaptorHelper from "@utils/ModelAdaptorHelper";
+import { editClassName, removeClassName } from "@/utils/ClassNameEditor";
+import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import BikeListWithLockInfo from "./BikeListWithLockInfo";
 import { type DeclarationsProps } from "@/models/JourneyComponentTypes";
 import { type Bike } from "@/models/bike";
@@ -39,7 +39,7 @@ const Declarations: React.FC<DeclarationsProps> = ({
     );
   }, [gState]);
   const getLocation = (id: number | null) => {
-    return ModelAdaptorHelper.getStorageLocation(id);
+    return modelAdaptorHelper.getStorageLocation(id);
   };
 
   const updateLockChecked = (id: number, checked: boolean) => {

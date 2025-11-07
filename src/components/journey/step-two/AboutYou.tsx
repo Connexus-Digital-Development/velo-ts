@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import * as Yup from "yup";
 import { JourneyContext } from "@/context/journeyStore";
 // import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
@@ -25,7 +25,7 @@ const AboutYou = () => {
   const { search } = useLocation();
   const [gState, setGState] = useContext(JourneyContext);
 
-  const history = useHistory();
+  const history = useNavigate();
   const MIN_AGE = 18,
     MAX_AGE = 90;
   const upper = new Date().getFullYear() - MIN_AGE;

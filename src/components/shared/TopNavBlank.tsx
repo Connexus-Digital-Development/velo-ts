@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CTAButton from "./CTAButton";
 import { useLocation } from "react-router-dom";
 import SOBBar from "./SOBBar";
@@ -24,7 +24,7 @@ const TopNavBlank = (props) => {
   useEffect(() => {
     const SOB = sessionStorage.getItem("sourceOfBusinessId");
     const offerActive = sessionStorage.getItem("offerActive");
-    if (SOB !== null && offerActive !== 'true') {
+    if (SOB !== null && offerActive !== "true") {
       setShowSOBBanner(true);
       setTopSpacingClass("fixed-top-alternate");
     }
@@ -37,7 +37,7 @@ const TopNavBlank = (props) => {
 
   return (
     <>
-      {showSOBBanner === true && (            
+      {showSOBBanner === true && (
         <SOBBar
           bgColor={backgroundColourClass}
           resetSObBanner={resetSObBanner}
@@ -361,9 +361,7 @@ const TopNavBlank = (props) => {
               </g>
             </svg>
           </a>
-          <div className="test">
-
-          </div>
+          <div className="test"></div>
         </div>
       </nav>
     </>

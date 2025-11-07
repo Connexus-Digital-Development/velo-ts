@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, type ReactElement } from "react";
 import { JourneyContext } from "@/context/journeyStore";
 import { type BikeSecurityProps } from "@/models/JourneyComponentTypes";
 
@@ -8,15 +8,18 @@ const isHomeHelpText = (
     accessed integral garage.
   </span>
 );
+
 const outBuildingHomeText = (
   <span>
     An attached or detached garage, privately accessed wooden or metal
     shed.{" "}
   </span>
 );
+
 const communalHelpText = (
   <span>A communal hallway or a communal outbuilding. </span>
 );
+
 const otherHelpText = (
   <span>
     Please call us on{" "}
@@ -74,7 +77,11 @@ const BikeSecurity = ({ setLocationInvalid }: BikeSecurityProps) => {
     setLocationInvalid(false);
   };
 
-  const handleHover = (hoverState: boolean, hoverAction: React.Dispatch<React.SetStateAction<boolean>>, helpText: string) => {
+  const handleHover = (
+    hoverState: boolean,
+    hoverAction: React.Dispatch<React.SetStateAction<boolean>>,
+    helpText: ReactElement,
+  ) => {
     hoverAction(hoverState);
     setHelpText(helpText);
   };
