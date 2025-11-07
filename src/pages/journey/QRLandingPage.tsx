@@ -163,8 +163,6 @@ const QRLandingPage = (_props: QRLandingPageProps) => {
               <select
                 id="dob_d"
                 placeholder="DD"
-                min="1"
-                max="31"
                 className={`form-control Individual_Dateparts Individual_Dateparts_Day ${
                   formik.errors.dob_d
                     ? formik.touched.dob_d && "is-invalid"
@@ -185,8 +183,6 @@ const QRLandingPage = (_props: QRLandingPageProps) => {
               <select
                 id="dob_m"
                 placeholder="MM"
-                min="1"
-                max="12"
                 className={`form-control Individual_Dateparts Individual_Dateparts_Month ${
                   formik.errors.dob_m
                     ? formik.touched.dob_m && "is-invalid"
@@ -206,8 +202,6 @@ const QRLandingPage = (_props: QRLandingPageProps) => {
               <select
                 id="dob_y"
                 placeholder="YYYY"
-                min="1"
-                max="31"
                 className={`form-control Individual_Dateparts_Year Individual_Dateparts  ${
                   formik.errors.dob_y
                     ? formik.touched.dob_y && "is-invalid"

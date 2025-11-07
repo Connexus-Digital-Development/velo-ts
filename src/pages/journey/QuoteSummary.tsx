@@ -17,7 +17,7 @@ const QuoteSummary = (_props: QuoteSummaryProps) => {
   const [gState, setGState] = useContext(JourneyContext)!;
   const [vals, setVals] = useState<any>(null);
   const [errored, setErrored] = useState(false);
-  const [error, setError] = useState<string | React.ReactElement | null>(null);
+  const [error, setError] = useState<string | React.JSX.Element | null>(null);
   const [incepted, setIncepted] = useState(false);
   const [expired, setExpired] = useState(false);
   const statefromExternalLink = useGlobalStateAdaptor(
