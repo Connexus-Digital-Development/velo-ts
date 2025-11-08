@@ -4,7 +4,7 @@ import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import WhatOurCustomersSayList from "@/components/marketing/REVIEWS/WhatOurCustomersSayList";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const Reviews = () => {
   useEffect(() => {

@@ -6,7 +6,7 @@ import WhatOurCustomersSay from "@/components/shared/WhatOurCustomersSay";
 import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const SingleBikeCover = () => {
   useEffect(() => {

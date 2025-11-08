@@ -8,7 +8,7 @@ import MoreBlogs from "@/components/marketing/PITSTOP/MoreBlogs";
 import { seoTags } from "@/components/shared/SeoEdit";
 import { socialMediaTags } from "@/components/shared/SeoEdit";
 import ShareToSocials from "@/components/marketing/PITSTOP/ShareToSocials";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const FullBlog = () => {
   const tags: string[] = [];

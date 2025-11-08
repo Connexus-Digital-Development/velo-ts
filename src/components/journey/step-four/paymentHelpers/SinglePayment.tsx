@@ -127,6 +127,7 @@ const SinglePayment = ({
     return () => {
       window.removeEventListener("message", (e) => messageTrig(e));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function messageTrig(e) {
@@ -145,7 +146,7 @@ const SinglePayment = ({
   }
 
   function populatePaymentData(number, expMonth, expYear, cvn, holder) {
-    var lineOne = `${
+    const lineOne = `${
       gState?.organisation?.length >= 1 ? gState.organisation.trim() : ""
     } ${gState.subHouseName?.length >= 1 ? gState.subHouseName.trim() : ""} ${
       gState.houseName?.length >= 1 ? gState.houseName.trim() : ""

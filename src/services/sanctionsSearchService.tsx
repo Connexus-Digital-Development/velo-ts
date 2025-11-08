@@ -1,4 +1,4 @@
-import helper from "@/utils/modelAdaptorHelper";
+import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import { veloAPIService } from "./veloAPIService";
 import type {
   SanctionsSearchRequest,
@@ -42,7 +42,7 @@ export const sanctionsSearchService = {
     );
     const data = await response.json();
     const phrasedSanctionResults: SanctionsSearchResponse =
-      helper.PhraseSanctionResults(data);
+      modelAdaptorHelper.PhraseSanctionResults(data);
     (phrasedSanctionResults as any).Reference = reference;
     (phrasedSanctionResults as any).PolicyDetailsId = gState?.policyDetailsId;
 

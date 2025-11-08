@@ -130,7 +130,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
   };
 
   const handleRemove = (id: number) => {
-    let filteredArray = gState.bikes.map((a) => {
+    const filteredArray = gState.bikes.map((a) => {
       // make a copy
       return { ...a };
     });
@@ -194,8 +194,8 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
     setIsElectric(flag);
     formik.values.isElectric = flag;
   };
-  const center = true;
-  const fs = false;
+  const _center = true;
+  const _fs = false;
 
   return (
     <section className="container container_narrow mt-3">
@@ -345,7 +345,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                 disabled={
                   gState.currentlyEditingABike || gState.currentlyAddingABike
                 }
-                onClick={(e) => {
+                onClick={(_e) => {
                   handleRemove(bike.id);
                 }}
               >
@@ -358,7 +358,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                 disabled={
                   gState.currentlyEditingABike || gState.currentlyAddingABike
                 }
-                onClick={(e) => {
+                onClick={(_e) => {
                   handleEdit(bike.id);
                 }}
               >

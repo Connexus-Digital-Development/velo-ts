@@ -7,7 +7,7 @@ import WhyDoINeedTravelInsurance from "@/components/marketing/TRAVEL/WhyDoINeedT
 import HeroBanner from "@/components/shared/HeroBanner";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const Travel = () => {
   useEffect(() => {

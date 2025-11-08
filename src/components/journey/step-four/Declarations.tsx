@@ -1,7 +1,7 @@
 import { Checkbox } from "@mantine/core";
 import { useContext, useEffect, useRef } from "react";
 import { JourneyContext } from "@/context/journeyStore";
-import { editClassName, removeClassName } from "@/utils/ClassNameEditor";
+import { editClassName, removeClassName } from "@/utils/classNameEditor";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import BikeListWithLockInfo from "./BikeListWithLockInfo";
 import { type DeclarationsProps } from "@/models/JourneyComponentTypes";

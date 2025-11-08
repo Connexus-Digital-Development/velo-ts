@@ -3,7 +3,7 @@ export class ApplePayments
 {
 
     static processPayment(orderRef, tokenData, PaymentData) {
-        var data = {
+        const data = {
             Token: JSON.stringify(tokenData.token.paymentData),
             paymentRef: orderRef,
             authData: PaymentSupport.AuthData,
@@ -19,7 +19,7 @@ export class ApplePayments
 
     
     static logCancellation(orderRef, PaymentData) {
-        var data = {
+        const data = {
             paymentRef: orderRef,
             authData: PaymentSupport.AuthData,
             Payment: PaymentData.payment
@@ -28,7 +28,7 @@ export class ApplePayments
     }
 
     static logError(message, orderRef, PaymentData) {
-        var data = {
+        const data = {
             paymentRef: orderRef,
             authData: PaymentSupport.AuthData,
             Payment: PaymentData.payment,

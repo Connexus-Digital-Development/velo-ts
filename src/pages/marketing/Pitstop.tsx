@@ -8,7 +8,7 @@ import { Pagination } from "@mantine/core";
 import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import { seoTags } from "@/components/shared/SeoEdit";
 import WhatOurCustomersSay from "@/components/shared/WhatOurCustomersSay";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { type BlogPost } from "@/models/MarketingComponentTypes";
 
 const Pitstop = () => {
@@ -166,13 +166,13 @@ const Pitstop = () => {
             total={Math.ceil(filteredData.length / 9)}
             position="center"
             radius="md"
-            styles={() => ({
-              item: {
-                "&[data-active]": {
-                  "background-color": "#00a8ff",
-                },
-              },
-            })}
+            // styles={() => ({
+            //   item: {
+            //     "&[data-active]": {
+            //       "background-color": "#00a8ff",
+            //     },
+            //   },
+            // })}
           />
         </div>
       </section>

@@ -8,7 +8,7 @@ import WhyInsureWithVelosure from "@/components/marketing/ABOUT_US/WhyInsureWith
 import NeedAQuote from "@/components/marketing/ABOUT_US/NeedAQuote";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const AboutUs = () => {
   useEffect(() => {

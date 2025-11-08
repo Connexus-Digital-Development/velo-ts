@@ -27,7 +27,7 @@ const QuickPay = ({
   const getApplePaySession = async (urlSession) => {
     try {
       // Call your own server to request a new merchant session.
-      let response = await ApplePayments.validateSession(urlSession);
+      const response = await ApplePayments.validateSession(urlSession);
       return response.token;
     } catch (error) {
       errorMessage(
@@ -317,7 +317,7 @@ const QuickPay = ({
                   uiLock(false);
                 });
             }}
-            onCancel={(reason) => {
+            onCancel={(_reason) => {
               errorMessage("Google Window Closed by User");
               GooglePayments.logCancellation(gState.quoteReference, {
                 payment: {
@@ -382,7 +382,7 @@ const QuickPay = ({
                     });
                 });
               }}
-              onCancel={(reason) => {
+              onCancel={(_reason) => {
                 errorMessage("Paypal Window Closed by User");
                 PaypalPayments.logCancellation(
                   gState.quoteReference,

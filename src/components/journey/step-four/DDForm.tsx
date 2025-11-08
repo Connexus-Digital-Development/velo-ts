@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { JourneyContext } from "@/context/journeyStore";
 import { loggingService } from "@/services/loggingService";
 import { paymentService } from "@/services/paymentService";
@@ -24,7 +24,7 @@ const DDForm = ({ formik }: DDFormProps) => {
       setCheckBottomLine(false);
       bottomLineCheck();
     }
-  }, [formik, checkBottomLine]);
+  }, [formik, checkBottomLine, bottomLineCheck]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ const DDForm = ({ formik }: DDFormProps) => {
     setCheckBottomLine(true);
   };
 
-  const bottomLineCheck = () => {
+  const bottomLineCheck = useCallback(() => {
     // check bottom line...
     //console.log("checking bottom Line");
     paymentService
@@ -65,7 +65,7 @@ const DDForm = ({ formik }: DDFormProps) => {
         );
         setGState({ ...gState, DDFormIsValid: false }); // this flag is used to trigger the Bottom Line API call, it might be needed again
       });
-  };
+  }, [formik.values.accountSortCode, formik.values.accountNumber, formik.setFieldValue, formik, setError, gState.quoteReference, setGState, gState]);
 
   return (
     <form id="ddForm" onSubmit={formik.handleSubmit} noValidate>

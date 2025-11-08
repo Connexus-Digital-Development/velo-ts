@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { JourneyContext } from "@/context/journeyStore";
 import currency from "currency.js";
-import { type MonthlyPaymentsProps } from "@/models/JourneyComponentTypes";
 
-const MonthlyPayments = ({}: MonthlyPaymentsProps) => {
+const MonthlyPayments = () => {
   const [gState] = useContext(JourneyContext);
 
   return (

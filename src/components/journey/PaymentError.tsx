@@ -12,6 +12,7 @@ const PaymentError = () => {
   useEffect(() => {
     setGState(initialJourneyState);
     sessionStorage.removeItem("context");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="pr oh">

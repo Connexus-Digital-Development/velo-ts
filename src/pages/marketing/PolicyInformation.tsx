@@ -6,7 +6,7 @@ import IntroBlock from "@/components/marketing/POLICY_INFORMATION/IntroBlock";
 import DownloadDocuments from "@/components/marketing/POLICY_INFORMATION/DownloadDocuments";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const PolicyInformation = () => {
   useEffect(() => {

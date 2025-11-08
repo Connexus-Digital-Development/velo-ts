@@ -1,11 +1,11 @@
 import { modelAdaptorHelper as helper } from "@/utils/modelAdaptorHelper";
-import moment from "moment";
+import * as moment from "moment";
 // convert the collected globalState data into a model accepted by transactor API
-import { JourneyState } from "@/models/JourneyTypes";
-import { RiskModel } from "@/models/QuoteTypes";
+import { type JourneyState } from "@/models/JourneyTypes";
+import { type RiskModel } from "@/models/QuoteTypes";
 
-const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | {} => {
-  if (!!!globalState.coverStartDate) {
+const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | object => {
+  if (!globalState.coverStartDate) {
     return {};
   }
   const homeAwayValue = helper.getHomeValue(globalState.bikes);

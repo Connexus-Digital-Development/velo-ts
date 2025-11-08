@@ -9,7 +9,7 @@ const OptionalCover = ({
   handleACCheckbox,
   handleWCCheckbox,
 }: OptionalCoverProps) => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, _setGState] = useContext(JourneyContext);
   const [opened, setOpened] = useState(0);
 
   const popUp = (description: string) => (

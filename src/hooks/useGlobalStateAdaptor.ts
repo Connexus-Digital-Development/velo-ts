@@ -1,11 +1,12 @@
-import { JourneyState } from "@/models/JourneyTypes";
-import {
+import { type JourneyState } from "@/models/JourneyTypes";
+import type {
   CoreQuote,
   PerformanceQuote,
   SelectedCoreScheme,
 } from "@/models/QuoteTypes";
+
 import { modelAdaptorHelper as helper } from "@/utils/modelAdaptorHelper";
-import moment from "moment";
+import * as moment from "moment";
 const useGlobalStateAdaptor = (
   coreQuote: CoreQuote,
   performanceQuote: PerformanceQuote,
@@ -21,13 +22,14 @@ const useGlobalStateAdaptor = (
 
     performanceQuote,
   );
-  if (!!!coreQuote) {
+  if (!coreQuote) {
     return {
       bikes: [{ make: "" }],
       loading: true,
     } as JourneyState;
   }
-  var i = 0;
+
+  let i = 0;
   const state: JourneyState = {
     id: 0,
     loading: false,
@@ -40,18 +42,25 @@ const useGlobalStateAdaptor = (
     worldwideCover: coreQuote.includeWorldWideCover,
     sportsCover: coreQuote?.includeSportCover ?? false,
     personalAccident: coreQuote.includePersonalAccidentCover,
-    bikes: coreQuote.bicycles.map((m) => {
-      return {
-        id: i++,
-        make: m.make,
-        model: m.model,
-        value: m.homeValue,
-        isElectric:
-          coreQuote.bicycles.length === 1
-            ? coreQuote?.isElectric
-            : (m?.isElectric ?? false),
-      };
-    }),
+    bikes: coreQuote.bicycles.map(
+      (m: {
+        make: string;
+        model: string;
+        homeValue: number;
+        isElectric?: boolean;
+      }) => {
+        return {
+          id: i++,
+          make: m.make,
+          model: m.model,
+          value: m.homeValue,
+          isElectric:
+            coreQuote.bicycles.length === 1
+              ? coreQuote?.isElectric
+              : (m?.isElectric ?? false),
+        };
+      },
+    ),
     hasPreviousClaim: false,
     title: coreQuote.title,
     titleId: helper.getTitleId(coreQuote.title.toLowerCase()),
@@ -99,7 +108,8 @@ const useGlobalStateAdaptor = (
     thirdPartyPhone: coreQuote?.allowTelephoneFromThirdParty ?? false,
     thirdPartyEmail: coreQuote?.allowMailFromThirdParty ?? false,
     marketingReference:
-      coreQuote.sourceBusinessId == "60" || coreQuote.sourceBusinessId == 60
+      coreQuote.sourceBusinessId == "60" ||
+      parseInt(coreQuote.sourceBusinessId) == 60
         ? "Retailer - QuoteZone"
         : coreQuote.sourceBusinessId,
     sourceOfBusinessId: coreQuote.sourceBusinessId, //should be 60 for quotezone

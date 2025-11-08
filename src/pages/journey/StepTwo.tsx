@@ -2,9 +2,8 @@ import AboutYou from "@/components/journey/step-two/AboutYou";
 import Breadcrumbs from "@/components/shared/Breadcrumbs";
 import RegularBanner from "@/components/shared/RegularBanner";
 import TopNavBlank from "@/components/shared/TopNavBlank";
-import type { StepTwoProps } from "@/models/JourneyComponentTypes";
 
-const StepTwo: React.FC<StepTwoProps> = () => {
+const StepTwo = () => {
   return (
     <div className="container-fluid mb-5 blueBorderBott oh">
       <TopNavBlank theme={"white"} />

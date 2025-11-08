@@ -3,8 +3,8 @@ import PaymentSupport from "./PaymentSupport";
 export class GooglePayments
 {
     static processPayment(orderRef, tokenData, PaymentData) {
-        let paymentToken = tokenData.paymentMethodData.tokenizationData.token;
-        var data = {
+        const paymentToken = tokenData.paymentMethodData.tokenizationData.token;
+        const data = {
             Token: paymentToken,
             paymentRef: orderRef,
             authData: PaymentSupport.AuthData,
@@ -14,7 +14,7 @@ export class GooglePayments
     }
 
     static logCancellation(orderRef, PaymentData) {
-        var data = {
+        const data = {
             paymentRef: orderRef,
             authData: PaymentSupport.AuthData,
             Payment: PaymentData.payment
@@ -23,7 +23,7 @@ export class GooglePayments
     }
 
     static logError(message, orderRef, PaymentData) {
-        var data = {
+        const data = {
             paymentRef: orderRef,
             authData: PaymentSupport.AuthData,
             Payment: PaymentData.payment,

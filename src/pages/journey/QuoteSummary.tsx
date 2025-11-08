@@ -7,9 +7,8 @@ import TopNavBlank from "@/components/shared/TopNavBlank";
 import RegularBanner from "@/components/shared/RegularBanner";
 import SummaryOfCover from "@/components/journey/step-three/SummaryOfCover";
 import { useParams, useNavigate } from "react-router-dom";
-import type { QuoteSummaryProps } from "@/models/JourneyComponentTypes";
 
-const QuoteSummary = (_props: QuoteSummaryProps) => {
+const QuoteSummary = () => {
   const navigate = useNavigate();
   const params = useParams();
   const quoteId = params.id?.slice(2) || "";

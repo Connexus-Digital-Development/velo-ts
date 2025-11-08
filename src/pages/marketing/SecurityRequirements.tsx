@@ -8,7 +8,7 @@ import StorageRequirements from "@/components/marketing/SECURITY_REQUIREMENTS/St
 import Stolen from "@/components/marketing/SECURITY_REQUIREMENTS/Stolen";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const SecurityRequirements = () => {
   useEffect(() => {

@@ -8,9 +8,8 @@ import Assumptions from "@/components/journey/step-four/Assumptions";
 import Declarations from "@/components/journey/step-four/Declarations";
 import DocumentPreferences from "@/components/journey/step-three/DocumentPreferences";
 import PaymentMethodSelector from "@/components/journey/step-four/PaymentMethodSelector";
-import { type StepFourProps } from "@/models/JourneyComponentTypes";
 
-const StepFour = (_props: StepFourProps) => {
+const StepFour = () => {
   const [gState] = useContext(JourneyContext);
   const [rotate, setRotate] = useState(false);
   const [showPaymentWindow, setShowPaymentWindow] = useState(false);

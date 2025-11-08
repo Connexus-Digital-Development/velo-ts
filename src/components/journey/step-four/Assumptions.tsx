@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import { JourneyContext } from "@/context/journeyStore";
 import { Checkbox } from "@mantine/core";
-import { editClassName, removeClassName } from "@/utils/ClassNameEditor";
+import { editClassName, removeClassName } from "@/utils/classNameEditor";
 import { type AssumptionsProps } from "@/models/JourneyComponentTypes";
 import { type Bike } from "@/models/bike";
 

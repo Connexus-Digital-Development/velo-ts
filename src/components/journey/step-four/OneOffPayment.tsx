@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { JourneyContext } from "@/context/journeyStore";
 import currency from "currency.js";
-import { type OneOffPaymentProps } from "@/models/JourneyComponentTypes";
 
-const OneOffPayment = ({}: OneOffPaymentProps) => {
+const OneOffPayment = () => {
   const [gState] = useContext(JourneyContext);
 
   console.log("Annual Gross Premium:", gState.annualGrossPremium);

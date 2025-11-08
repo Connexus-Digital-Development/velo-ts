@@ -5,7 +5,7 @@ import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import ContactUsForm from "@/components/marketing/CONTACT_US/ContactUsForm";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const ContactUs = () => {
   useEffect(() => {

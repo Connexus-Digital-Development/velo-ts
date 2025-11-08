@@ -11,14 +11,13 @@ import AwayValue from "@/components/journey/step-one/AwayValue";
 import React, { useState } from "react";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import TopNavBlank from "@/components/shared/TopNavBlank";
 import { Engine, Rule } from "json-rules-engine";
 // import { useDisclosure } from "@mantine/hooks";
 import type { JourneyState } from "@/models/JourneyTypes";
-import type { StepOneProps } from "@/models/JourneyComponentTypes";
 
-const StepOne = (_props: StepOneProps): React.JSX.Element => {
+const StepOne = (): React.JSX.Element => {
   const [gState, setGState] = useContext(JourneyContext) as [
     JourneyState,
     React.Dispatch<React.SetStateAction<JourneyState>>,

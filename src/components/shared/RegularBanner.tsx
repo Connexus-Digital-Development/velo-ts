@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Cog from "./Cog";
 import CTAButton from "./CTAButton";
 import { useLocation } from "react-router-dom";

@@ -1,7 +1,7 @@
 import { Checkbox } from "@mantine/core";
 import { useContext, useEffect, useRef } from "react";
 import { JourneyContext } from "@/context/journeyStore";
-import { editClassName, removeClassName } from "@/utils/ClassNameEditor";
+import { editClassName, removeClassName } from "@/utils/classNameEditor";
 import { type IndividualBikeRowProps } from "@/models/JourneyComponentTypes";
 import { type Bike } from "@/models/bike";
 
@@ -22,6 +22,7 @@ const IndividualBikeRow: React.FC<IndividualBikeRowProps> = ({
       gState.clickedPayNow && bike && !bike.lockChecked,
       "mantine-Checkbox-error",
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gState]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateLockChecked(bikeId, e.target.checked);

@@ -8,8 +8,8 @@ import TransactorService from "@/services/transactorService";
 import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
 import DDForm from "./DDForm";
 import DDGuarantee from "./DDGuarantee";
-import loggingService from "@/services/loggingService";
-import SanctionsSearchService from "@/services/sanctionsSearchService";
+import { loggingService } from "@/services/loggingService";
+import { sanctionsSearchService } from "@/services/sanctionsSearchService";
 import { type PaymentsProps } from "@/models/JourneyComponentTypes";
 import { type Bike } from "@/models/bike";
 import { type RiskModel } from "@/models/QuoteTypes";
@@ -62,6 +62,7 @@ const Payments: React.FC<PaymentsProps> = ({
       setGState((prev) => ({ ...prev, yourQuoteCrumb: 0 }));
       return navigate(`/get-a-quote${search}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -84,6 +85,9 @@ const Payments: React.FC<PaymentsProps> = ({
     gState.storageLocationTicked,
     gState.readDocumentsTicked,
     gState.paymentTypeIsAnnual,
+    gState.eBikeTicked,
+    setGState,
+    setShowPaymentWindow,
   ]);
 
   const formik = useFormik({
@@ -172,7 +176,8 @@ const Payments: React.FC<PaymentsProps> = ({
       }
     }
     if (import.meta.env.VITE_SanctionsSearchDisabled === "false") {
-      SanctionsSearchService.SanctionSearch(gState)
+      sanctionsSearchService
+        .SanctionSearch(gState)
         .then((data) => {
           if (data.Error) {
             navigate("/QuoteReferred?quoteReference=" + gState.quoteReference);
@@ -328,43 +333,15 @@ const Payments: React.FC<PaymentsProps> = ({
       yourCoverCrumb: prev.yourCoverCrumb === 2 ? 1 : prev.yourCoverCrumb,
       paymentCrumb: 2,
     }));
-  }, []);
+  }, [
+    gState.bikes,
+    setGState,
+  ]);
 
   return (
     <>
       {gState.paymentSuccessful === false && !gState.paymentTypeIsAnnual && (
         <DDGuarantee readyToRead={assumptionsAndDeclarationsAllChecked} />
-      )}
-      {false && (
-        <>
-          <section className="container container_narrow ">
-            <div className="content_section mt-3">
-              <div className="row">
-                <div className="col-4 mb-2">
-                  <label className="form-label">
-                    Payment amount (used to test payments){" "}
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="amount"
-                    required
-                    value={gState.annualGrossPremium}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setGState((prev) => ({
-                        ...prev,
-                        annualGrossPremium:
-                          parseFloat(e.currentTarget.value) || 0,
-                        instalmentsFirstPayment:
-                          parseFloat(e.currentTarget.value) || 0,
-                      }))
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-        </>
       )}
       <div hidden={!processing}>
         <div

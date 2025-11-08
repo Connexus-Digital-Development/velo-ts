@@ -1,10 +1,10 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { JourneyContext } from "@/context/journeyStore";
 import IndividualBike from "./IndividualBike";
 import { type AboutYourBikeProps } from "@/models/JourneyComponentTypes";
 
 const BikeList = ({ validateNextButton }: AboutYourBikeProps) => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, _setGState] = useContext(JourneyContext);
 
   return gState.bikes.map((bike, index) => (
     <IndividualBike

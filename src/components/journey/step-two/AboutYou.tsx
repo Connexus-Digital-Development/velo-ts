@@ -23,9 +23,9 @@ const postcodeRegex =
   /^(([A-Z][A-HJ-Y]?\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}|BFPO ?\d{1,4}|(KY\d|MSR|VG|AI)[ ]?\d{4}|[A-Z]{2} ?\d{2}|GE ?CX|GIR ?0A{2}|SAN ?TA1)$/;
 const AboutYou = () => {
   const { search } = useLocation();
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useContext(JourneyContext)!;
 
-  const history = useNavigate();
+  const navigate = useNavigate();
   const MIN_AGE = 18,
     MAX_AGE = 90;
   const upper = new Date().getFullYear() - MIN_AGE;
@@ -35,24 +35,23 @@ const AboutYou = () => {
   const [error, setError] = useState<string | null>(null);
   const [addressesFound, setAddressesFound] = useState<boolean>(false); //use to show/hide the postcode select list
   const [customReference, setCustomReference] = useState<boolean>(
-    gState.customSource,
+    gState.customSource ?? false,
   );
   const [retailerReference, setRetailerReference] = useState<boolean>(
-    gState.marketingReference?.startsWith("Retailer"),
+    gState.marketingReference?.startsWith("Retailer") ?? false,
   );
   const [marketingReference, setMarketingReference] = useState<string>(
-    gState.marketingReference,
+    gState.marketingReference ?? "",
   );
   const [showManualAddress, setShowManualAddress] = useState<boolean>(false);
-  const [SOBId, setSOBId] = useState<number>(gState.sourceOfBusinessId);
-  const [disableSOB, setDisableSOB] = useState<boolean>(gState.disableSOB);
+  const [SOBId, setSOBId] = useState<number>(gState.sourceOfBusinessId ? parseInt(gState.sourceOfBusinessId) : 0);
 
   const minDate = new Date();
   const maxDate = () => {
-    var d = minDate;
-    var year = d.getFullYear();
-    var month = d.getMonth();
-    var day = d.getDate();
+    const d = minDate;
+    const year = d.getFullYear();
+    const month = d.getMonth();
+    const day = d.getDate();
 
     return new Date(year, month, day + 45);
   };
@@ -61,7 +60,7 @@ const AboutYou = () => {
     console.log("AboutYou useEffect on load");
     // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
     if (gState.bikes.length === 0) {
-      return history.push(`/get-a-quote${search}`);
+      navigate(`/get-a-quote${search}`);
     }
   }, []);
 
@@ -127,7 +126,7 @@ const AboutYou = () => {
         selectedAddress.houseNumber !== null ? selectedAddress.houseNumber : "",
       houseName:
         selectedAddress.houseName !== null ? selectedAddress.houseName : "",
-      subHouseName:
+      houseSubName:
         selectedAddress.subHouseName !== null
           ? selectedAddress.subHouseName
           : "",
@@ -139,14 +138,13 @@ const AboutYou = () => {
       hideAddressForm: true,
     });
     const houseNo = (
-      (selectedAddress.organisation !== null
-        ? selectedAddress.organisation + ", "
+      (selectedAddress!.organisation !== null
+        ? selectedAddress!.organisation + ", "
         : "") +
-        selectedAddress?.subHouseName?.length >
-      1
-        ? selectedAddress?.subHouseName
-        : "" + " " + selectedAddress?.houseName?.length > 1
-          ? selectedAddress?.houseName
+        selectedAddress!.subHouseName && selectedAddress!.subHouseName.length > 1
+          ? selectedAddress!.subHouseName
+          : "" + " " + selectedAddress!.houseName && selectedAddress!.houseName.length > 1
+          ? selectedAddress!.houseName
           : ""
     ).trim();
 
@@ -178,7 +176,7 @@ const AboutYou = () => {
         selectedAddress.houseNumber !== null ? selectedAddress.houseNumber : "",
       houseName:
         selectedAddress.houseName !== null ? selectedAddress.houseName : "",
-      subHouseName:
+      houseSubName:
         selectedAddress.subHouseName !== null
           ? selectedAddress.subHouseName
           : "",
@@ -191,14 +189,13 @@ const AboutYou = () => {
     });
 
     const houseNo = (
-      (selectedAddress.organisation !== null
-        ? selectedAddress.organisation + ", "
+      (selectedAddress!.organisation !== null
+        ? selectedAddress!.organisation + ", "
         : "") +
-        selectedAddress?.subHouseName?.length >
-      1
-        ? selectedAddress?.subHouseName
-        : "" + " " + selectedAddress?.houseName?.length > 1
-          ? selectedAddress?.houseName
+        selectedAddress!.subHouseName && selectedAddress!.subHouseName.length > 1
+          ? selectedAddress!.subHouseName
+          : "" + " " + selectedAddress!.houseName && selectedAddress!.houseName.length > 1
+          ? selectedAddress!.houseName
           : ""
     ).trim();
 
@@ -275,18 +272,19 @@ const AboutYou = () => {
       .required("This is required")
       .min(lower, "Please select a year.")
       .max(upper),
-    postalCode: Yup.string().when("showManualAddress", {
-      is: false,
-      then: Yup.string()
-        .min(5, "This postcode is too short")
-        .required("Please enter your post code to complete your address")
-        .matches(postcodeRegex, "This postcode is not valid"),
-    }),
+    postalCode: Yup.string().when("showManualAddress", ([showManualAddress], schema) =>
+      showManualAddress === false
+        ? schema
+            .min(5, "This postcode is too short")
+            .required("Please enter your post code to complete your address")
+            .matches(postcodeRegex, "This postcode is not valid")
+        : schema
+    ),
     addressLine1: Yup.string()
       .nullable()
       .required("Address line 1 is required")
       .matches(
-        "^[A-Za-z0-9 ./-]*$",
+new RegExp("^[A-Za-z0-9 ./-]*$"),
         "Address line 1 can only contain letters, numbers, spaces, full stops, hyphens and forward slashes",
       ),
     addressLine2: Yup.string().when("showManualAddress", {
@@ -294,26 +292,26 @@ const AboutYou = () => {
       then: Yup.string()
         .required("Address line 2 is required")
         .matches(
-          "^[A-Za-z ./-]+$",
+          new RegExp("^[A-Za-z ./-]+$"),
           "Address line 2 can only contain letters, spaces, full stops, hyphens and forward slashes",
         ),
     }),
     houseNo: Yup.string()
       .nullable()
       .matches(
-        "^[A-Za-z0-9 ./-]*$",
+new RegExp("^[A-Za-z0-9 ./-]*$"),
         "House name or number can only contain letters, numbers, spaces, full stops, hyphens and forward slashes",
       ),
     addressLine3: Yup.string()
       .nullable()
       .matches(
-        "^[A-Za-z .-]+$",
+        new RegExp("^[A-Za-z .-]+$"),
         "Address line 3 can only contain letters, spaces, full stops and hyphens",
       ),
     addressLine4: Yup.string()
       .nullable()
       .matches(
-        "^[A-Za-z .-]+$",
+        new RegExp("^[A-Za-z .-]+$"),
         "Address line 4 can only contain letters, spaces, full stops and hyphens",
       ),
     postcode: Yup.string().when("showManualAddress", {
@@ -374,7 +372,7 @@ const AboutYou = () => {
         gState.coverStartDate == null ? null : new Date(gState.coverStartDate),
       showManualAddress: false,
       addressIsValid: true,
-      disableSOB: disableSOB,
+      disableSOB: gState.disableSOB ?? false,
       hideAddressForm: gState.hideAddressForm,
       houseNo: gState.houseNo,
       houseNumber: gState.houseNo,
@@ -410,7 +408,7 @@ const AboutYou = () => {
           Number(values.dob_m),
           values.dob_y,
         ),
-        subHouseName: showManualAddress ? null : gState.subHouseName,
+        houseSubName: showManualAddress ? null : gState.houseSubName,
         houseName: showManualAddress ? null : gState.houseName,
         houseNo: showManualAddress
           ? values.houseNo
@@ -454,7 +452,7 @@ const AboutYou = () => {
           ? gState.sourceOfBusinessId
           : SOBId,
       });
-      history.push(`/stepThree${search}`);
+      navigate(`/stepThree${search}`);
     },
   });
 
@@ -530,7 +528,7 @@ const AboutYou = () => {
   const YearsList = () => {
     const years = [];
 
-    for (var i = upper; i >= lower; i--) {
+    for (let i = upper; i >= lower; i--) {
       years.push(i);
     }
     return years;
@@ -1143,7 +1141,7 @@ const AboutYou = () => {
                 ) : null}
               </div>
 
-              <div className="" hidden={disableSOB}>
+              <div className="" hidden={gState.disableSOB ?? false}>
                 <label className="form-label">
                   Where did you hear about us?
                 </label>
@@ -1204,7 +1202,7 @@ const AboutYou = () => {
                   />
                 </div>
               )}
-              {retailerReference && !disableSOB && (
+              {retailerReference && !(gState.disableSOB ?? false) && (
                 <div className="mt-3">
                   <label className="form-label">Retailer Name / Number*</label>
                   <input

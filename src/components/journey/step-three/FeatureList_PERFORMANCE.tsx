@@ -103,7 +103,7 @@ const Features = ({
 }) => {
   const [gState, setGState] = useContext(JourneyContext);
   const riskModel = useRiskModelAdaptor(gState);
-  const [showExtras, setShowExtras] = useState(
+  const [_showExtras, _setShowExtras] = useState(
     gState.bikes.length === 1 && gState.bikes[0].isElectric,
   );
   const [monthlyPriceDifference, setMonthlyPriceDifference] = useState(0);

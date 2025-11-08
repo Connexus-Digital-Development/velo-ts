@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Moment from "react-moment";
+import * as moment from "moment";
 import { JourneyContext } from "@/context/journeyStore";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import SimpleBikeList from "./SimpleBikeList";
@@ -8,9 +8,9 @@ import { type SummaryOfCoverProps } from "@/models/JourneyComponentTypes";
 const SummaryOfCover: React.FC<SummaryOfCoverProps> = ({
   detailsText = "Please ensure all of the details are correct. To amend any information please revert back to the required section using the back button below.",
   fromExternalLink = false,
-  validateNextButton = false,
+  validateNextButton: _validateNextButton = false,
 }) => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, _setGState] = useContext(JourneyContext);
 
   return (
     <section className="container container_narrow " id="Quote-Summary">
@@ -87,7 +87,9 @@ const SummaryOfCover: React.FC<SummaryOfCoverProps> = ({
           Cover start date
         </p>
         <p className="summaryDetail">
-          <Moment format="DD/MM/YYYY" date={gState.coverStartDate} />
+          {gState.coverStartDate && moment(gState.coverStartDate).isValid()
+            ? moment(gState.coverStartDate).format("DD/MM/YYYY")
+            : "Not set"}
         </p>
         <p className="lowerOpacity lufga-light summaryTitle">Insured cycle/s</p>
         {<SimpleBikeList bikes={gState.bikes} />}

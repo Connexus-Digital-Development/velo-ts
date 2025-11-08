@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { JourneyContext } from "@/context/journeyStore";
 import MonthlyPayments from "./MonthlyPayments";
 import OneOffPayment from "./OneOffPayment";
-import { PaymentMethodSelectorProps } from "@/models/JourneyComponentTypes";
+import { type PaymentMethodSelectorProps } from "@/models/JourneyComponentTypes";
 
 const PaymentMethodSelector = ({
   setShowPaymentWindow,

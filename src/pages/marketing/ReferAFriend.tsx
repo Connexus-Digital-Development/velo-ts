@@ -7,7 +7,7 @@ import ForgotYourPolicy from "@/components/marketing/REFER_A_FRIEND/ForgotYourPo
 import HowDoesItWork from "@/components/marketing/REFER_A_FRIEND/HowDoesItWork";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const ReferAFriend = () => {
   useEffect(() => {

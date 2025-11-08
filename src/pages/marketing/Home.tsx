@@ -3,7 +3,7 @@ import HeroBanner from "@/components/shared/HeroBanner";
 import IntroBlock from "@/components/marketing/HOME/IntroBlock";
 import React, { useEffect, Suspense } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 const Home = () => {
   sessionStorage.removeItem("context");
 

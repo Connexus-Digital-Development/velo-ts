@@ -6,7 +6,7 @@ const PreviousClaims = ({ validateNextButton }: AboutYourBikeProps) => {
   const [state, setState] = useContext(JourneyContext);
   const [showSetPreviousClaimsMessage, setShowSetPreviousClaimsMessage] =
     useState(false);
-  const [unableToQuoteMessage, setUnableToQuoteMessage] = useState(false);
+  const [unableToQuoteMessage, _setUnableToQuoteMessage] = useState(false);
 
   useEffect(() => {
     if (validateNextButton && state.hasPreviousClaim == null) {
@@ -27,7 +27,7 @@ const PreviousClaims = ({ validateNextButton }: AboutYourBikeProps) => {
           <div className="col-6 col-md-2" id="has-previous-claim">
             <button
               type="button"
-              onClick={(e) => {
+              onClick={(_e) => {
                 setState({
                   ...state,
                   hasPreviousClaim: true,
@@ -46,7 +46,7 @@ const PreviousClaims = ({ validateNextButton }: AboutYourBikeProps) => {
           <div className="col-6 col-md-2">
             <button
               type="button"
-              onClick={(e) => {
+              onClick={(_e) => {
                 setState({
                   ...state,
                   hasPreviousClaim: false,

@@ -7,7 +7,7 @@ import StandardFeatures from "./StandardFeatures";
 import EBikeFeatures from "./EBikeFeatures";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const CoverFeatures = () => {
   useEffect(() => {

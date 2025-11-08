@@ -6,7 +6,7 @@ import FAQSection from "@/components/marketing/FAQ/FAQSection";
 import CantSeeAnswer from "@/components/marketing/FAQ/CantSeeAnswer";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const FAQ = () => {
   useEffect(() => {

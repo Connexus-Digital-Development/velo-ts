@@ -40,9 +40,9 @@ export interface QRPaymentProps {
   setShowPaymentWindow?: (show: boolean) => void;
 }
 
-export interface AggregatorPaymentProps extends QRPaymentProps {
-  // Additional props for aggregator payment
-}
+// export interface AggregatorPaymentProps extends QRPaymentProps {
+//   // Additional props for aggregator payment
+// }
 
 // Form value types
 export interface BikeFormValues {
@@ -73,9 +73,9 @@ export interface BaseComponentProps {
   children?: React.ReactNode;
 }
 
-export interface AboutYouProps {
-  // AboutYou component has no props, it's a standalone component
-}
+// export interface AboutYouProps {
+//   // AboutYou component has no props, it's a standalone component
+// }
 
 // Address lookup API response types
 export interface AddressLookupResponse {
@@ -127,9 +127,9 @@ export interface AboutYouFormValues {
 }
 
 // YourAddress component types
-export interface YourAddressProps {
-  // YourAddress component has no props, it's a standalone component
-}
+// export interface YourAddressProps {
+//   // YourAddress component has no props, it's a standalone component
+// }
 
 export interface YourAddressFormValues {
   postalCode: string;
@@ -259,9 +259,9 @@ export interface FeatureListCoreProps {
 }
 
 // DocumentPreferences component types
-export interface DocumentPreferencesProps {
-  // No props required
-}
+// export interface DocumentPreferencesProps {
+//   // No props required
+// }
 
 // Assumptions component types
 export interface AssumptionsProps {
@@ -300,14 +300,14 @@ export interface PaymentMethodSelectorProps {
 }
 
 // MonthlyPayments component types
-export interface MonthlyPaymentsProps {
-  // No props required
-}
+// export interface MonthlyPaymentsProps {
+//   // No props required
+// }
 
-// OneOffPayment component types
-export interface OneOffPaymentProps {
-  // No props required
-}
+// // OneOffPayment component types
+// export interface OneOffPaymentProps {
+//   // No props required
+// }
 
 // DDForm component types
 export interface DDFormProps {
@@ -339,26 +339,26 @@ export interface QuickPayProps {
 }
 
 // Page component types
-export interface StepOneProps {
-  // Page components typically have no props
-}
+// export interface StepOneProps {
+//   // Page components typically have no props
+// }
 
-export interface StepTwoProps {
-  // Page components typically have no props
-}
+// export interface StepTwoProps {
+//   // Page components typically have no props
+// }
 
-export interface StepFourProps {
-  // Page components typically have no props
-}
+// export interface StepFourProps {
+//   // Page components typically have no props
+// }
 
-export interface QuoteSummaryProps {
-  // Page components typically have no props
-}
+// export interface QuoteSummaryProps {
+//   // Page components typically have no props
+// }
 
-export interface QRLandingPageProps {
-  // Page components typically have no props
-}
+// export interface QRLandingPageProps {
+//   // Page components typically have no props
+// }
 
-export interface BeforeYouBeginProps {
-  // Page components typically have no props
-}
+// export interface BeforeYouBeginProps {
+//   // Page components typically have no props
+// }

@@ -1,3 +1,3 @@
-export * from "./journeyStore";
+export * from "./JourneyStore";
 export * from "./journeyStoreContext";
 export * from "./journeyStoreInitalState";

@@ -7,7 +7,7 @@ import WhatCanIClaimFor from "@/components/marketing/SUBMIT_A_CLAIM/WhatCanIClai
 import HowToMakeAClaim from "@/components/marketing/SUBMIT_A_CLAIM/HowToMakeAClaim";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const SubmitAClaim = () => {
   useEffect(() => {

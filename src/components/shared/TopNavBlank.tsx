@@ -1,25 +1,24 @@
 import { useState, useEffect } from "react";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import { Link, useNavigate } from "react-router-dom";
-import CTAButton from "./CTAButton";
-import { useLocation } from "react-router-dom";
+// import Offcanvas from "react-bootstrap/Offcanvas";
+// import { Link, useNavigate } from "react-router-dom";
+// import CTAButton from "./CTAButton";
+// import { useLocation } from "react-router-dom";
 import SOBBar from "./SOBBar";
 
-const TopNavBlank = (props) => {
-  const { search } = useLocation();
-  const [textColourClass, setTextColourClass] = useState("blueFont");
-  const [svgFill, setSvgFill] = useState("#00a8ff");
-  const [svgFill2, setSvgFill2] = useState("#171715");
+const TopNavBlank = () => {
+  // const { search } = useLocation();
+  // const [textColourClass, setTextColourClass] = useState("blueFont");
+  const [svgFill] = useState("#00a8ff");
+  const [svgFill2] = useState("#171715");
 
-  const [backgroundColourClass, setBackgroundColourClass] =
-    useState("whiteNav");
-  const [show, setShow] = useState(false);
+  const [backgroundColourClass] = useState("whiteNav");
+  // const [_show, setShow] = useState(false);
   const [showSOBBanner, setShowSOBBanner] = useState(false);
   const [topSpacingClass, setTopSpacingClass] = useState("");
-  const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
-  };
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => {
+  //   setShow(true);
+  // };
 
   useEffect(() => {
     const SOB = sessionStorage.getItem("sourceOfBusinessId");

@@ -12,7 +12,7 @@ import {
 } from "@/models/JourneyComponentTypes";
 
 const YourAddress = () => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useContext(JourneyContext)!;
   const [data, setData] = useState<AddressLookupResponse | null>(null);
   const [_isPending, setIsPending] = useState<boolean>(true);
   const [_error, setError] = useState<string | null>(null);
@@ -58,7 +58,7 @@ const YourAddress = () => {
         selectedAddress.houseNumber !== null ? selectedAddress.houseNumber : "",
       houseName:
         selectedAddress.houseName !== null ? selectedAddress.houseName : "",
-      subHouseName:
+      houseSubName:
         selectedAddress.subHouseName !== null
           ? selectedAddress.subHouseName
           : "",

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import React from "react";
+import { useState, type RefObject } from "react";
 
 import SignUpForm from "./SIGNUP_COMPONENTS/SignUpForm";
 import SignUpSuccess from "./SIGNUP_COMPONENTS/SignUpSuccess";
@@ -8,7 +7,7 @@ import SignUpFailed from "./SIGNUP_COMPONENTS/SignUpFailed";
 const ReadyToSignUp = ({
   signupRef,
 }: {
-  signupRef: React.RefObject<HTMLDivElement>;
+  signupRef: RefObject<HTMLElement>;
 }) => {
   const [formSubmitted, setFormSubmitted] = useState<boolean | null>(false);
   const [submitSuccessful, setSubmitSuccessful] = useState<boolean | null>(

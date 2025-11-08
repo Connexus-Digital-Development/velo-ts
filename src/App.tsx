@@ -1,6 +1,7 @@
 import { MantineProvider, type MantineThemeOverride } from "@mantine/core";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import "./styles/site.css";
 import ScrollToTop from "@/components/marketing/ScrollToTop";
 import CookieBar from "@/components/shared/CookieBar";
@@ -38,21 +39,23 @@ const App = () => {
   };
 
   return (
-    <MantineProvider theme={theme}>
-      <Router>
-        <div className="App">
-          <div className="container-fluid">
-            <ScrollToTop>
-              <CookieBar />
-              {/* <BootstrapBreakpointVisualiser isVisible={import.meta.env.VITE_SHOW_RESPONSIVE_TOOL === 'true'}> */}
-              <Routes />
-              {/* </BootstrapBreakpointVisualiser> */}
-            </ScrollToTop>
+    <HelmetProvider>
+      <MantineProvider theme={theme}>
+        <Router>
+          <div className="App">
+            <div className="container-fluid">
+              <ScrollToTop>
+                <CookieBar />
+                {/* <BootstrapBreakpointVisualiser isVisible={import.meta.env.VITE_SHOW_RESPONSIVE_TOOL === 'true'}> */}
+                <Routes />
+                {/* </BootstrapBreakpointVisualiser> */}
+              </ScrollToTop>
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-      </Router>
-    </MantineProvider>
+        </Router>
+      </MantineProvider>
+    </HelmetProvider>
   );
 };
 

@@ -5,7 +5,7 @@ import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import AccessoryCategories from "@/components/marketing/ACCESSORY_COVER/AccessoryCategories";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const AccessoryCover = () => {
   useEffect(() => {

@@ -11,7 +11,7 @@ import ReadyToSignUp from "@/components/marketing/RETAILER_AFFILIATE/ReadyToSign
 import { createRef } from "react";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const RetailerAffiliate = () => {
   const signupRef = createRef<HTMLElement>() as React.RefObject<HTMLElement>;

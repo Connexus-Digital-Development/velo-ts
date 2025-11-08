@@ -22,6 +22,7 @@ const PolicyConfirmation = () => {
     }
     setGState(initialJourneyState);
     sessionStorage.removeItem("context");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!policyReference) {

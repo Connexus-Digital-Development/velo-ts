@@ -10,7 +10,7 @@ export class CardPayments
     static trigger3dsChallenge(target, requestData)
     {
         if (requestData.requiresChallenge) {
-            var form = document.createElement("form");
+            const form = document.createElement("form");
             form.setAttribute("method", "POST");
             form.setAttribute("action", requestData.challengeLocation);
             form.setAttribute("target", target);
@@ -18,7 +18,7 @@ export class CardPayments
             // form.style.height = "100%";
             // form.style.position = "absolute";
             // form.style.display = "block";
-            var input = document.createElement("input");
+            const input = document.createElement("input");
             input.setAttribute("type", "hidden");
             input.setAttribute("name", "creq");
             input.setAttribute("value", requestData.challengeData);

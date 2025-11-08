@@ -6,9 +6,8 @@ import { useContext, useEffect, useState } from "react";
 import { JourneyContext } from "@/context/journeyStore";
 import useGlobalStateAdaptor from "@/hooks/useGlobalStateAdaptor";
 import * as Yup from "yup";
-import { type QRLandingPageProps } from "@/models/JourneyComponentTypes";
 
-const QRLandingPage = (_props: QRLandingPageProps) => {
+const QRLandingPage = () => {
   const navigate = useNavigate();
   sessionStorage.setItem("fromExternalLink", "true");
   const [_gState, setGState] = useContext(JourneyContext);

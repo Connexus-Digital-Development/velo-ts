@@ -1,6 +1,6 @@
 import CTAButton from "./CTAButton";
 import { useLocation } from "react-router-dom";
-const ProtectYourBike = ({ variant }) => {
+const ProtectYourBike = ({ variant }: { variant: number }) => {
   //prop variant 1 = single bike,multibike = 2 or electric = 3, or Travel version =4
 
   const { search } = useLocation();

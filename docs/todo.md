@@ -1,0 +1,2 @@
+- Remove inline svgs
+- rename markting comonents to be not uppercase 

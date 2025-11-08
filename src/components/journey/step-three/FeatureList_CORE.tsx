@@ -94,7 +94,7 @@ const FeaturesCore = ({
   isCore,
   initCoreQuote = { initCoreQuote },
   setIsLoading,
-  setPerformanceQuote,
+  setPerformanceQuote: _setPerformanceQuote,
   setCoreQuote,
   unSelectAll,
   showReQuoteCore,
@@ -107,13 +107,13 @@ const FeaturesCore = ({
 }) => {
   const [gState, setGState] = useContext(JourneyContext);
   const riskModel = useRiskModelAdaptor(gState);
-  const [showExtras, setShowExtras] = useState(
+  const [_showExtras, _setShowExtras] = useState(
     gState.bikes.length === 1 && gState.bikes[0].isElectric,
   );
   const [monthlyPriceDifferenceCore, setMonthlyPriceDifferenceCore] =
     useState(0);
   const [annualPriceDifferenceCore, setAnnualPriceDifferenceCore] = useState(0);
-  const [showPriceDifference, setShowPriceDifference] = useState(false);
+  const [_showPriceDifference, setShowPriceDifference] = useState(false);
   const [PCCheckboxCore, setPCCheckboxCore] = useState(
     gState.personalAccidentCore,
   );
