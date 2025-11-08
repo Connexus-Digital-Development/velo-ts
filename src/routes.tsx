@@ -37,7 +37,7 @@ import Travel from "@/pages/marketing/Travel";
 import Redirector from "./redirector";
 import AboutUs from "@/pages/marketing/AboutUs";
 import ContactUs from "@/pages/marketing/ContactUs";
-import BrandAmbassador from "@/components/marketing/BRAND_AMBASSADOR/BrandAmbassador";
+import BrandAmbassador from "@/components/marketing/BrandAmbassador/BrandAmbassador";
 import FAQ from "@/pages/marketing/FAQ";
 import CoverComparison from "@/pages/marketing/CoverComparison";
 import BikesWeCover from "@/pages/marketing/BikesWeCover";

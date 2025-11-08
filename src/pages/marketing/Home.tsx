@@ -1,6 +1,6 @@
 import TopNavBar from "@/components/shared/TopNavBar";
 import HeroBanner from "@/components/shared/HeroBanner";
-import IntroBlock from "@/components/marketing/HOME/IntroBlock";
+import IntroBlock from "@/components/marketing/Home/IntroBlock";
 import React, { useEffect, Suspense } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
 import { Helmet } from "react-helmet-async";
@@ -22,11 +22,11 @@ const Home = () => {
     () => import("../../components/shared/WhatOurCustomersSay"),
   );
   const BlueBikesWeCoverSection = React.lazy(
-    () => import("../../components/marketing/HOME/BlueBikesWeCoverSection"),
+    () => import("../../components/marketing/Home/BlueBikesWeCoverSection"),
   );
   //console.log(JSON.stringify(process.env));
   const PitstopPreview = React.lazy(
-    () => import("../../components/marketing/HOME/PitstopPreview"),
+    () => import("../../components/marketing/Home/PitstopPreview"),
   );
   // const TrustedByTheBest = React.lazy(() => import("./TrustedByTheBest"));
   return (

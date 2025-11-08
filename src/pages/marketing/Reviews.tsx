@@ -1,7 +1,7 @@
 import TopNavBar from "@/components/shared/TopNavBar";
 import RegularBanner from "@/components/shared/RegularBanner";
 import ProtectYourBike from "@/components/shared/ProtectYourBike";
-import WhatOurCustomersSayList from "@/components/marketing/REVIEWS/WhatOurCustomersSayList";
+import WhatOurCustomersSayList from "@/components/marketing/Reviews/WhatOurCustomersSayList";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
 import { Helmet } from "react-helmet-async";

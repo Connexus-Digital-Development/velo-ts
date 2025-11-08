@@ -1,7 +1,7 @@
 import TopNavBar from "@/components/shared/TopNavBar";
 import RegularBanner from "@/components/shared/RegularBanner";
-import IntroBlock from "@/components/marketing/COVER_COMPARISON/IntroBlock";
-import CompareOurCover from "@/components/marketing/COVER_COMPARISON/CompareOurCover";
+import IntroBlock from "@/components/marketing/CoverComparison/IntroBlock";
+import CompareOurCover from "@/components/marketing/CoverComparison/CompareOurCover";
 import WhatOurCustomersSay from "@/components/shared/WhatOurCustomersSay";
 import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import { useEffect } from "react";

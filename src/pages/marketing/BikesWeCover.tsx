@@ -1,8 +1,8 @@
 import TopNavBar from "@/components/shared/TopNavBar";
 import RegularBanner from "@/components/shared/RegularBanner";
-import TypesOfBikes from "@/components/marketing/BIKES_WE_COVER/TypesOfBikes";
-import FiftyFiftyBlock from "@/components/marketing/BIKES_WE_COVER/FiftyFiftyBlock";
-import BikesWeCoverData from "@/components/marketing/BIKES_WE_COVER/BikesweCoverData";
+import TypesOfBikes from "@/components/marketing/BikesWeCover/TypesOfBikes";
+import FiftyFiftyBlock from "@/components/marketing/BikesWeCover/FiftyFiftyBlock";
+import BikesWeCoverData from "@/components/marketing/BikesWeCover/BikesweCoverData";
 import WhatOurCustomersSay from "@/components/shared/WhatOurCustomersSay";
 import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import { useEffect } from "react";

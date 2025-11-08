@@ -5,11 +5,11 @@ import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
 import RegularBanner from "@/components/shared/RegularBanner";
-import VelosureCore from "@/components/marketing/OUR_COVER_LEVELS/VelosureCore";
-import VelosurePerformance from "@/components/marketing/OUR_COVER_LEVELS/VelosurePerformance";
-import CorePerformanceComparison from "@/components/marketing/OUR_COVER_LEVELS/CorePerformanceComparison";
-import CorePerformanceIntro from "@/components/marketing/OUR_COVER_LEVELS/CorePerformanceIntro";
-import WhatWeDontCover from "@/components/marketing/OUR_COVER_LEVELS/WhatWeDontCover";
+import VelosureCore from "@/components/marketing/OurCoverLevels/VelosureCore";
+import VelosurePerformance from "@/components/marketing/OurCoverLevels/VelosurePerformance";
+import CorePerformanceComparison from "@/components/marketing/OurCoverLevels/CorePerformanceComparison";
+import CorePerformanceIntro from "@/components/marketing/OurCoverLevels/CorePerformanceIntro";
+import WhatWeDontCover from "@/components/marketing/OurCoverLevels/WhatWeDontCover";
 
 const OurCoverLevels = () => {
   useEffect(() => {

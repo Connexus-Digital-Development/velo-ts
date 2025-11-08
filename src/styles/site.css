@@ -83,13 +83,7 @@ ul.DD li::marker {
   font-family: Roboto;
 }
 .electricBikeModal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 1050;
-  background-color: rgba(0, 0, 0, 0.3);
+  /* Removed custom positioning and backdrop styling to use Mantine's built-in modal behavior */
 }
 .officialDocs a {
   /* color: var(--velo-black); */

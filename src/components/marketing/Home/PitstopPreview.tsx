@@ -14,10 +14,10 @@ const PitstopPreview = () => {
   const [size] = useState(getSize());
 
   useEffect(() => {
-    generateArticleData();
+    getArticleData();
   }, [windowSize]);
 
-  const generateArticleData = async () => {
+  const getArticleData = async () => {
     const options = {
       method: "GET",
       headers: {
@@ -25,6 +25,9 @@ const PitstopPreview = () => {
         "content-type": "application/json",
       },
     };
+
+    console.log(import.meta.env.VITE_VELOSURE_API_URL);
+
     const articles = await fetch(
       `${import.meta.env.VITE_VELOSURE_API_URL}/api/ConnexusCMS/Articles/GetNumberOfArticles/${import.meta.env.VITE_CONNEXUS_BRAND}/${size}`,
       options,

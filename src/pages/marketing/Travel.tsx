@@ -1,9 +1,9 @@
 import TopNavBar from "@/components/shared/TopNavBar";
 import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import WhatOurCustomersSay from "@/components/shared/WhatOurCustomersSay";
-import NeedATravelQuote from "@/components/marketing/TRAVEL/NeedATravelQuote";
-import KeyFeatures from "@/components/marketing/TRAVEL/KeyFeatures";
-import WhyDoINeedTravelInsurance from "@/components/marketing/TRAVEL/WhyDoINeedTravelInsurance";
+import NeedATravelQuote from "@/components/marketing/Travel/NeedATravelQuote";
+import KeyFeatures from "@/components/marketing/Travel/KeyFeatures";
+import WhyDoINeedTravelInsurance from "@/components/marketing/Travel/WhyDoINeedTravelInsurance";
 import HeroBanner from "@/components/shared/HeroBanner";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";

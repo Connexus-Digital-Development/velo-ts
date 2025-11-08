@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import TopNavBar from "@/components/shared/TopNavBar";
 import RegularBanner from "@/components/shared/RegularBanner";
-import LatestBlog from "@/components/marketing/PITSTOP/LatestBlog";
+import LatestBlog from "@/components/marketing/Pitstop/LatestBlog";
 import { Pagination } from "@mantine/core";
 import ProtectYourBike from "@/components/shared/ProtectYourBike";
 import { seoTags } from "@/components/shared/SeoEdit";

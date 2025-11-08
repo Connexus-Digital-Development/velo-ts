@@ -91,7 +91,7 @@ This session focused on scanning and correcting TypeScript errors in the marketi
   - Missing export/import statements
 
 #### 2. Specific Fixes Applied
-- **File**: `src/components/marketing/ABOUT_US/WhyInsureWithVelosure.tsx`
+- **File**: `src/components/marketing/AboutUs/WhyInsureWithVelosure.tsx`
   - ✅ **Removed unused import**: Eliminated the unused `Ebike` import from `@/assets/images/eBike.png`
   - ✅ **Verified SVG attributes**: Confirmed all SVG elements use proper `data-name` attributes instead of invalid `dataname`
 
@@ -153,10 +153,10 @@ The remaining **144 errors** require continued systematic type annotation work w
 ## Files Affected
 - **All `.tsx` and `.ts` files** in `src/components/marketing/` subdirectories
 - **Primary focus areas**:
-  - ABOUT_US/WhyInsureWithVelosure.tsx (complete JSX restructure)
-  - SUBMIT_A_CLAIM/WhatCanIClaimFor.tsx (JSX repair and typing)
-  - COVER_COMPARISON/ComparisonTableRow*.tsx (comprehensive prop interfaces)
-  - COVER_FEATURES/EBikeFeatures.tsx and StandardFeatures.tsx (parameter typing)
+  - AboutUs/WhyInsureWithVelosure.tsx (complete JSX restructure)
+  - SubmitAClaim/WhatCanIClaimFor.tsx (JSX repair and typing)
+  - CoverComparison/ComparisonTableRow*.tsx (comprehensive prop interfaces)
+  - CoverFeatures/EBikeFeatures.tsx and StandardFeatures.tsx (parameter typing)
   - All files with SVG elements (attribute standardization)
 
 ## Recommendations

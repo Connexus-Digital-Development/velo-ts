@@ -4,10 +4,10 @@ import BlogBanner from "@/components/shared/BlogBanner";
 import { useParams } from "react-router-dom";
 import WhatOurCustomersSay from "@/components/shared/WhatOurCustomersSay";
 import ProtectYourBike from "@/components/shared/ProtectYourBike";
-import MoreBlogs from "@/components/marketing/PITSTOP/MoreBlogs";
+import MoreBlogs from "@/components/marketing/Pitstop/MoreBlogs";
 import { seoTags } from "@/components/shared/SeoEdit";
 import { socialMediaTags } from "@/components/shared/SeoEdit";
-import ShareToSocials from "@/components/marketing/PITSTOP/ShareToSocials";
+import ShareToSocials from "@/components/marketing/Pitstop/ShareToSocials";
 import { Helmet } from "react-helmet-async";
 
 const FullBlog = () => {

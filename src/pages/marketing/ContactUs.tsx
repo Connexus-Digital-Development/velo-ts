@@ -2,7 +2,7 @@ import TopNavBar from "@/components/shared/TopNavBar";
 import RegularBanner from "@/components/shared/RegularBanner";
 import WhatOurCustomersSay from "@/components/shared/WhatOurCustomersSay";
 import ProtectYourBike from "@/components/shared/ProtectYourBike";
-import ContactUsForm from "@/components/marketing/CONTACT_US/ContactUsForm";
+import ContactUsForm from "@/components/marketing/ContactUs/ContactUsForm";
 import { useEffect } from "react";
 import { seoTags } from "@/components/shared/SeoEdit";
 import { Helmet } from "react-helmet-async";

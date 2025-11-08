@@ -12,6 +12,30 @@ import {
 } from "@/models/JourneyComponentTypes";
 import type { Bike } from "@/models";
 
+// Validation schema defined outside component to prevent recreation on every render
+const createValidationSchema = (gState: any, bike: Bike) => Yup.object({
+  bikeMake: Yup.string()
+    .required("Bike Make is required")
+    .min(2, "This bike name is too short")
+    .max(20, "This bike make name is too long"),
+  bikeModel: Yup.string()
+    .required("Bike Model is required")
+    .min(2, "This bike model is too short")
+    .max(40, "This bike model name is too long"),
+  bikeValue: Yup.number()
+    .required("Bike Value is required")
+    .min(
+      500,
+      "Only bikes valued £500 or more can be insured"
+    )
+    .max(
+      20000 -
+        ((gState?.bikes?.map((m: Bike) => Number(m.value)).reduce((a: number, b: number) => a + b, 0) ?? 0) -
+          Number(bike.value)),
+      "Sorry, you've exceeded our £20,000 online quoting limit. Please call us on 0800 083 3035 for a personalised quote"
+    ),
+});
+
 // the template for each bike in the bike list
 const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
   const [gState, setGState] = useContext(JourneyContext);
@@ -47,43 +71,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
       bikeValue: bike.value,
       isElectric: bike.isElectric,
     },
-    validationSchema: Yup.object({
-      bikeMake: Yup.string()
-        .required("Bike Make is required")
-        .min(2, "This bike name is too short")
-        .max(20, "This bike make name is too long"),
-      bikeModel: Yup.string()
-        .required("Bike Model is required")
-        .min(2, "This bike model is too short")
-        .max(40, "This bike model name is too long"),
-      bikeValue: Yup.number()
-        .required("Bike Value is required")
-        .min(
-          500,
-          <small className="redFont mt-1 lufga-light">
-            Only bikes valued £500 or more can be insured
-          </small>,
-        )
-        .max(
-          20000 -
-            (gState?.bikes?.map((m) => m.value).reduce((a, b) => a + b, 0) -
-              bike.value),
-          <small className="redFont mt-1 lufga-light">
-            Sorry, you've exceeded our £20,000 online quoting limit. Please call
-            us on{" "}
-            <a
-              className="redFont"
-              rel="noreferrer"
-              href="tel:08000833035"
-              target="_blank"
-            >
-              {" "}
-              0800 083 3035
-            </a>{" "}
-            for a personalised quote
-          </small>,
-        ),
-    }),
+    validationSchema: createValidationSchema(gState, bike),
     onSubmit: (values, { resetForm: _resetForm }) => {
       if (isElectric && !electricAgreed) {
         return open();
@@ -204,7 +192,8 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
         onClose={close}
         className="electricBikeModal"
         centered
-        withCloseButton={false}
+        withCloseButton={true}
+        closeOnClickOutside={true}
       >
         <div className="row">
           <p>

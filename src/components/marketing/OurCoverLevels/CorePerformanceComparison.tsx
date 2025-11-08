@@ -1,7 +1,7 @@
 import { useLocation } from "react-router";
-import ComparisonTableRowAlt from "../COVER_COMPARISON/ComparisonTableRowAlt";
+import ComparisonTableRowAlt from "../CoverComparison/ComparisonTableRowAlt";
 import CTAButton from "@/components/shared/CTAButton";
-import CoverData from "./../COVER_COMPARISON/CoverData";
+import CoverData from "./../CoverComparison/CoverData";
 
 const CorePerformanceComparison = () => {
   const coverData = CoverData();
