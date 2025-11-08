@@ -4,14 +4,12 @@ import RegularBanner from "@/components/shared/RegularBanner";
 import ImportantInformation from "@/components/journey/before-you-begin/ImportantInformation";
 import JourneyCheck from "@/components/journey/before-you-begin/JourneyCheck";
 
-interface BeforeYouBeginProps {}
-
-const BeforeYouBegin = (_props: BeforeYouBeginProps) => {
+const BeforeYouBegin = () => {
   const [rotate, _setRotate] = useState(false);
 
   return (
     <div className="container-fluid mb-5 blueBorderBott oh">
-      <TopNavBlank theme={"white"} />
+      <TopNavBlank />
       <RegularBanner
         headlineLine1={"Before you begin"}
         headlineLine2={""}

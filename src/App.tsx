@@ -5,7 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import "./styles/site.css";
 import ScrollToTop from "@/components/marketing/ScrollToTop";
 import CookieBar from "@/components/shared/CookieBar";
-import Footer from "@/components/shared/Footer";
+import { Footer } from "@/components/shared/Footer";
 import Routes from "@/routes";
 
 const App = () => {

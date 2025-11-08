@@ -1,0 +1,76 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="32"
+  height="32"
+  viewBox="0 0 32 32"
+>
+  <defs>
+    <clipPath id="clipPath87654">
+      <rect
+        id="Rectangle_1161"
+        data-name="Rectangle 1161"
+        width="15.979"
+        height="15.979"
+        fill="#00a8ff"
+      />
+    </clipPath>
+  </defs>
+  <g
+    id="Group_2342"
+    data-name="Group 2342"
+    transform="translate(-463 -3832)"
+  >
+    <g
+      id="Rectangle_707"
+      data-name="Rectangle 707"
+      transform="translate(463 3832)"
+      fill="none"
+      stroke="#00a8ff"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    >
+      <rect width="32" height="32" rx="9" stroke="none" />
+      <rect
+        x="1"
+        y="1"
+        width="30"
+        height="30"
+        rx="8"
+        fill="none"
+      />
+    </g>
+    <g
+      id="Group_2341"
+      data-name="Group 2341"
+      transform="translate(471 3840.405)"
+    >
+      <g
+        id="Group_2341-2"
+        data-name="Group 2341"
+        clipPath="url(#clipPath87654)"
+      >
+        <path
+          id="Path_2248"
+          data-name="Path 2248"
+          d="M10.867,0H5.112A5.117,5.117,0,0,0,0,5.112v5.755a5.117,5.117,0,0,0,5.112,5.112h5.755a5.117,5.117,0,0,0,5.112-5.112V5.112A5.117,5.117,0,0,0,10.867,0m3.976,10.867a3.98,3.98,0,0,1-3.976,3.976H5.112a3.98,3.98,0,0,1-3.976-3.976V5.112A3.98,3.98,0,0,1,5.112,1.136h5.755a3.98,3.98,0,0,1,3.976,3.976Z"
+          fill="#00a8ff"
+        />
+        <path
+          id="Path_2249"
+          data-name="Path 2249"
+          d="M130.614,126.525a4.089,4.089,0,1,0,4.089,4.089,4.094,4.094,0,0,0-4.089-4.089m0,6.816a2.726,2.726,0,1,1,2.726-2.726,2.729,2.729,0,0,1-2.726,2.726"
+          transform="translate(-122.625 -122.625)"
+          fill="#00a8ff"
+        />
+        <path
+          id="Path_2250"
+          data-name="Path 2250"
+          d="M372.6,100.928a.814.814,0,1,1-.814-.814.814.814,0,0,1,.814.814"
+          transform="translate(-359.541 -97.028)"
+          fill="#00a8ff"
+        />
+      </g>
+    </g>
+  </g>
+</svg>

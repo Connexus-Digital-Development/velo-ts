@@ -1,0 +1,27 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="17"
+  viewBox="0 0 24 17"
+>
+  <circle
+    id="Ellipse_81"
+    data-name="Ellipse 81"
+    cx="8"
+    cy="8"
+    r="8"
+    transform="translate(8 1)"
+    fill="#00a8ff"
+  />
+  <text
+    id="i"
+    transform="translate(14 13)"
+    fill="#fff"
+    fontSize="10"
+    fontFamily="SegoeUI, Segoe UI"
+  >
+    <tspan x="1" y="0">
+      i
+    </tspan>
+  </text>
+</svg>

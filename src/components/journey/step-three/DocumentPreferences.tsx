@@ -1,9 +1,7 @@
 import { Checkbox } from "@mantine/core";
 import { useSafeContext } from "@/context/journeyStore";
 
-interface DocumentPreferencesProps {}
-
-const DocumentPreferences: React.FC<DocumentPreferencesProps> = () => {
+const DocumentPreferences = () => {
   const [gState, setGState] = useSafeContext({
     componentName: "DocumentPreferences",
   });
@@ -31,7 +29,6 @@ const DocumentPreferences: React.FC<DocumentPreferencesProps> = () => {
               radius="md"
               size="lg"
               color="velo-blue"
-              value={gState.recieveByEmailOnly}
               checked={gState.recieveByEmailOnly}
               onChange={(e) => updateContactPref(e)}
             />

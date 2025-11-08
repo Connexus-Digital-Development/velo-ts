@@ -6,6 +6,10 @@ import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
 import { loggingService } from "@/services/loggingService";
 import TransactorService from "@/services/transactorService";
 import { type Quote } from "@/models/JourneyComponentTypes";
+import CrossIcon from "@/assets/svgs/cross-icon.svg?url";
+import TickIcon from "@/assets/svgs/tick-icon.svg?url";
+import ChevronDownIcon from "@/assets/svgs/chevron-down-icon.svg?url";
+import ChevronUpIcon from "@/assets/svgs/chevron-up-icon.svg?url";
 
 interface FeatureListCoreProps {
   isCore: boolean;
@@ -448,110 +452,17 @@ const FeaturesCore = ({
 };
 
 const crossSvg = (
-  <svg width="17" height="17" viewBox="0 0 17 17">
-    <g id="Group_2221" data-name="Group 2221" transform="translate(-667 -1496)">
-      <g
-        id="Group_2191"
-        data-name="Group 2191"
-        transform="translate(666.581 1496)"
-      >
-        <circle
-          id="Ellipse_63"
-          data-name="Ellipse 63"
-          cx="8.5"
-          cy="8.5"
-          r="8.5"
-          transform="translate(0.419)"
-          fill="#bbb"
-        />
-      </g>
-      <g
-        id="Group_2210"
-        data-name="Group 2210"
-        transform="translate(671.317 1500.317)"
-      >
-        <g id="Group_2209" data-name="Group 2209" clipPath="url(#clip-path)">
-          <path
-            id="Path_2177"
-            data-name="Path 2177"
-            d="M5.521,4.183,8.09,1.614A.946.946,0,1,0,6.753.277L4.184,2.846,1.615.277A.946.946,0,0,0,.278,1.614L2.847,4.183.278,6.752A.946.946,0,1,0,1.615,8.089L4.184,5.521,6.753,8.089A.946.946,0,0,0,8.09,6.752Z"
-            transform="translate(-0.001 0)"
-            fill="#fff"
-          />
-        </g>
-      </g>
-    </g>
-  </svg>
+  <img src={CrossIcon} alt="Cross icon" />
 );
 
 const tickSvg = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="17"
-    height="17"
-    viewBox="0 0 17 17"
-  >
-    <g id="Group_2898" data-name="Group 2898" transform="translate(-0.418)">
-      <circle
-        id="Ellipse_63"
-        data-name="Ellipse 63"
-        cx="8.5"
-        cy="8.5"
-        r="8.5"
-        transform="translate(0.418)"
-        fill="#00a8ff"
-      />
-      <path
-        id="Path_1875"
-        data-name="Path 1875"
-        d="M217.815,190.653l2.263,2.263.226-.226,5.356-5.356"
-        transform="translate(-213.279 -181.773)"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeMiterlimit="10"
-        strokeWidth="3"
-      />
-    </g>
-  </svg>
+  <img src={TickIcon} alt="Tick icon" />
 );
 
 const chevronDown = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="40"
-    height="40"
-    fill="#00a8ff"
-    className="bi bi-chevron-down chevronScale"
-    viewBox="-12 -4 40 40"
-  >
-    <path
-      fill-rule="evenodd"
-      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-    />
-  </svg>
+  <img src={ChevronDownIcon} alt="Chevron down icon" />
 );
 
 const chevronUp = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="40"
-    height="40"
-    fill="#00a8ff"
-    className="bi bi-chevron-up chevronScale"
-    viewBox="-12 0 40 40"
-  >
-    <path
-      fillRule="evenodd"
-      d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
-    />
-  </svg>
+  <img src={ChevronUpIcon} alt="Chevron up icon" />
 );
-//   >
-//     <path
-//       fillRule="evenodd"
-//       d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
-//     />
-//   </svg>
-// );

@@ -1,0 +1,40 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="32"
+  height="32"
+  viewBox="0 0 32 32"
+>
+  <g
+    id="Group_1859"
+    data-name="Group 1859"
+    transform="translate(-331 -3832)"
+  >
+    <path
+      id="Path_1981"
+      data-name="Path 1981"
+      d="M8.555,7.115V5.7c0-.613.141-.943,1.131-.943h1.226V2.4H9.026a3.039,3.039,0,0,0-3.3,3.3V7.115H3.84V9.472H5.726v7.072H8.555V9.472h2.074l.283-2.357Z"
+      transform="translate(339.625 3838.528)"
+      fill="#00a8ff"
+    />
+    <g
+      id="Rectangle_704"
+      data-name="Rectangle 704"
+      transform="translate(331 3832)"
+      fill="none"
+      stroke="#00a8ff"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    >
+      <rect width="32" height="32" rx="9" stroke="none" />
+      <rect
+        x="1"
+        y="1"
+        width="30"
+        height="30"
+        rx="8"
+        fill="none"
+      />
+    </g>
+  </g>
+</svg>

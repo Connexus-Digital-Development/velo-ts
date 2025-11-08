@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { Checkbox } from "@mantine/core";
 import { Tooltip } from "@mantine/core";
+import InfoIcon from "@/assets/svgs/info-icon.svg?url";
 
 interface OptionalCoverProps {
   handleSCCheckbox: (checked: boolean) => void;
@@ -27,35 +28,7 @@ const OptionalCover = ({
     </div>
   );
 
-  const infoIcon = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="17"
-      viewBox="0 0 24 17"
-    >
-      <circle
-        id="Ellipse_81"
-        data-name="Ellipse 81"
-        cx="8"
-        cy="8"
-        r="8"
-        transform="translate(8 1)"
-        fill="#00a8ff"
-      />
-      <text
-        id="i"
-        transform="translate(14 13)"
-        fill="#fff"
-        fontSize="10"
-        fontFamily="SegoeUI, Segoe UI"
-      >
-        <tspan x="1" y="0">
-          i
-        </tspan>
-      </text>
-    </svg>
-  );
+  const infoIcon = <img src={InfoIcon} alt="Information icon" />;
   return (
     <section className="container container_narrow mt-3">
       <div className="content_section">
@@ -75,7 +48,7 @@ const OptionalCover = ({
                   color="velo-blue"
                   className="mr-1"
                   checked={gState.accessoryCover}
-                  onChange={handleACCheckbox}
+                  onChange={(e) => handleACCheckbox(e.target.checked)}
                 />
                 <span
                   className="additionalCoverSpan"
@@ -114,7 +87,7 @@ const OptionalCover = ({
                   color="velo-blue"
                   className="mr-1"
                   checked={gState.worldwideCover}
-                  onChange={handleWCCheckbox}
+                  onChange={(e) => handleWCCheckbox(e.target.checked)}
                 />{" "}
                 <span
                   className="additionalCoverSpan"
@@ -152,7 +125,7 @@ const OptionalCover = ({
                   color="velo-blue"
                   className="mr-1"
                   checked={gState.sportsCover}
-                  onChange={handleSCCheckbox}
+                  onChange={(e) => handleSCCheckbox(e.target.checked)}
                 />{" "}
                 <span
                   className="additionalCoverSpan"
@@ -190,7 +163,7 @@ const OptionalCover = ({
                   color="velo-blue"
                   className="mr-1"
                   checked={gState.personalAccident}
-                  onChange={handlePCCheckbox}
+                  onChange={(e) => handlePCCheckbox(e.target.checked)}
                 />{" "}
                 <span
                   className="additionalCoverSpan"

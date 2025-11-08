@@ -19,4 +19,5 @@ export default defineConfig({
       "@/pages": path.resolve(__dirname, "./src/pages"),
     },
   },
+  assetsInclude: ["**/*.svg"],
 });

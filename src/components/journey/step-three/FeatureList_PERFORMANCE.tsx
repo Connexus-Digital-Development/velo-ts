@@ -7,6 +7,11 @@ import { loggingService } from "@/services/loggingService";
 import TransactorService from "@/services/transactorService";
 import { type Quote } from "@/models/JourneyComponentTypes";
 
+import crossIcon from "@/assets/svgs/cross-icon.svg?url";
+import tickIcon from "@/assets/svgs/tick-icon.svg?url";
+import chevronDownIcon from "@/assets/svgs/chevron-down-icon.svg?url";
+import chevronUpIcon from "@/assets/svgs/chevron-up-icon.svg?url";
+
 interface FeatureListPerformanceProps {
   isCore: boolean;
   initPerformanceQuote: Quote;
@@ -51,7 +56,11 @@ const FeatureListPerformance: React.FC<FeatureListPerformanceProps> = ({
             hidden={show}
             onClick={(e) => handleClick(e, true)}
           >
-            {chevronDown}
+            <img
+              src={chevronDownIcon}
+              alt="chevron down"
+              className="bi bi-chevron-down chevronScale"
+            />
           </a>
         </div>
         <div hidden={!show}>
@@ -76,7 +85,11 @@ const FeatureListPerformance: React.FC<FeatureListPerformanceProps> = ({
             hidden={show}
             onClick={(e) => handleClick(e, false)}
           >
-            {chevronUp}
+            <img
+              src={chevronUpIcon}
+              alt="chevron up"
+              className="bi bi-chevron-up chevronScale"
+            />
           </a>
         </div>
       </div>
@@ -115,7 +128,7 @@ const Features = ({
   fromExternalLink,
   showReQuoteCore,
   clearShowError, // Add this prop
-}) => {
+}: any) => {
   const [gState, setGState] = useSafeContext({
     componentName: "FeatureListPerformance",
   });
@@ -261,366 +274,299 @@ const Features = ({
   };
 
   return (
-    <div className="row">
-      <p className="col-6 pb-1">
-        {tickSvg}{" "}
-        <span className="darkGreyFont  featureListFont ">Accident damage</span>
-      </p>
-      <p className="col-6 pb-1">
-        {tickSvg} <span className="darkGreyFont  featureListFont ">Theft</span>
-      </p>
-      <p className="col-6 pb-1">
-        {tickSvg}{" "}
-        <span className="darkGreyFont  featureListFont ">Public liability</span>
-      </p>
-      <p className="col-6 pb-1">
-        {tickSvg}{" "}
-        <span className="darkGreyFont  featureListFont ">Accessory cover</span>
-      </p>
-      <p className="col-6 pb-1">
-        {tickSvg}{" "}
-        <span className="darkGreyFont  featureListFont ">Family cover</span>
-      </p>
-      <p className="col-6 pb-1">
-        {tickSvg}{" "}
-        <span className="darkGreyFont  featureListFont ">New for old</span>
-      </p>
-      <p className="col-6 pb-1">
-        {tickSvg}{" "}
-        <span className="darkGreyFont  featureListFont ">Legal advice</span>
-        <span className="blueFont">*</span>
-      </p>
-      <p className="col-6 pb-1">
-        {tickSvg} <span className="darkGreyFont  featureListFont ">Physio</span>
-      </p>
-      <p className="col-6 pb-1">
-        {tickSvg} <span className="darkGreyFont  featureListFont ">Triage</span>
-      </p>
-      <p className="col-6 pb-1">
-        {tickSvg}{" "}
-        <span className="darkGreyFont  featureListFont ">
-          Replacement cycle hire
-        </span>
-      </p>
-      {/* For Personal accident - for performance - no electric we just show this ( using showExtra logic) */}
-
-      {!showExtras && (
+    <>
+      <div className="row">
         <p className="col-6 pb-1">
-          {tickSvg}{" "}
-          <span className={"darkGreyFont " + "  featureListFont "}>
-            Personal accident
+          <img src={tickIcon} alt="tick" />
+          <span className="darkGreyFont  featureListFont ">
+            Accident damage
           </span>
         </p>
-      )}
+        <p className="col-6 pb-1">
+          <img src={tickIcon} alt="tick" />{" "}
+          <span className="darkGreyFont  featureListFont">Theft</span>
+        </p>
+        <p className="col-6 pb-1">
+          <img src={tickIcon} alt="tick" />
+          <span className="darkGreyFont  featureListFont ">
+            Public liability
+          </span>
+        </p>
+        <p className="col-6 pb-1">
+          <img src={tickIcon} alt="tick" />
+          <span className="darkGreyFont  featureListFont ">
+            Accessory cover
+          </span>
+        </p>
+        <p className="col-6 pb-1">
+          <img src={tickIcon} alt="tick" />
+          <span className="darkGreyFont  featureListFont ">Family cover</span>
+        </p>
+        <p className="col-6 pb-1">
+          <img src={tickIcon} alt="tick" />
+          <span className="darkGreyFont  featureListFont ">New for old</span>
+        </p>
+        <p className="col-6 pb-1">
+          <img src={tickIcon} alt="tick" />
+          <span className="darkGreyFont  featureListFont ">Legal advice</span>
+          <span className="blueFont">*</span>
+        </p>
+        <p className="col-6 pb-1">
+          <img src={tickIcon} alt="tick" />{" "}
+          <span className="darkGreyFont  featureListFont ">Physio</span>
+        </p>
+        <p className="col-6 pb-1">
+          <img src={tickIcon} alt="tick" />{" "}
+          <span className="darkGreyFont  featureListFont ">Triage</span>
+        </p>
+        <p className="col-6 pb-1">
+          <img src={tickIcon} alt="tick" />
+          <span className="darkGreyFont  featureListFont ">
+            Replacement cycle hire
+          </span>
+        </p>
+        {/* For Personal accident - for performance - no electric we just show this ( using showExtra logic) */}
 
-      <p className="col-6 pb-1">
-        {isCore ? crossSvg : tickSvg}{" "}
-        <span
-          className={
-            (isCore ? "lightgreyFont " : "darkGreyFont ") + "  featureListFont "
-          }
-        >
-          European cover
-        </span>
-      </p>
-      <p className="col-6 pb-1">
-        {isCore ? crossSvg : tickSvg}{" "}
-        <span
-          className={
-            (isCore ? "lightgreyFont " : "darkGreyFont ") + "  featureListFont "
-          }
-        >
-          Cycle rescue
-        </span>
-        {isCore ? "" : <span className="blueFont">**</span>}
-      </p>
-      {(isCore || !showExtras) && (
-        <>
+        {!_showExtras && (
           <p className="col-6 pb-1">
-            {isCore ? crossSvg : tickSvg}{" "}
-            <span
-              className={
-                (isCore ? "lightgreyFont " : "darkGreyFont ") +
-                "  featureListFont "
-              }
-            >
-              Sports & events
+            <img src={tickIcon} alt="tick" />
+            <span className={"darkGreyFont " + "  featureListFont "}>
+              Personal accident
             </span>
           </p>
+        )}
 
-          <p className="col-6 pb-1">
-            {isCore ? crossSvg : tickSvg}{" "}
-            <span
-              className={
-                (isCore ? "lightgreyFont " : "darkGreyFont ") +
-                "  featureListFont "
-              }
-            >
-              Road rage assault
-            </span>
-          </p>
-          <p className="col-6 pb-1">
-            {isCore ? crossSvg : tickSvg}{" "}
-            <span
-              className={
-                (isCore ? "lightgreyFont " : "darkGreyFont ") +
-                "  featureListFont "
-              }
-            >
-              Worldwide cover
-            </span>
-          </p>
-        </>
-      )}
-
-      <p className="legalFooter mt-3">
-        <span>
-          <span className="blueFont">*</span> Free Legal advice is given with
-          this policy, however this does not include a full Legal Expenses
-          Insurance Policy.
-        </span>
-      </p>
-      {!isCore && (
-        <span>
-          {" "}
-          <p className="legalFooter mt-2">
-            <span className="blueFont">**</span> Cycle rescue excludes
-            electronically assisted cycles weighing 40kg or over, or an output
-            exceeding 200w/15mph
-          </p>
-        </span>
-      )}
-
-      {!isCore && showExtras && (
-        <>
-          <div className="d-flex justify-content-center pt-3">
-            <p className="quoteBlueSubHeader">
-              <span className="footer-darkgrey">Optional</span> extras
-              <span className="footer-darkgrey">.</span>
+        <p className="col-6 pb-1">
+          {isCore ? (
+            <img src={crossIcon} alt="cross" />
+          ) : (
+            <img src={tickIcon} alt="tick" />
+          )}{" "}
+          <span
+            className={
+              (isCore ? "lightgreyFont " : "darkGreyFont ") +
+              "  featureListFont "
+            }
+          >
+            European cover
+          </span>
+        </p>
+        <p className="col-6 pb-1">
+          {isCore ? (
+            <img src={crossIcon} alt="cross" />
+          ) : (
+            <img src={tickIcon} alt="tick" />
+          )}{" "}
+          <span
+            className={
+              (isCore ? "lightgreyFont " : "darkGreyFont ") +
+              "  featureListFont "
+            }
+          >
+            Cycle rescue
+          </span>
+          {isCore ? "" : <span className="blueFont">**</span>}
+        </p>
+        {(isCore || !_showExtras) && (
+          <>
+            <p className="col-6 pb-1">
+              {isCore ? (
+                <img src={crossIcon} alt="cross" />
+              ) : (
+                <img src={tickIcon} alt="tick" />
+              )}{" "}
+              <span
+                className={
+                  (isCore ? "lightgreyFont " : "darkGreyFont ") +
+                  "  featureListFont "
+                }
+              >
+                Sports & events
+              </span>
             </p>
-          </div>
-          {showPriceDifference && (
-            <div className="d-flex justify-content-center px-2">
-              <p className="greyFont lufga-light ">
-                (£
-                {currency(monthlyPriceDifference, {
-                  symbol: "",
-                  separator: ",",
-                }).format()}{" "}
-                extra per month or £
-                {currency(annualPriceDifference, {
-                  symbol: "",
-                  separator: ",",
-                }).format()}{" "}
-                extra per year)
+
+            <p className="col-6 pb-1">
+              {isCore ? (
+                <img src={crossIcon} alt="cross" />
+              ) : (
+                <img src={tickIcon} alt="tick" />
+              )}{" "}
+              <span
+                className={
+                  (isCore ? "lightgreyFont " : "darkGreyFont ") +
+                  "  featureListFont "
+                }
+              >
+                Road rage assault
+              </span>
+            </p>
+            <p className="col-6 pb-1">
+              {isCore ? (
+                <img src={crossIcon} alt="cross" />
+              ) : (
+                <img src={tickIcon} alt="tick" />
+              )}{" "}
+              <span
+                className={
+                  (isCore ? "lightgreyFont " : "darkGreyFont ") +
+                  "  featureListFont "
+                }
+              >
+                Worldwide cover
+              </span>
+            </p>
+          </>
+        )}
+
+        <p className="legalFooter mt-3">
+          <span>
+            <span className="blueFont">*</span> Free Legal advice is given with
+            this policy, however this does not include a full Legal Expenses
+            Insurance Policy.
+          </span>
+        </p>
+        {!isCore && (
+          <span>
+            {" "}
+            <p className="legalFooter mt-2">
+              <span className="blueFont">**</span> Cycle rescue excludes
+              electronically assisted cycles weighing 40kg or over, or an output
+              exceeding 200w/15mph
+            </p>
+          </span>
+        )}
+
+        {!isCore && _showExtras && (
+          <>
+            <div className="d-flex justify-content-center pt-3">
+              <p className="quoteBlueSubHeader">
+                <span className="footer-darkgrey">Optional</span> extras
+                <span className="footer-darkgrey">.</span>
               </p>
             </div>
-          )}
+            {showPriceDifference && (
+              <div className="d-flex justify-content-center px-2">
+                <p className="greyFont lufga-light ">
+                  (£
+                  {currency(monthlyPriceDifference, {
+                    symbol: "",
+                    separator: ",",
+                  }).format()}{" "}
+                  extra per month or £
+                  {currency(annualPriceDifference, {
+                    symbol: "",
+                    separator: ",",
+                  }).format()}{" "}
+                  extra per year)
+                </p>
+              </div>
+            )}
 
-          <div className="d-flex justify-content-between mb-2">
-            <p className="  darkGreyFont  featureListFont ">Sports & events</p>
-            <div
-              className={`m-right-5 ${
-                fromExternalLink ? "pointer-events-none" : ""
-              }`}
-            >
-              <Checkbox
-                radius="md"
-                size="lg"
-                color="velo-blue"
-                className=" m-right-5"
-                checked={sportsCoverCheckBox}
-                disabled={showReQuoteCore} // Disable when Core has pending changes
-                onChange={(e) => {
-                  if (!fromExternalLink && !showReQuoteCore) {
-                    handleSCCheckbox(e.target.checked);
-                    unSelectAll();
-                  }
-                }}
-              />
-            </div>
-          </div>
-          <div className="d-flex justify-content-between mb-2">
-            <p className="darkGreyFont featureListFont ">Worldwide cover</p>
-            <div
-              className={`m-right-5 ${
-                fromExternalLink ? "pointer-events-none" : ""
-              }`}
-            >
-              <Checkbox
-                radius="md"
-                size="lg"
-                color="velo-blue"
-                className=" m-right-5"
-                checked={includeWorldwideCoverCheckBox}
-                disabled={showReQuoteCore} // Disable when Core has pending changes
-                onChange={(e) => {
-                  if (!fromExternalLink && !showReQuoteCore) {
-                    handleWCCheckbox(e.target.checked);
-                    unSelectAll();
-                  }
-                }}
-              />
-            </div>
-          </div>
-          <div className="d-flex justify-content-between mb-2">
-            <p className="  darkGreyFont  featureListFont ">
-              Personal accident &<br /> road rage assault
-            </p>
-            <div
-              className={`m-right-5 ${
-                fromExternalLink ? "pointer-events-none" : ""
-              }`}
-            >
-              <Checkbox
-                radius="md"
-                size="lg"
-                color="velo-blue"
-                className=" m-right-5"
-                checked={PCCheckbox}
-                disabled={showReQuoteCore} // Disable when Core has pending changes
-                onChange={(e) => {
-                  if (!fromExternalLink && !showReQuoteCore) {
-                    handlePCCheckbox(e.target.checked);
-                    unSelectAll();
-                  }
-                }}
-              />
-            </div>
-          </div>
-          {showReQuote && (
-            <div className="d-flex justify-content-end gap-2 m-right-5">
-              <button
-                id="cancelQuotePerformance"
-                className="btn btn-outline-secondary"
-                disabled={showReQuoteCore}
-                onClick={(e) => handleCancelClick(e)}
+            <div className="d-flex justify-content-between mb-2">
+              <p className="  darkGreyFont  featureListFont ">
+                Sports & events
+              </p>
+              <div
+                className={`m-right-5 ${
+                  fromExternalLink ? "pointer-events-none" : ""
+                }`}
               >
-                Cancel
-              </button>
-              <button
-                id="updateQuotePerformance"
-                className="btn btn-green"
-                style={{ marginRight: "15px" }}
-                disabled={showReQuoteCore}
-                onClick={(e) => handleUpdateClick(e)}
+                <Checkbox
+                  radius="md"
+                  size="lg"
+                  color="velo-blue"
+                  className=" m-right-5"
+                  checked={sportsCoverCheckBox}
+                  disabled={showReQuoteCore} // Disable when Core has pending changes
+                  onChange={(e) => {
+                    if (!fromExternalLink && !showReQuoteCore) {
+                      handleSCCheckbox(e.target.checked);
+                      unSelectAll();
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <div className="d-flex justify-content-between mb-2">
+              <p className="darkGreyFont featureListFont ">Worldwide cover</p>
+              <div
+                className={`m-right-5 ${
+                  fromExternalLink ? "pointer-events-none" : ""
+                }`}
               >
-                Update quote
-              </button>
+                <Checkbox
+                  radius="md"
+                  size="lg"
+                  color="velo-blue"
+                  className=" m-right-5"
+                  checked={includeWorldwideCoverCheckBox}
+                  disabled={showReQuoteCore} // Disable when Core has pending changes
+                  onChange={(e) => {
+                    if (!fromExternalLink && !showReQuoteCore) {
+                      handleWCCheckbox(e.target.checked);
+                      unSelectAll();
+                    }
+                  }}
+                />
+              </div>
             </div>
-          )}
-          {showPerformanceReQuoteMessage && (
-            <div className="text-center">
-              {" "}
-              <small className="redFont my-1 ">
-                Please update or cancel your changes before proceeding
-              </small>
+            <div className="d-flex justify-content-between mb-2">
+              <p className="  darkGreyFont  featureListFont ">
+                Personal accident &<br /> road rage assault
+              </p>
+              <div
+                className={`m-right-5 ${
+                  fromExternalLink ? "pointer-events-none" : ""
+                }`}
+              >
+                <Checkbox
+                  radius="md"
+                  size="lg"
+                  color="velo-blue"
+                  className=" m-right-5"
+                  checked={PCCheckbox}
+                  disabled={showReQuoteCore} // Disable when Core has pending changes
+                  onChange={(e) => {
+                    if (!fromExternalLink && !showReQuoteCore) {
+                      handlePCCheckbox(e.target.checked);
+                      unSelectAll();
+                    }
+                  }}
+                />
+              </div>
             </div>
-          )}
-        </>
-      )}
-    </div>
+            {showReQuote && (
+              <div className="d-flex justify-content-end gap-2 m-right-5">
+                <button
+                  id="cancelQuotePerformance"
+                  className="btn btn-outline-secondary"
+                  disabled={showReQuoteCore}
+                  onClick={(e) => handleCancelClick(e)}
+                >
+                  Cancel
+                </button>
+                <button
+                  id="updateQuotePerformance"
+                  className="btn btn-green"
+                  style={{ marginRight: "15px" }}
+                  disabled={showReQuoteCore}
+                  onClick={(e) => handleUpdateClick(e)}
+                >
+                  Update quote
+                </button>
+              </div>
+            )}
+            {showPerformanceReQuoteMessage && (
+              <div className="text-center">
+                {" "}
+                <small className="redFont my-1 ">
+                  Please update or cancel your changes before proceeding
+                </small>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 };
-
-const crossSvg = (
-  <svg width="17" height="17" viewBox="0 0 17 17">
-    <g id="Group_2221" data-name="Group 2221" transform="translate(-667 -1496)">
-      <g
-        id="Group_2191"
-        data-name="Group 2191"
-        transform="translate(666.581 1496)"
-      >
-        <circle
-          id="Ellipse_63"
-          data-name="Ellipse 63"
-          cx="8.5"
-          cy="8.5"
-          r="8.5"
-          transform="translate(0.419)"
-          fill="#bbb"
-        />
-      </g>
-      <g
-        id="Group_2210"
-        data-name="Group 2210"
-        transform="translate(671.317 1500.317)"
-      >
-        <g id="Group_2209" data-name="Group 2209" clipPath="url(#clip-path)">
-          <path
-            id="Path_2177"
-            data-name="Path 2177"
-            d="M5.521,4.183,8.09,1.614A.946.946,0,1,0,6.753.277L4.184,2.846,1.615.277A.946.946,0,0,0,.278,1.614L2.847,4.183.278,6.752A.946.946,0,1,0,1.615,8.089L4.184,5.521,6.753,8.089A.946.946,0,0,0,8.09,6.752Z"
-            transform="translate(-0.001 0)"
-            fill="#fff"
-          />
-        </g>
-      </g>
-    </g>
-  </svg>
-);
-
-const tickSvg = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="17"
-    height="17"
-    viewBox="0 0 17 17"
-  >
-    <g id="Group_2898" data-name="Group 2898" transform="translate(-0.418)">
-      <circle
-        id="Ellipse_63"
-        data-name="Ellipse 63"
-        cx="8.5"
-        cy="8.5"
-        r="8.5"
-        transform="translate(0.418)"
-        fill="#00a8ff"
-      />
-      <path
-        id="Path_1875"
-        data-name="Path 1875"
-        d="M217.815,190.653l2.263,2.263.226-.226,5.356-5.356"
-        transform="translate(-213.279 -181.773)"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeMiterlimit="10"
-        strokeWidth="3"
-      />
-    </g>
-  </svg>
-);
-
-const chevronDown = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="40"
-    height="40"
-    fill="#00a8ff"
-    className="bi bi-chevron-down chevronScale"
-    viewBox="-12 -4 40 40"
-  >
-    <path
-      fill-rule="evenodd"
-      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-    />
-  </svg>
-);
-
-const chevronUp = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="40"
-    height="40"
-    fill="#00a8ff"
-    className="bi bi-chevron-up chevronScale"
-    viewBox="-12 0 40 40"
-  >
-    <path
-      fillRule="evenodd"
-      d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
-    />
-  </svg>
-);

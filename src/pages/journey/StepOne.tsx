@@ -15,7 +15,6 @@ import { Helmet } from "react-helmet-async";
 import TopNavBlank from "@/components/shared/TopNavBlank";
 import { Engine, Rule } from "json-rules-engine";
 // import { useDisclosure } from "@mantine/hooks";
-import type { JourneyState } from "@/models/JourneyTypes";
 
 const StepOne = (): React.JSX.Element => {
   const [gState, setGState] = useSafeContext({
