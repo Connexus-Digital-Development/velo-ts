@@ -1,6 +1,6 @@
 import { Checkbox } from "@mantine/core";
-import { useContext, useEffect, useRef } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useEffect, useRef } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { editClassName, removeClassName } from "@/utils/classNameEditor";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import BikeListWithLockInfo from "./BikeListWithLockInfo";
@@ -25,7 +25,9 @@ const Declarations: React.FC<DeclarationsProps> = ({
 }) => {
   const readDocumentsTickedRef = useRef<HTMLInputElement>(null!);
   const storageLocationTickedRef = useRef<HTMLInputElement>(null!);
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "Declarations",
+  });
   useEffect(() => {
     editClassName(
       readDocumentsTickedRef,

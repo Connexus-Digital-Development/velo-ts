@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext, type ReactElement } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState, useEffect, type ReactElement } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { type BikeSecurityProps } from "@/models/JourneyComponentTypes";
 
 const isHomeHelpText = (
@@ -37,7 +37,9 @@ const otherHelpText = (
 );
 
 const BikeSecurity = ({ setLocationInvalid }: BikeSecurityProps) => {
-  const [state, setState] = useContext(JourneyContext);
+  const [state, setState] = useSafeContext({
+    componentName: "BikeSecurity",
+  });
   const [helpText, setHelpText] = useState(isHomeHelpText);
   const [isHome, setIsHome] = useState(false);
   const [isHomeHover, setIsHomeHover] = useState(false);

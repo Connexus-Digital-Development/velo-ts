@@ -1,12 +1,14 @@
-import { useContext, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import YourQuote from "@/components/journey/step-three/YourQuote";
 import TopNavBlank from "@/components/shared/TopNavBlank";
 import RegularBanner from "@/components/shared/RegularBanner";
 import SummaryOfCover from "@/components/journey/step-three/SummaryOfCover";
 import { useNavigate } from "react-router-dom";
 const QRQuoteSummary = () => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "QRQuoteSummary",
+  });
   const navigate = useNavigate();
   const [loading, setIsLoading] = useState(false);
   const [clickedButton, setClickedButton] = useState(false);

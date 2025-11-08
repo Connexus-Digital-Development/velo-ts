@@ -1,14 +1,18 @@
 import TopNavBar from "@/components/shared/TopNavBar";
 import RegularBanner from "@/components/shared/RegularBanner";
 import { useLocation } from "react-router-dom";
-import { JourneyContext, initialJourneyState } from "@/context/journeyStore";
-import { useContext, useEffect } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
+import { initialJourneyState } from "@/context/journeyStore";
+import { useEffect } from "react";
+
 const PaymentError = () => {
   const { search } = useLocation();
   const query = new URLSearchParams(search);
   const quoteReference = query.get("quoteReference");
-  const context = useContext(JourneyContext);
-  const [, setGState] = context!;
+  const [, setGState] = useSafeContext({
+    componentName: "PaymentError",
+  });
+
   useEffect(() => {
     setGState(initialJourneyState);
     sessionStorage.removeItem("context");

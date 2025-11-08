@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import AddressDropdown from "./AddressDropdown";
 import AddressPreview from "./AddressPreview";
 import { useFormik } from "formik";
@@ -12,7 +12,9 @@ import {
 } from "@/models/JourneyComponentTypes";
 
 const YourAddress = () => {
-  const [gState, setGState] = useContext(JourneyContext)!;
+  const [gState, setGState] = useSafeContext({
+    componentName: "YourAddress",
+  });
   const [data, setData] = useState<AddressLookupResponse | null>(null);
   const [_isPending, setIsPending] = useState<boolean>(true);
   const [_error, setError] = useState<string | null>(null);

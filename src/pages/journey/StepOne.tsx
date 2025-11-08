@@ -4,8 +4,8 @@ import BikeSecurity from "@/components/journey/step-one/BikeSecurity";
 import Breadcrumbs from "@/components/shared/Breadcrumbs";
 import RegularBanner from "@/components/shared/RegularBanner";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { JourneyContext, initialJourneyState } from "@/context/journeyStore";
+import { useEffect } from "react";
+import { useSafeContext, initialJourneyState } from "@/context/journeyStore";
 import PreviousClaims from "@/components/journey/step-one/PreviousClaims";
 import AwayValue from "@/components/journey/step-one/AwayValue";
 import React, { useState } from "react";
@@ -18,10 +18,9 @@ import { Engine, Rule } from "json-rules-engine";
 import type { JourneyState } from "@/models/JourneyTypes";
 
 const StepOne = (): React.JSX.Element => {
-  const [gState, setGState] = useContext(JourneyContext) as [
-    JourneyState,
-    React.Dispatch<React.SetStateAction<JourneyState>>,
-  ];
+  const [gState, setGState] = useSafeContext({
+    componentName: "StepOne",
+  });
   // const [opened, { close, open }] = useDisclosure(false);
   const { search } = useLocation();
   const [validateNextButton, setValidateNextButton] = useState(false);

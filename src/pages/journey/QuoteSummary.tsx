@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useEffect, useState } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import useGlobalStateAdaptor from "@/hooks/useGlobalStateAdaptor";
 import useFetch from "@/hooks/useFetch";
 import YourQuote from "@/components/journey/step-three/YourQuote";
@@ -13,7 +13,9 @@ const QuoteSummary = () => {
   const params = useParams();
   const quoteId = params.id?.slice(2) || "";
   const [showQuoteDetails, setShowQuoteDetails] = useState(false);
-  const [gState, setGState] = useContext(JourneyContext)!;
+  const [gState, setGState] = useSafeContext({
+    componentName: "QuoteSummary",
+  });
   const [vals, setVals] = useState<any>(null);
   const [errored, setErrored] = useState(false);
   const [error, setError] = useState<string | React.JSX.Element | null>(null);

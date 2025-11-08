@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useContext, useEffect, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useEffect, useState } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { Link } from "react-router-dom";
 import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -12,7 +12,9 @@ import type {
 
 const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
   const [_addAnotherBike, setAddAnotherBike] = useState(false);
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "AboutYourBike",
+  });
   const [opened, { close, open }] = useDisclosure(false);
   const [showAddBikeMessage, setShowAddBikeMessage] = useState(false);
   const [isElectric, setIsElectric] = useState(false);

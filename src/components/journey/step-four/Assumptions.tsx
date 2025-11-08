@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useEffect, useRef } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { Checkbox } from "@mantine/core";
 import { editClassName, removeClassName } from "@/utils/classNameEditor";
 import { type AssumptionsProps } from "@/models/JourneyComponentTypes";
@@ -8,7 +8,9 @@ import { type Bike } from "@/models/bike";
 const Assumptions: React.FC<AssumptionsProps> = ({ setShowPaymentWindow }) => {
   const assumptionsRef = useRef<HTMLInputElement>(null);
   const eBikeRef = useRef<HTMLInputElement>(null);
-  const [gState, setGState] = useContext(JourneyContext)!;
+  const [gState, setGState] = useSafeContext({
+    componentName: "Assumptions",
+  });
   useEffect(() => {
     editClassName(
       assumptionsRef as React.RefObject<HTMLElement>,

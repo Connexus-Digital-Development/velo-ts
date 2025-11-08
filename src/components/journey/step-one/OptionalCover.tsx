@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { Checkbox } from "@mantine/core";
 import { Tooltip } from "@mantine/core";
 import { type OptionalCoverProps } from "@/models/JourneyComponentTypes";
@@ -9,7 +9,9 @@ const OptionalCover = ({
   handleACCheckbox,
   handleWCCheckbox,
 }: OptionalCoverProps) => {
-  const [gState, _setGState] = useContext(JourneyContext);
+  const [gState] = useSafeContext({
+    componentName: "OptionalCover",
+  });
   const [opened, setOpened] = useState(0);
 
   const popUp = (description: string) => (

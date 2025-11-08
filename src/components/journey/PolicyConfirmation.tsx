@@ -2,14 +2,16 @@ import TopNavBlank from "@/components/shared/TopNavBlank";
 import RegularBanner from "@/components/shared/RegularBanner";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { JourneyContext, initialJourneyState } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
+import { initialJourneyState } from "@/context/journeyStore";
 import currency from "currency.js";
 import CompletedBreadcrumbs from "@/components/shared/CompletedBreadcrumbs";
 import type { JourneyState } from "@/models";
 
 const PolicyConfirmation = () => {
-  const context = useContext(JourneyContext);
-  const [gState, setGState] = context!;
+  const [gState, setGState] = useSafeContext({
+    componentName: "PolicyConfirmation",
+  });
   const [state, setState] = useState<JourneyState | null>(null);
   const navigate = useNavigate();
   const search = window.location.search;

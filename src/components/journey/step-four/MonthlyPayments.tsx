@@ -1,9 +1,10 @@
-import { useContext } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import currency from "currency.js";
 
 const MonthlyPayments = () => {
-  const [gState] = useContext(JourneyContext);
+  const [gState] = useSafeContext({
+    componentName: "MonthlyPayments",
+  });
 
   return (
     <div className="blueBox">

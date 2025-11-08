@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import {
   type MarketingPreferencesProps,
   type PreferenceButtonProps,
@@ -25,7 +25,9 @@ function PreferenceButton({ label, isActive, onClick }: PreferenceButtonProps) {
 }
 
 const MarketingPreferences = ({ formik }: MarketingPreferencesProps) => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "MarketingPreferences",
+  });
   // const preferPhoneCode = "3EHPHIF7";
   // const preferEmailCode = "3EHPHID7";
   // const [optIn, setOptIn] = useState<boolean>(gState?.optIn ?? true);

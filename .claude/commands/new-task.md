@@ -1,0 +1,1 @@
+We are starting a new task. Each task will be tracked in docs/tasks/<task_number>/<task_name>.md file. If the file exists already then use the next steps to inform the current task at hand. Iff  

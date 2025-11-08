@@ -1,7 +1,7 @@
 import { Checkbox } from "@mantine/core";
 import currency from "currency.js";
-import { useContext, useEffect, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useEffect, useState } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
 import { loggingService } from "@/services/loggingService";
 import TransactorService from "@/services/transactorService";
@@ -101,7 +101,9 @@ const Features = ({
   showReQuoteCore,
   clearShowError, // Add this prop
 }) => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "FeatureListPerformance",
+  });
   const riskModel = useRiskModelAdaptor(gState);
   const [_showExtras, _setShowExtras] = useState(
     gState.bikes.length === 1 && gState.bikes[0].isElectric,

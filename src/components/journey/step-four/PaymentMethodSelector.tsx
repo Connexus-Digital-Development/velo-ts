@@ -1,6 +1,5 @@
-// import { getSpaceUntilMaxLength } from "@testing-library/user-event/dist/utils";
-import { useContext, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import MonthlyPayments from "./MonthlyPayments";
 import OneOffPayment from "./OneOffPayment";
 import { type PaymentMethodSelectorProps } from "@/models/JourneyComponentTypes";
@@ -8,7 +7,9 @@ import { type PaymentMethodSelectorProps } from "@/models/JourneyComponentTypes"
 const PaymentMethodSelector = ({
   setShowPaymentWindow,
 }: PaymentMethodSelectorProps) => {
-  const [state, setState] = useContext(JourneyContext);
+  const [state, setState] = useSafeContext({
+    componentName: "PaymentMethodSelector",
+  });
   const [isMonthly, setIsMonthly] = useState(!state.paymentTypeIsAnnual);
   const [isAnnual, setIsAnnual] = useState(state.paymentTypeIsAnnual);
 

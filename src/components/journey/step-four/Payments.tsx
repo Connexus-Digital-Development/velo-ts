@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { JourneyContext } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import TransactorService from "@/services/transactorService";
 import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
@@ -23,7 +23,9 @@ const Payments: React.FC<PaymentsProps> = ({
   setPending,
 }) => {
   const { search } = useLocation();
-  const [gState, setGState] = useContext(JourneyContext)!;
+  const [gState, setGState] = useSafeContext({
+    componentName: "Payments",
+  });
   const navigate = useNavigate();
   const riskModel = useRiskModelAdaptor(gState) as RiskModel;
   const [paymentDiv, setPaymentDiv] = useState(<></>);

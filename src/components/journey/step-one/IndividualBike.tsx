@@ -1,7 +1,6 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { JourneyContext } from "@/context/journeyStore";
 import currency from "currency.js";
 import { Link } from "react-router-dom";
 import { Modal } from "@mantine/core";
@@ -11,34 +10,37 @@ import {
   type IndividualBikeFormValues,
 } from "@/models/JourneyComponentTypes";
 import type { Bike } from "@/models";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 
 // Validation schema defined outside component to prevent recreation on every render
-const createValidationSchema = (gState: any, bike: Bike) => Yup.object({
-  bikeMake: Yup.string()
-    .required("Bike Make is required")
-    .min(2, "This bike name is too short")
-    .max(20, "This bike make name is too long"),
-  bikeModel: Yup.string()
-    .required("Bike Model is required")
-    .min(2, "This bike model is too short")
-    .max(40, "This bike model name is too long"),
-  bikeValue: Yup.number()
-    .required("Bike Value is required")
-    .min(
-      500,
-      "Only bikes valued £500 or more can be insured"
-    )
-    .max(
-      20000 -
-        ((gState?.bikes?.map((m: Bike) => Number(m.value)).reduce((a: number, b: number) => a + b, 0) ?? 0) -
-          Number(bike.value)),
-      "Sorry, you've exceeded our £20,000 online quoting limit. Please call us on 0800 083 3035 for a personalised quote"
-    ),
-});
+const createValidationSchema = (gState: any, bike: Bike) =>
+  Yup.object({
+    bikeMake: Yup.string()
+      .required("Bike Make is required")
+      .min(2, "This bike name is too short")
+      .max(20, "This bike make name is too long"),
+    bikeModel: Yup.string()
+      .required("Bike Model is required")
+      .min(2, "This bike model is too short")
+      .max(40, "This bike model name is too long"),
+    bikeValue: Yup.number()
+      .required("Bike Value is required")
+      .min(500, "Only bikes valued £500 or more can be insured")
+      .max(
+        20000 -
+          ((gState?.bikes
+            ?.map((m: Bike) => Number(m.value))
+            .reduce((a: number, b: number) => a + b, 0) ?? 0) -
+            Number(bike.value)),
+        "Sorry, you've exceeded our £20,000 online quoting limit. Please call us on 0800 083 3035 for a personalised quote",
+      ),
+  });
 
 // the template for each bike in the bike list
 const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "IndividualBike",
+  });
   const [editMode, SetEditMode] = useState(false);
   const [showEditBikeMessage, setShowEditBikeMessage] = useState(false);
   const [opened, { close, open }] = useDisclosure(false);
@@ -129,7 +131,8 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
       bikes: filtered,
       resetAwayValue: true,
       awayValue: 0,
-      yourQuoteCrumb: gState.validatedRules !== null ? 0 : gState.yourQuoteCrumb,
+      yourQuoteCrumb:
+        gState.validatedRules !== null ? 0 : gState.yourQuoteCrumb,
     }); // copy new version to the main object - dont change the state directly
     // resetForm();
   };
@@ -177,7 +180,10 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
 
   const thisBike = bike;
 
-  const handleIsElectric = (e: React.MouseEvent<HTMLButtonElement>, flag: boolean) => {
+  const handleIsElectric = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    flag: boolean,
+  ) => {
     e.preventDefault();
     setIsElectric(flag);
     formik.values.isElectric = flag;

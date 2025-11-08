@@ -1,12 +1,13 @@
-import { useContext } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore";
 import {
   type AddressDropdownProps,
   type AddressItem,
 } from "@/models/JourneyComponentTypes";
 
 const AddressDropdown = ({ addressList }: AddressDropdownProps) => {
-  const [state, setState] = useContext(JourneyContext);
+  const [state, setState] = useSafeContext({
+    componentName: "AddressDropdown",
+  });
 
   if (!addressList) {
     return <div>No addresses found.</div>;

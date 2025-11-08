@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import TopNavBlank from "@/components/shared/TopNavBlank";
 import Breadcrumbs from "@/components/shared/Breadcrumbs";
 import RegularBanner from "@/components/shared/RegularBanner";
@@ -10,7 +10,9 @@ import DocumentPreferences from "@/components/journey/step-three/DocumentPrefere
 import PaymentMethodSelector from "@/components/journey/step-four/PaymentMethodSelector";
 
 const StepFour = () => {
-  const [gState] = useContext(JourneyContext);
+  const [gState] = useSafeContext({
+    componentName: "StepFour",
+  });
   const [rotate, setRotate] = useState(false);
   const [showPaymentWindow, setShowPaymentWindow] = useState(false);
   const [pending, setPending] = useState(false);

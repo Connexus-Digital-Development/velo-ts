@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { JourneyContext } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore";
 import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import RegularBanner from "@/components/shared/RegularBanner";
@@ -16,7 +16,9 @@ const StepThree = () => {
   const { search } = useLocation();
   const navigate = useNavigate();
 
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "StepThree",
+  });
 
   const [error, setError] = useState<any>(null);
   const [showQuoteDetails, setShowQuoteDetails] = useState(

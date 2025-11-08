@@ -1,10 +1,11 @@
 import { Checkbox } from "@mantine/core";
-import { JourneyContext } from "@/context/journeyStore";
-import { useContext } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import { type DocumentPreferencesProps } from "@/models/JourneyComponentTypes";
 
 const DocumentPreferences: React.FC<DocumentPreferencesProps> = () => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "DocumentPreferences",
+  });
   const updateContactPref = (e) => {
     setGState({ ...gState, recieveByEmailOnly: e.target.checked });
   };

@@ -1,10 +1,11 @@
-import { useContext } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import IndividualBike from "./IndividualBike";
 import { type AboutYourBikeProps } from "@/models/JourneyComponentTypes";
 
 const BikeList = ({ validateNextButton }: AboutYourBikeProps) => {
-  const [gState, _setGState] = useContext(JourneyContext);
+  const [gState] = useSafeContext({
+    componentName: "BikeList",
+  });
 
   return gState.bikes.map((bike, index) => (
     <IndividualBike

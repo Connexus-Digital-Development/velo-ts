@@ -1,9 +1,11 @@
-import { useState, useEffect, useContext } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState, useEffect } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { type AboutYourBikeProps } from "@/models/JourneyComponentTypes";
 
 const PreviousClaims = ({ validateNextButton }: AboutYourBikeProps) => {
-  const [state, setState] = useContext(JourneyContext);
+  const [state, setState] = useSafeContext({
+    componentName: "PreviousClaims",
+  });
   const [showSetPreviousClaimsMessage, setShowSetPreviousClaimsMessage] =
     useState(false);
   const [unableToQuoteMessage, _setUnableToQuoteMessage] = useState(false);

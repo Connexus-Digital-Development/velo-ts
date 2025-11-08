@@ -1,16 +1,14 @@
-import { useContext, useEffect, useState, useCallback } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useEffect, useState, useCallback } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { loggingService } from "@/services/loggingService";
 import { paymentService } from "@/services/paymentService";
 import { restApiCommBaseService } from "@/services/restApiCommBaseService";
 import { type DDFormProps } from "@/models/JourneyComponentTypes";
 
 const DDForm = ({ formik }: DDFormProps) => {
-  const context = useContext(JourneyContext);
-  if (!context) {
-    throw new Error("JourneyContext must be used within a JourneyProvider");
-  }
-  const [gState, setGState] = context;
+  const [gState, setGState] = useSafeContext({
+    componentName: "DDForm",
+  });
   const [error, setError] = useState("");
   const [checkBottomLine, setCheckBottomLine] = useState(true);
 

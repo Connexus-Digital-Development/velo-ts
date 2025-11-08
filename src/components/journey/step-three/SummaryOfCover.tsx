@@ -1,6 +1,5 @@
-import { useContext } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import * as moment from "moment";
-import { JourneyContext } from "@/context/journeyStore";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import SimpleBikeList from "./SimpleBikeList";
 import { type SummaryOfCoverProps } from "@/models/JourneyComponentTypes";
@@ -10,7 +9,9 @@ const SummaryOfCover: React.FC<SummaryOfCoverProps> = ({
   fromExternalLink = false,
   validateNextButton: _validateNextButton = false,
 }) => {
-  const [gState, _setGState] = useContext(JourneyContext);
+  const [gState, _setGState] = useSafeContext({
+    componentName: "SummaryOfCover",
+  });
 
   return (
     <section className="container container_narrow " id="Quote-Summary">

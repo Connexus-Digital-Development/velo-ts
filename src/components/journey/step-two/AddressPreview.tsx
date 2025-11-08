@@ -1,9 +1,10 @@
-import { JourneyContext } from "@/context/journeyStore";
-import { useContext } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import { type AddressPreviewProps } from "@/models/JourneyComponentTypes";
 
 const AddressPreview = ({ formik }: AddressPreviewProps) => {
-  const [state, setState] = useContext(JourneyContext);
+  const [state, setState] = useSafeContext({
+    componentName: "AddressPreview",
+  });
   const handleLinkClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     setState({ ...state, hideAddressForm: false });

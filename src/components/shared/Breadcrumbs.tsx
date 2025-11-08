@@ -1,13 +1,14 @@
-import { useContext } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import { Link, useLocation } from "react-router-dom";
-import { JourneyContext } from "@/context/journeyStore";
 
 interface BreadcrumbsProps {
   navigationAction?: (() => Promise<void>) | null;
 }
 
 const Breadcrumbs = ({ navigationAction = null }: BreadcrumbsProps) => {
-  const [state] = useContext(JourneyContext)!;
+  const [state] = useSafeContext({
+    componentName: "Breadcrumbs",
+  });
   const UNVISITED = 0;
   const VISITED = 1;
   const FOCUS = 2;

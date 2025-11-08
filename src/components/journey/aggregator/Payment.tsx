@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import TopNavBar from "@/components/shared/TopNavBar";
 import RegularBanner from "@/components/shared/RegularBanner";
 import Payments from "@/components/journey/step-four/Payments";
@@ -9,8 +9,10 @@ import Declarations from "@/components/journey/step-four/Declarations";
 import PaymentMethodSelector from "@/components/journey/step-four/PaymentMethodSelector";
 import MarketingPreferences from "./MarketingPreferences";
 import DocumentPreferences from "@/components/journey/step-three/DocumentPreferences";
+
 const Payment = () => {
-  const [gState] = useContext(JourneyContext);
+  const [gState] = useSafeContext({ componentName: "Payment" });
+
   const [rotate, setRotate] = useState(false);
   const [showPaymentWindow, setShowPaymentWindow] = useState(false);
   const [pending, setPending] = useState(false);

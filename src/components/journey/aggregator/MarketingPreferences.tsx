@@ -1,10 +1,10 @@
-import { useContext } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { Checkbox } from "@mantine/core";
 
 const MarketingPreferences = () => {
-  const context = useContext(JourneyContext);
-  const [gState, setGState] = context!;
+  const [gState, setGState] = useSafeContext({
+    componentName: "MarketingPreferences",
+  });
 
   const handleThirdPartyEmailClick = (checked: boolean) => {
     setGState({ ...gState, thirdPartyEmail: checked });

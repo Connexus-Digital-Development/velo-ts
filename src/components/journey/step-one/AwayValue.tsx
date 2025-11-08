@@ -1,11 +1,13 @@
-import { useState, useEffect, useContext } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useState, useEffect } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import { type AboutYourBikeProps } from "@/models/JourneyComponentTypes";
 import type { Bike } from "@/models";
 
 const AwayValue = ({ validateNextButton }: AboutYourBikeProps) => {
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "AwayValue",
+  });
   const getHighestValueBike = (bikes: Bike[]) =>
     Math.max(...bikes.map((o) => o.value));
   const [homeValue, setHomeValue] = useState(

@@ -1,6 +1,6 @@
 import { Checkbox } from "@mantine/core";
-import { useContext, useEffect, useRef } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useEffect, useRef } from "react";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { editClassName, removeClassName } from "@/utils/classNameEditor";
 import { type IndividualBikeRowProps } from "@/models/JourneyComponentTypes";
 import { type Bike } from "@/models/bike";
@@ -14,7 +14,9 @@ const IndividualBikeRow: React.FC<IndividualBikeRowProps> = ({
   updateLockChecked,
 }) => {
   const ref = useRef<HTMLInputElement>(null!);
-  const [gState] = useContext(JourneyContext)!;
+  const [gState] = useSafeContext({
+    componentName: "IndividualBikeRow",
+  });
   useEffect(() => {
     const bike = gState.bikes.find((x: Bike) => x.id === bikeId);
     editClassName(

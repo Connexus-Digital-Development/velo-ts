@@ -1,9 +1,10 @@
-import { useContext } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import currency from "currency.js";
 
 const OneOffPayment = () => {
-  const [gState] = useContext(JourneyContext);
+  const [gState] = useSafeContext({
+    componentName: "OneOffPayment",
+  });
 
   console.log("Annual Gross Premium:", gState.annualGrossPremium);
   console.log("Core Gross Premium:", gState.coreQuote.annualGrossPremium);

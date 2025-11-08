@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { JourneyContext } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore";
 import FeatureListCore from "./FeatureList_CORE";
 import FeatureListPerformance from "./FeatureList_PERFORMANCE";
 import currency from "currency.js";
@@ -27,7 +27,9 @@ const YourQuote: React.FC<YourQuoteProps> = ({
   const [showPerformanceQuote, setPerformanceQuote] =
     useState(performanceQuote);
   const [showCoreQuote, setCoreQuote] = useState(coreQuote);
-  const [gState, setGState] = useContext(JourneyContext);
+  const [gState, setGState] = useSafeContext({
+    componentName: "YourQuote",
+  });
   const [highlightCore, setHighlightCore] = useState(
     gState.selectedCoreScheme === true,
   );

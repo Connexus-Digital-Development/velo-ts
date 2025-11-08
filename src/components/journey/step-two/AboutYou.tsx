@@ -4,7 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import * as Yup from "yup";
-import { JourneyContext } from "@/context/journeyStore";
+import { useSafeContext } from "@/context/journeyStore/useSafeContext";
+// import { JourneyContext } from "@/context/journeyStore";
 // import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import { loggingService } from "@/services/loggingService";
 import transactorHelper from "@/services/transactorService";
@@ -23,7 +24,9 @@ const postcodeRegex =
   /^(([A-Z][A-HJ-Y]?\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}|BFPO ?\d{1,4}|(KY\d|MSR|VG|AI)[ ]?\d{4}|[A-Z]{2} ?\d{2}|GE ?CX|GIR ?0A{2}|SAN ?TA1)$/;
 const AboutYou = () => {
   const { search } = useLocation();
-  const [gState, setGState] = useContext(JourneyContext)!;
+  const [gState, setGState] = useSafeContext({
+    componentName: "AboutYou",
+  });
 
   const navigate = useNavigate();
   const MIN_AGE = 18,
@@ -272,7 +275,7 @@ const AboutYou = () => {
       .required("This is required")
       .min(lower, "Please select a year.")
       .max(upper),
-    postalCode: Yup.string().when("showManualAddress", ([showManualAddress], schema) =>
+    postalCode: Yup.string().when("showManualAddress", (showManualAddress, schema) =>
       showManualAddress === false
         ? schema
             .min(5, "This postcode is too short")
@@ -334,17 +337,8 @@ new RegExp("^[A-Za-z0-9 ./-]*$"),
       is: false,
       then: Yup.string()
         .nullable()
-        .required(
-          retailerReference
-            ? "Retailer name is required"
-            : "Marketing Reference is required",
-        )
-        .min(
-          1,
-          retailerReference
-            ? "Retailer name you've entered is to short"
-            : "Marketing Reference you've entered is too short",
-        ),
+        .required("Marketing Reference is required")
+        .min(1, "Marketing Reference you've entered is too short"),
     }),
     marketingPreferences: Yup.boolean()
       .oneOf([true], "Please select your marketing preference or opt out")

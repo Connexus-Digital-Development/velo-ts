@@ -2,15 +2,17 @@ import { useFormik } from "formik";
 import TopNavBlank from "@/components/shared/TopNavBlank";
 import RegularBanner from "@/components/shared/RegularBanner";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { JourneyContext } from "@/context/journeyStore";
+import { useEffect, useState } from "react";
+import { useSafeContext } from "@/context/journeyStore";
 import useGlobalStateAdaptor from "@/hooks/useGlobalStateAdaptor";
 import * as Yup from "yup";
 
 const QRLandingPage = () => {
   const navigate = useNavigate();
   sessionStorage.setItem("fromExternalLink", "true");
-  const [_gState, setGState] = useContext(JourneyContext);
+  const [_gState, setGState] = useSafeContext({
+    componentName: "QRLandingPage",
+  });
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const quoteId = params.get("PolicyReference") as string;
