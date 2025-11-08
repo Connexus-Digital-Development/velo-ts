@@ -1,5 +1,8 @@
 import { useSafeContext } from "@/context/journeyStore";
-import { type AddressPreviewProps } from "@/models/JourneyComponentTypes";
+
+interface AddressPreviewProps {
+  formik: any; // TODO: Replace with proper Formik type when available
+}
 
 const AddressPreview = ({ formik }: AddressPreviewProps) => {
   const [state, setState] = useSafeContext({

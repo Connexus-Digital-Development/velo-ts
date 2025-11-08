@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { useSafeContext } from "@/context/journeyStore";
-import {
-  type MarketingPreferencesProps,
-  type PreferenceButtonProps,
-} from "@/models/JourneyComponentTypes";
+
+interface MarketingPreferencesProps {
+  formik: any; // TODO: Replace with proper Formik type when available
+}
+
+interface PreferenceButtonProps {
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
+}
 
 function PreferenceButton({ label, isActive, onClick }: PreferenceButtonProps) {
   return (

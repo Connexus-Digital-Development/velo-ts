@@ -5,7 +5,23 @@ import { useSafeContext } from "@/context/journeyStore";
 import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
 import { loggingService } from "@/services/loggingService";
 import TransactorService from "@/services/transactorService";
-import { type FeatureListCoreProps } from "@/models/JourneyComponentTypes";
+import { type Quote } from "@/models/JourneyComponentTypes";
+
+interface FeatureListCoreProps {
+  isCore: boolean;
+  initCoreQuote: Quote;
+  setIsLoading: (loading: boolean) => void;
+  setPerformanceQuote: (quote: Quote) => void;
+  setCoreQuote: (quote: Quote) => void;
+  unSelectAll: () => void;
+  showReQuoteCore: boolean;
+  setShowReQuoteCore: (show: boolean) => void;
+  showReQuoteMessage: boolean;
+  setShowReQuoteMessage: (show: boolean) => void;
+  fromExternalLink: boolean;
+  showReQuote: boolean;
+  clearShowError: () => void;
+}
 
 const FeatureListCore: React.FC<FeatureListCoreProps> = ({
   isCore,

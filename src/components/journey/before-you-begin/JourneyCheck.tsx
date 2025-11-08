@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const JourneyCheck = () => {
+interface JourneyCheckProps {
+  onContinue?: () => void;
+}
+
+const JourneyCheck = ({ onContinue }: JourneyCheckProps) => {
   const [isChecked, setIsChecked] = useState(false);
   const { search } = useLocation();
   const navigate = useNavigate();
@@ -13,7 +17,11 @@ const JourneyCheck = () => {
 
   const handleContinue = () => {
     if (isChecked) {
-      handleNextPage(); //   navigate to step one
+      if (onContinue) {
+        onContinue();
+      } else {
+        handleNextPage(); // navigate to step one
+      }
     }
 
     function handleNextPage() {

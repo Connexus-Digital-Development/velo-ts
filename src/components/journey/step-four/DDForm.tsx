@@ -3,7 +3,10 @@ import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { loggingService } from "@/services/loggingService";
 import { paymentService } from "@/services/paymentService";
 import { restApiCommBaseService } from "@/services/restApiCommBaseService";
-import { type DDFormProps } from "@/models/JourneyComponentTypes";
+
+interface DDFormProps {
+  formik: any; // TODO: Replace with proper Formik type when available
+}
 
 const DDForm = ({ formik }: DDFormProps) => {
   const [gState, setGState] = useSafeContext({

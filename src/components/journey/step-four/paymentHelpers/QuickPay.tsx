@@ -4,7 +4,16 @@ import ApplePayments from "./ApplePayments";
 import GooglePayments from "./GooglePayments";
 import PaypalPayments from "./PaypalPayments";
 import { useState } from "react";
-import { type QuickPayProps } from "@/models/JourneyComponentTypes";
+
+interface QuickPayProps {
+  PaymentData: any;
+  successMethod: (result: any) => void;
+  failureMethod: (error: any) => void;
+  uiLock: (lock: boolean) => void;
+  gState: any; // TODO: Replace with proper JourneyState type when available
+  errorMessage: (message: string) => void;
+  ddPayment?: boolean;
+}
 
 const QuickPay = ({
   PaymentData,

@@ -2,7 +2,12 @@ import { useSafeContext } from "@/context/journeyStore";
 import * as moment from "moment";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import SimpleBikeList from "./SimpleBikeList";
-import { type SummaryOfCoverProps } from "@/models/JourneyComponentTypes";
+
+interface SummaryOfCoverProps {
+  detailsText?: string;
+  fromExternalLink?: boolean;
+  validateNextButton?: boolean;
+}
 
 const SummaryOfCover: React.FC<SummaryOfCoverProps> = ({
   detailsText = "Please ensure all of the details are correct. To amend any information please revert back to the required section using the back button below.",

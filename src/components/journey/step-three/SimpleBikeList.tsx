@@ -1,4 +1,8 @@
-import { type SimpleBikeListProps } from "@/models/JourneyComponentTypes";
+import { type Bike } from "@/models/JourneyTypes";
+
+interface SimpleBikeListProps {
+  bikes: Bike[];
+}
 
 const SimpleBikeList: React.FC<SimpleBikeListProps> = ({ bikes }) => {
   if (!bikes) return "no Bikes";

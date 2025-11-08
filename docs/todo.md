@@ -1,4 +1,4 @@
 - Remove inline svgs
-- rename markting comonents to be not uppercase
-- move props to be with the component
-- gstate
+[x] rename markting comonents to be not uppercase
+[x] move props to be with the component
+[x] gstate

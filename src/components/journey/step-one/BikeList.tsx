@@ -1,8 +1,11 @@
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import IndividualBike from "./IndividualBike";
-import { type AboutYourBikeProps } from "@/models/JourneyComponentTypes";
 
-const BikeList = ({ validateNextButton }: AboutYourBikeProps) => {
+interface BikeListProps {
+  validateNextButton?: boolean;
+}
+
+const BikeList = ({ validateNextButton }: BikeListProps) => {
   const [gState] = useSafeContext({
     componentName: "BikeList",
   });

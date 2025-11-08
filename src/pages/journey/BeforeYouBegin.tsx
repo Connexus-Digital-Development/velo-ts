@@ -3,7 +3,8 @@ import TopNavBlank from "@/components/shared/TopNavBlank";
 import RegularBanner from "@/components/shared/RegularBanner";
 import ImportantInformation from "@/components/journey/before-you-begin/ImportantInformation";
 import JourneyCheck from "@/components/journey/before-you-begin/JourneyCheck";
-import { type BeforeYouBeginProps } from "@/models/JourneyComponentTypes";
+
+interface BeforeYouBeginProps {}
 
 const BeforeYouBegin = (_props: BeforeYouBeginProps) => {
   const [rotate, _setRotate] = useState(false);

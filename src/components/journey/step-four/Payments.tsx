@@ -8,12 +8,18 @@ import TransactorService from "@/services/transactorService";
 import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
 import DDForm from "./DDForm";
 import DDGuarantee from "./DDGuarantee";
-import { loggingService } from "@/services/loggingService";
-import { sanctionsSearchService } from "@/services/sanctionsSearchService";
-import { type PaymentsProps } from "@/models/JourneyComponentTypes";
 import { type Bike } from "@/models/bike";
 import { type RiskModel } from "@/models/QuoteTypes";
 import SinglePayment from "./paymentHelpers/SinglePayment";
+
+interface PaymentsProps {
+  fromExternalLink?: boolean;
+  fromAggregator?: boolean;
+  setRotate?: (rotate: boolean) => void;
+  showPaymentWindow?: boolean;
+  setShowPaymentWindow?: (show: boolean) => void;
+  setPending?: (pending: boolean) => void;
+}
 
 const Payments: React.FC<PaymentsProps> = ({
   fromExternalLink = false,

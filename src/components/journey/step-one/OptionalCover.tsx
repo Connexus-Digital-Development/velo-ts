@@ -2,7 +2,14 @@ import { useState } from "react";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { Checkbox } from "@mantine/core";
 import { Tooltip } from "@mantine/core";
-import { type OptionalCoverProps } from "@/models/JourneyComponentTypes";
+
+interface OptionalCoverProps {
+  handleSCCheckbox: (checked: boolean) => void;
+  handlePCCheckbox: (checked: boolean) => void;
+  handleACCheckbox: (checked: boolean) => void;
+  handleWCCheckbox: (checked: boolean) => void;
+}
+
 const OptionalCover = ({
   handleSCCheckbox,
   handlePCCheckbox,

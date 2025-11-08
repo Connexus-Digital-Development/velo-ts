@@ -7,12 +7,24 @@ import Assumptions from "@/components/journey/step-four/Assumptions";
 import Declarations from "@/components/journey/step-four/Declarations";
 import PaymentMethodSelector from "@/components/journey/step-four/PaymentMethodSelector";
 import DocumentPreferences from "@/components/journey/step-three/DocumentPreferences";
-const QRPayment = () => {
+
+interface QRPaymentProps {
+  setShowPaymentWindow?: (show: boolean) => void;
+}
+
+const QRPayment = ({ setShowPaymentWindow: externalSetShowPaymentWindow }: QRPaymentProps) => {
   const [gState] = useSafeContext({
     componentName: "QRPayment",
   });
   const [rotate, setRotate] = useState(false);
   const [showPaymentWindow, setShowPaymentWindow] = useState(false);
+
+  const handleSetShowPaymentWindow = (show: boolean) => {
+    setShowPaymentWindow(show);
+    if (externalSetShowPaymentWindow) {
+      externalSetShowPaymentWindow(show);
+    }
+  };
   const [pending, setPending] = useState(false);
   return (
     <div className="container-fluid mb-5 oh">
@@ -34,11 +46,11 @@ const QRPayment = () => {
           <h1>Incepting your policy...</h1>
         </div>
       </div>
-      <PaymentMethodSelector setShowPaymentWindow={setShowPaymentWindow} />
+      <PaymentMethodSelector setShowPaymentWindow={handleSetShowPaymentWindow} />
 
       {gState.paymentSuccessful === false && (
         <>
-          <Assumptions setShowPaymentWindow={setShowPaymentWindow} />
+          <Assumptions setShowPaymentWindow={handleSetShowPaymentWindow} />
           <Declarations />
           <DocumentPreferences />
         </>
@@ -51,7 +63,7 @@ const QRPayment = () => {
           setPending={setPending}
           setRotate={setRotate}
           showPaymentWindow={showPaymentWindow}
-          setShowPaymentWindow={setShowPaymentWindow}
+          setShowPaymentWindow={handleSetShowPaymentWindow}
         />
       )}
     </div>

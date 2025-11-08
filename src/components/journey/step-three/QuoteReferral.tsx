@@ -1,4 +1,6 @@
-import { type QuoteReferralProps } from "@/models/JourneyComponentTypes";
+interface QuoteReferralProps {
+  quoteReference: string;
+}
 
 const QuoteReferral: React.FC<QuoteReferralProps> = ({ quoteReference }) => {
   return (

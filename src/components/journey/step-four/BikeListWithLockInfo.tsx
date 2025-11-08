@@ -1,6 +1,11 @@
 import IndividualBikeRow from "./IndividualBikeRow";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
-import { type BikeListWithLockInfoProps } from "@/models/JourneyComponentTypes";
+import { type Bike } from "@/models/JourneyTypes";
+
+interface BikeListWithLockInfoProps {
+  bikes: Bike[];
+  updateLockChecked: (bikeId: number, checked: boolean) => void;
+}
 
 const BikeListWithLockInfo: React.FC<BikeListWithLockInfoProps> = ({
   bikes,

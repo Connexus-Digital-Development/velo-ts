@@ -1,6 +1,9 @@
 import { useState, useEffect, type ReactElement } from "react";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
-import { type BikeSecurityProps } from "@/models/JourneyComponentTypes";
+
+interface BikeSecurityProps {
+  setLocationInvalid: (valid: boolean) => void;
+}
 
 const isHomeHelpText = (
   <span>

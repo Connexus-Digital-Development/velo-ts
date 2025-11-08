@@ -4,7 +4,29 @@ import { useSafeContext } from "@/context/journeyStore";
 import FeatureListCore from "./FeatureList_CORE";
 import FeatureListPerformance from "./FeatureList_PERFORMANCE";
 import currency from "currency.js";
-import { type YourQuoteProps } from "@/models/JourneyComponentTypes";
+import { type Quote } from "@/models/JourneyComponentTypes";
+
+interface YourQuoteProps {
+  error: string | null;
+  coreQuote: Quote;
+  performanceQuote: Quote;
+  setIsLoading: (loading: boolean) => void;
+  showError: boolean;
+  clearShowError: () => void;
+  canProceedToPayment: (canProceed: boolean) => void;
+  showReQuote: boolean;
+  showReQuoteCore: boolean;
+  setShowReQuote: (show: boolean) => void;
+  setShowReQuoteCore: (show: boolean) => void;
+  showReQuoteMessage: boolean;
+  setShowReQuoteMessage: (show: boolean) => void;
+  showCoreReQuoteMessage: boolean;
+  setShowCoreReQuoteMessage: (show: boolean) => void;
+  showPerformanceReQuoteMessage: boolean;
+  setShowPerformanceReQuoteMessage: (show: boolean) => void;
+  fromExternalLink?: boolean;
+}
+
 const YourQuote: React.FC<YourQuoteProps> = ({
   error,
   coreQuote,

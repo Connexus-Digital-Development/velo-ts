@@ -5,10 +5,10 @@ import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { Link } from "react-router-dom";
 import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import type {
-  AboutYourBikeProps,
-  BikeFormValues,
-} from "@/models/JourneyComponentTypes";
+
+interface AboutYourBikeProps {
+  validateNextButton?: boolean;
+}
 
 const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
   const [_addAnotherBike, setAddAnotherBike] = useState(false);

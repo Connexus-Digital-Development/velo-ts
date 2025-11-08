@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
-import { type AboutYourBikeProps } from "@/models/JourneyComponentTypes";
 import type { Bike } from "@/models";
 
-const AwayValue = ({ validateNextButton }: AboutYourBikeProps) => {
+interface AwayValueProps {
+  validateNextButton?: boolean;
+}
+
+const AwayValue = ({ validateNextButton }: AwayValueProps) => {
   const [gState, setGState] = useSafeContext({
     componentName: "AwayValue",
   });

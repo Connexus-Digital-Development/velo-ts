@@ -5,14 +5,14 @@ import currency from "currency.js";
 import { Link } from "react-router-dom";
 import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  type IndividualBikeProps,
-  type IndividualBikeFormValues,
-} from "@/models/JourneyComponentTypes";
+import type { IndividualBikeFormValues } from "@/models/JourneyComponentTypes";
 import type { Bike } from "@/models";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 
-// Validation schema defined outside component to prevent recreation on every render
+interface IndividualBikeProps {
+  bike: import("@/models").Bike;
+  validateNextButton?: boolean;
+}
 const createValidationSchema = (gState: any, bike: Bike) =>
   Yup.object({
     bikeMake: Yup.string()

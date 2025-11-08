@@ -1,11 +1,6 @@
-We are starting a new task.
+We are continuing to work on task the Current Task found in docs/tasks/index.md unless the user specifies a number here: $1
 
-## Task Initialization
-Each task will be tracked in docs/tasks/<task_number>/task.md file.
-
-If the file exists already then use the next steps to inform the current task at hand.
-
-If the file does not exist then create a new file with the task number and task name and the next task is: $1
+Find the current task info in docs/tasks/<task_number>/task.md
 
 ## Task Management Process
 Before starting the task, read the task file and if required then idenitify if there are any dependencies or prerequisites needed to complete the task by passing to the researcher agent (if required). Once we know what we are doing, split the work up into smaller subtasks and assign them to the worker agents.

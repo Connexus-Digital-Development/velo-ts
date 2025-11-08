@@ -1,6 +1,7 @@
 import { Checkbox } from "@mantine/core";
 import { useSafeContext } from "@/context/journeyStore";
-import { type DocumentPreferencesProps } from "@/models/JourneyComponentTypes";
+
+interface DocumentPreferencesProps {}
 
 const DocumentPreferences: React.FC<DocumentPreferencesProps> = () => {
   const [gState, setGState] = useSafeContext({

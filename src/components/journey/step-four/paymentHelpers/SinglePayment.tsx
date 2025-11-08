@@ -8,7 +8,15 @@ import valid from "card-validator";
 import "./AnnualPayment.css";
 import CardPayments from "./CardPayments";
 import PaymentData from "./PaymentData";
-import { type SinglePaymentProps } from "@/models/JourneyComponentTypes";
+
+interface SinglePaymentProps {
+  successMethod: (result: any) => void;
+  failureMethod: (error: any) => void;
+  gState: any; // TODO: Replace with proper JourneyState type when available
+  uiLock: (lock: boolean) => void;
+  threeDS: (show: boolean) => void;
+  ddPayment?: boolean;
+}
 
 const SinglePayment = ({
   successMethod,

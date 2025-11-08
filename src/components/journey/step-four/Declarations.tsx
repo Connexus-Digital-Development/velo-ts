@@ -4,8 +4,11 @@ import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { editClassName, removeClassName } from "@/utils/classNameEditor";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import BikeListWithLockInfo from "./BikeListWithLockInfo";
-import { type DeclarationsProps } from "@/models/JourneyComponentTypes";
 import { type Bike } from "@/models/bike";
+
+interface DeclarationsProps {
+  setShowPaymentWindow?: (show: boolean) => void;
+}
 
 const cycleRescuePolicyWording =
   "/documents/Velosure.Policy.Wording.January.2025.pdf";

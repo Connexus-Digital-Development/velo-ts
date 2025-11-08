@@ -1,4 +1,8 @@
-import { type ManualAddressEntryProps } from "@/models/JourneyComponentTypes";
+interface ManualAddressEntryProps {
+  formik: any; // TODO: Replace with proper Formik type when available
+  gState: any; // TODO: Replace with proper JourneyState type when available
+  setGState: (state: any) => void; // TODO: Replace with proper types when available
+}
 
 const ManualAddressEntry = ({
   formik,

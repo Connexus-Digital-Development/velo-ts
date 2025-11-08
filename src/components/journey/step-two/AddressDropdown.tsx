@@ -1,8 +1,12 @@
 import { useSafeContext } from "@/context/journeyStore";
 import {
-  type AddressDropdownProps,
   type AddressItem,
+  type AddressLookupResponse,
 } from "@/models/JourneyComponentTypes";
+
+interface AddressDropdownProps {
+  addressList: AddressLookupResponse | null;
+}
 
 const AddressDropdown = ({ addressList }: AddressDropdownProps) => {
   const [state, setState] = useSafeContext({

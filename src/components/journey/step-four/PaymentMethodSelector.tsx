@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useSafeContext } from "@/context/journeyStore";
 import MonthlyPayments from "./MonthlyPayments";
 import OneOffPayment from "./OneOffPayment";
-import { type PaymentMethodSelectorProps } from "@/models/JourneyComponentTypes";
+
+interface PaymentMethodSelectorProps {
+  setShowPaymentWindow?: (show: boolean) => void;
+}
 
 const PaymentMethodSelector = ({
   setShowPaymentWindow,

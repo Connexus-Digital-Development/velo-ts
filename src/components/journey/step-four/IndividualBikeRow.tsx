@@ -2,8 +2,16 @@ import { Checkbox } from "@mantine/core";
 import { useEffect, useRef } from "react";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { editClassName, removeClassName } from "@/utils/classNameEditor";
-import { type IndividualBikeRowProps } from "@/models/JourneyComponentTypes";
 import { type Bike } from "@/models/bike";
+
+interface IndividualBikeRowProps {
+  bikeMake: string;
+  bikeModel: string;
+  lockName: string;
+  bikeId: number;
+  lockChecked: boolean;
+  updateLockChecked: (bikeId: number, checked: boolean) => void;
+}
 
 const IndividualBikeRow: React.FC<IndividualBikeRowProps> = ({
   bikeMake,

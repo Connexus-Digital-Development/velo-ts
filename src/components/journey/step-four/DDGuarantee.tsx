@@ -1,4 +1,6 @@
-import { type DDGuaranteeProps } from "@/models/JourneyComponentTypes";
+interface DDGuaranteeProps {
+  readyToRead?: boolean;
+}
 
 const DDGuarantee: React.FC<DDGuaranteeProps> = () => {
   return (

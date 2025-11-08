@@ -2,8 +2,11 @@ import { useEffect, useRef } from "react";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { Checkbox } from "@mantine/core";
 import { editClassName, removeClassName } from "@/utils/classNameEditor";
-import { type AssumptionsProps } from "@/models/JourneyComponentTypes";
 import { type Bike } from "@/models/bike";
+
+interface AssumptionsProps {
+  setShowPaymentWindow: (show: boolean) => void;
+}
 
 const Assumptions: React.FC<AssumptionsProps> = ({ setShowPaymentWindow }) => {
   const assumptionsRef = useRef<HTMLInputElement>(null);

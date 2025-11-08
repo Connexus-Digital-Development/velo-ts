@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
-import { type AboutYourBikeProps } from "@/models/JourneyComponentTypes";
 
-const PreviousClaims = ({ validateNextButton }: AboutYourBikeProps) => {
+interface PreviousClaimsProps {
+  validateNextButton?: boolean;
+}
+
+const PreviousClaims = ({ validateNextButton }: PreviousClaimsProps) => {
   const [state, setState] = useSafeContext({
     componentName: "PreviousClaims",
   });

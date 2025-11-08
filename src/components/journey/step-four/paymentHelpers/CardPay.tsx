@@ -1,5 +1,8 @@
 import DatePicker from "react-datepicker";
-import { type CardPayProps } from "@/models/JourneyComponentTypes";
+
+interface CardPayProps {
+  formik: any; // TODO: Replace with proper Formik type when available
+}
 
 const CardPay = ({ formik }: CardPayProps) => {
   const handleStartEndDate = (date) => {
