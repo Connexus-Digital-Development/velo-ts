@@ -101,7 +101,7 @@ const Assumptions: React.FC<AssumptionsProps> = ({ setShowPaymentWindow }) => {
                   setShowPaymentWindow(false);
                 }
               }}
-              value={gState.assumptionsTicked}
+              checked={gState.assumptionsTicked}
             />
           </div>
         </div>
@@ -166,7 +166,7 @@ const Assumptions: React.FC<AssumptionsProps> = ({ setShowPaymentWindow }) => {
                       setShowPaymentWindow(false);
                     }
                   }}
-                  value={gState.eBikeTicked}
+                  checked={gState.eBikeTicked}
                 />
               </div>
             </div>

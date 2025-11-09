@@ -144,13 +144,15 @@ const StepThree = () => {
             annualGrossPremiumCore: coreQuote.annualGrossPremium,
             basePremiumCore: coreQuote.basePremium,
             commissionCore: coreQuote.commission,
-            declineReasonCore: coreQuote.declineReason,
+            // TODO: Re-add decline reason core if needed
+            // declineReasonCore: coreQuote.declineReason,
             instalmentsAprCore: coreQuote.instalmentsApr,
             instalmentsFirstPaymentCore: coreQuote.instalmentsFirstPayment,
             instalmentsGrossPremiumCore: coreQuote.instalmentsGrossPremium,
             instalmentsInterestPcCore: coreQuote.instalmentsInterestPc,
             instalmentsServiceChargeCore: coreQuote.instalmentsServiceCharge,
-            depositCore: coreQuote.deposit,
+            // TODO: Re-add deposit core if needed
+            // depositCore: coreQuote.deposit,
             instalmentsSubsequentPaymentsCore:
               coreQuote.instalmentsSubsequentPayments,
             iptCore: coreQuote.ipt,

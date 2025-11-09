@@ -12,7 +12,7 @@ const AwayValue = ({ validateNextButton }: AwayValueProps) => {
     componentName: "AwayValue",
   });
   const getHighestValueBike = (bikes: Bike[]) =>
-    Math.max(...bikes.map((o) => o.value));
+    Math.max(...bikes.map((o) => Number(o.value)));
   const [homeValue, setHomeValue] = useState(
     modelAdaptorHelper.getHomeValue(gState.bikes),
   );
@@ -32,7 +32,7 @@ const AwayValue = ({ validateNextButton }: AwayValueProps) => {
       });
       setValue(getHighestValueBike(gState.bikes));
     }
-  }, [gState.resetAwayValue]);
+  }, [gState.resetAwayValue, gState, setGState]);
 
   useEffect(() => {
     if (
@@ -49,7 +49,7 @@ const AwayValue = ({ validateNextButton }: AwayValueProps) => {
     ) {
       setError("Away value must not exceeded total value of all bikes");
     }
-  }, [validateNextButton]);
+  }, [validateNextButton, gState.awayValue, gState.bikes.length, homeValue]);
 
   const handleOnBlur = (value: number) => {
     setValue(value);

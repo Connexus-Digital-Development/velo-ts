@@ -29,19 +29,16 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
   useEffect(() => {
     // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
     if (gState.bikes.length === 0) {
-      setGState(
-        {
-          ...gState,
-          yourCoverCrumb: 0,
-          paymentCrumb: 0,
-          yourQuoteCrumb: 0,
-          yourDetailsCrumb: 0,
-          generateQuote: true,
-        },
-        [],
-      );
+      setGState({
+        ...gState,
+        yourCoverCrumb: 0,
+        paymentCrumb: 0,
+        yourQuoteCrumb: 0,
+        yourDetailsCrumb: 0,
+        generateQuote: true,
+      });
     }
-  }, []);
+  }, [gState, setGState]);
 
   const formik = useFormik<BikeFormValues>({
     initialValues: {
@@ -61,28 +58,13 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
         .max(40, "This bike model name is too long"),
       bikeValue: Yup.number()
         .required("Bike Value is required")
-        .min(
-          500,
-          <small className="redFont mt-1 lufga-light">
-            Only bikes valued £500 or more can be insured
-          </small>,
-        )
+        .min(500, "Only bikes valued £500 or more can be insured")
         .max(
-          20000 - gState?.bikes?.map((m) => m.value).reduce((a, b) => a + b, 0),
-          <small className="redFont mt-1 lufga-light">
-            Sorry, you've exceeded our £20,000 online quoting limit. Please call
-            us on{" "}
-            <a
-              className="redFont"
-              rel="noreferrer"
-              href="tel:08000833035"
-              target="_blank"
-            >
-              {" "}
-              0800 083 3035
-            </a>{" "}
-            for a personalised quote
-          </small>,
+          20000 -
+            (gState?.bikes
+              ?.map((m) => Number(m.value))
+              .reduce((a, b) => a + b, 0) || 0),
+          "Sorry, you've exceeded our £20,000 online quoting limit. Please call us on 0800 083 3035 for a personalised quote",
         ),
       isElectric: Yup.boolean()
         .nullable()
@@ -96,17 +78,22 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
       setElectricAgreed(false);
       close();
       const bike = {
-        id: gState.bikes?.length === 0 ? 1 : [...gState.bikes].pop().id + 1,
+        id: gState.bikes.length + 1,
         make: values.bikeMake,
         model: values.bikeModel,
-        value: values.bikeValue,
-        isElectric: values.isElectric,
-
+        value: Number(values.bikeValue),
+        isElectric: values.isElectric ?? false,
+        AccessoryCover: false,
+        SportsCover: false,
+        WorldWideCover: false,
+        PublicAccidentRoadRage: false,
         lockChecked: false,
       };
       setShowAddBikeMessage(false);
       //update state so that the bikes will be displayed
-      const newBikeList = gState.bikes.concat(bike);
+      const newBikeList = gState.bikes;
+      newBikeList.push(bike);
+
       setGState((prevState) => {
         return {
           ...prevState,
@@ -160,7 +147,6 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
     setGState((prevState) => {
       return {
         ...prevState,
-        id: null,
         make: "",
         model: "",
         value: 0,
@@ -187,7 +173,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
   ) => {
     e.preventDefault(); //
     setIsElectric(flag);
-    formik.values.isElectric = flag;
+    formik.setFieldValue("isElectric", flag);
   };
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) =>
     e.target.select();
