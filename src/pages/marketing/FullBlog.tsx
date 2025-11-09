@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import TopNavBar from "@/components/shared/TopNavBar";
 import BlogBanner from "@/components/shared/BlogBanner";
 import { useParams } from "react-router-dom";
@@ -9,43 +9,45 @@ import { seoTags } from "@/components/shared/SeoEdit";
 import { socialMediaTags } from "@/components/shared/SeoEdit";
 import ShareToSocials from "@/components/marketing/Pitstop/ShareToSocials";
 import { Helmet } from "react-helmet-async";
+import { useArticle } from "@/hooks/queries/useContent";
+
+// Type for article data
+interface ArticleData {
+  seoTitle: string;
+  seoDescription: string;
+  imageUrl: string;
+  headline: string;
+  subHeading: string;
+  body: string;
+  pageURL: string;
+  author: string;
+  authorImage: string;
+  publishedDate: string;
+  articleSEOTags: Array<{ tag: { name: string } }>;
+}
 
 const FullBlog = () => {
   const tags: string[] = [];
-  const [articleData, setArticleData] = useState<any>({});
   const { id } = useParams() as { id: string };
 
+  // Fetch article using React Query
+  const { data: articleData, isLoading } = useArticle(id);
+
+  // Handle SEO updates when article data changes
   useEffect(() => {
-    getArticleData(id);
+    if (articleData && Object.keys(articleData).length > 0) {
+      seoTags(
+        (articleData as ArticleData).seoTitle,
+        (articleData as ArticleData).seoDescription,
+        articleTagsToCSV(articleData as ArticleData),
+      );
+      socialMediaTags((articleData as ArticleData).seoTitle, (articleData as ArticleData).seoDescription, (articleData as ArticleData).imageUrl);
+    }
     return () => {
       seoTags("velosure ", "", "");
       socialMediaTags("", "", "");
     };
-  }, [id]);
-
-  const getArticleData = async (id: string) => {
-    const options = {
-      method: "GET",
-      headers: {
-        "X-API-KEY": import.meta.env.VITE_VELOSURE_API_KEY as string,
-        "content-type": "application/json",
-      },
-    };
-    const article = await fetch(
-      `${import.meta.env.VITE_VELOSURE_API_URL}/api/ConnexusCMS/Articles/GetArticleFromSlug/${id}`,
-      options,
-    )
-      .then((response) => response.json())
-      .then((data) => data);
-
-    setArticleData(article);
-    seoTags(
-      article.seoTitle,
-      article.seoDescription,
-      articleTagsToCSV(article),
-    );
-    socialMediaTags(article.seoTitle, article.seoDescription, article.imageUrl);
-  };
+  }, [articleData]);
 
   /*
    * document.title = "Welcome | here is your page title to display";
@@ -67,55 +69,63 @@ const FullBlog = () => {
 
   return (
     <div className="container-fluid whiteBG">
-      <Helmet>
-        <link
-          rel="canonical"
-          href={`https://www.velosure.co.uk/FullBlog/${articleData.pageURL}`}
-        />
-      </Helmet>
-
-      <TopNavBar theme={"white"} />
-      <BlogBanner
-        headlineLine1={articleData.headline}
-        headlineLine2={""}
-        author={articleData.author}
-        avatarImageURL={articleData.authorImage}
-        hasCTA={"false"}
-        CTAText={"Get a quote"}
-      />
-
-      <div className="container mb-5">
-        <div className="row mt-3 mb-5">
-          <div className="col-12 col-md-4 mb-4">
-            <img
-              alt={articleData.headline}
-              className="latestBlogImage"
-              src={articleData.imageUrl}
-            />
-          </div>
-
-          <div
-            className="col-12 col-md-7 font-27 mt-5 mb-3"
-            dangerouslySetInnerHTML={{ __html: articleData.subHeading }}
-          />
-
-          {/* <div className="d-none d-md-block shareToSocialsBigVersion">
-            <ShareToSocials articleData={articleData} />
-          </div> */}
-
-          <div
-            className="col-12 "
-            dangerouslySetInnerHTML={{ __html: articleData.body }}
-          />
+      {isLoading ? (
+        <div className="text-center mt-5">
+          <p>Loading article...</p>
         </div>
+      ) : (
+        <>
+          <Helmet>
+            <link
+              rel="canonical"
+              href={`https://www.velosure.co.uk/FullBlog/${(articleData as ArticleData)?.pageURL}`}
+            />
+          </Helmet>
 
-        <ShareToSocials articleData={articleData} />
-      </div>
-      <MoreBlogs excludedArticleId={id} />
-      <WhatOurCustomersSay />
-      <div className="lightBlueBG">
-        <ProtectYourBike variant={3} />
-      </div>
+          <TopNavBar theme={"white"} />
+          <BlogBanner
+            headlineLine1={(articleData as ArticleData)?.headline}
+            headlineLine2={""}
+            author={(articleData as ArticleData)?.author}
+            avatarImageURL={(articleData as ArticleData)?.authorImage}
+            hasCTA={"false"}
+            CTAText={"Get a quote"}
+          />
+
+          <div className="container mb-5">
+            <div className="row mt-3 mb-5">
+              <div className="col-12 col-md-4 mb-4">
+                <img
+                  alt={(articleData as ArticleData)?.headline}
+                  className="latestBlogImage"
+                  src={(articleData as ArticleData)?.imageUrl}
+                />
+              </div>
+
+              <div
+                className="col-12 col-md-7 font-27 mt-5 mb-3"
+                dangerouslySetInnerHTML={{ __html: (articleData as ArticleData)?.subHeading }}
+              />
+
+              {/* <div className="d-none d-md-block shareToSocialsBigVersion">
+                <ShareToSocials articleData={articleData} />
+              </div> */}
+
+              <div
+                className="col-12 "
+                dangerouslySetInnerHTML={{ __html: (articleData as ArticleData)?.body }}
+              />
+            </div>
+
+            <ShareToSocials articleData={articleData as ArticleData} />
+          </div>
+          <MoreBlogs excludedArticleId={id} />
+          <WhatOurCustomersSay />
+          <div className="lightBlueBG">
+            <ProtectYourBike variant={3} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

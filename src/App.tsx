@@ -2,11 +2,13 @@ import { MantineProvider, type MantineThemeOverride } from "@mantine/core";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { QueryClientProvider } from "@tanstack/react-query";
 import "./styles/site.css";
 import ScrollToTop from "@/components/marketing/ScrollToTop";
 import CookieBar from "@/components/shared/CookieBar";
 import { Footer } from "@/components/shared/Footer";
 import Routes from "@/routes";
+import { queryClient } from "@/lib/react-query";
 
 const App = () => {
   const theme: MantineThemeOverride = {
@@ -40,21 +42,23 @@ const App = () => {
 
   return (
     <HelmetProvider>
-      <MantineProvider theme={theme}>
-        <Router>
-          <div className="App">
-            <div className="container-fluid">
-              <ScrollToTop>
-                <CookieBar />
-                {/* <BootstrapBreakpointVisualiser isVisible={import.meta.env.VITE_SHOW_RESPONSIVE_TOOL === 'true'}> */}
-                <Routes />
-                {/* </BootstrapBreakpointVisualiser> */}
-              </ScrollToTop>
+      <QueryClientProvider client={queryClient}>
+        <MantineProvider theme={theme}>
+          <Router>
+            <div className="App">
+              <div className="container-fluid">
+                <ScrollToTop>
+                  <CookieBar />
+                  {/* <BootstrapBreakpointVisualiser isVisible={import.meta.env.VITE_SHOW_RESPONSIVE_TOOL === 'true'}> */}
+                  <Routes />
+                  {/* </BootstrapBreakpointVisualiser> */}
+                </ScrollToTop>
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
-        </Router>
-      </MantineProvider>
+          </Router>
+        </MantineProvider>
+      </QueryClientProvider>
     </HelmetProvider>
   );
 };

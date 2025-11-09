@@ -5,6 +5,7 @@ import ContactUsSuccess from "./ContactUsSuccess";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useSubmitContactForm } from "@/hooks/queries/useContact";
 
 const ContactUsForm = () => {
   const botThreshold = 0.6;
@@ -12,6 +13,9 @@ const ContactUsForm = () => {
   const [recaptcha, setRecaptcha] = useState<number | null>(null);
 
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
+
+  // Use React Query mutation for form submission
+  const submitContactForm = useSubmitContactForm();
 
   const schema = Yup.object().shape({
     forename: Yup.string()
@@ -68,48 +72,29 @@ const ContactUsForm = () => {
     },
     validationSchema: schema,
 
-    onSubmit: (values) => {
-      {
-        fetch(`${import.meta.env.VITE_VELOSURE_API_URL}/api/Email/ContactUs`, {
-          method: "POST",
-          headers: {
-            "X-API-KEY": import.meta.env.VITE_VELOSURE_API_KEY,
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({
-            natureOfEnquiry: "General Enquiry",
-            firstName: values.forename,
-            lastName: values.surname,
-            emailAddress: values.email.trim(),
-            phoneNumber: values.telephoneNo.trim(),
-            enquiry: values.enquiry,
-            marketByTelephone: values.marketByTelephone ? true : false,
-            marketByEmail: values.marketByEmail ? true : false,
-            marketByTelephoneCarbon: values.marketByTelephoneCarbon
-              ? true
-              : false,
-            marketByEmailCarbon: values.marketByEmailCarbon ? true : false,
-            acceptedPrivacyPolicy: true,
-          }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw Error("The message could not be sent.");
-            } else {
-              setSentSuccessfully(true);
-            }
-            setFormSubmitClicked(true);
-
-            return response.json();
-          })
-          // .then((_data) => {
-          //   // Data handling can be added here if needed
-          // })
-          .catch((err: unknown) => {
-            console.log({ err });
-            // Error handling can be added here if needed
-          });
+    onSubmit: async (values) => {
+      try {
+        await submitContactForm.mutateAsync({
+          natureOfEnquiry: "General Enquiry",
+          firstName: values.forename,
+          lastName: values.surname,
+          emailAddress: values.email.trim(),
+          phoneNumber: values.telephoneNo.trim(),
+          enquiry: values.enquiry,
+          marketByTelephone: values.marketByTelephone ? true : false,
+          marketByEmail: values.marketByEmail ? true : false,
+          marketByTelephoneCarbon: values.marketByTelephoneCarbon
+            ? true
+            : false,
+          marketByEmailCarbon: values.marketByEmailCarbon ? true : false,
+          acceptedPrivacyPolicy: true,
+        });
+        setSentSuccessfully(true);
+        setFormSubmitClicked(true);
         window.scrollTo(0, 0);
+      } catch (error) {
+        console.log({ error });
+        // Error handling can be added here if needed
       }
     },
   });
@@ -450,8 +435,12 @@ const ContactUsForm = () => {
                   </div>
 
                   <div className="col-12">
-                    <button type="submit" className="btn btn-wider btn-primary">
-                      Submit
+                    <button
+                      type="submit"
+                      className="btn btn-wider btn-primary"
+                      disabled={submitContactForm.isPending}
+                    >
+                      {submitContactForm.isPending ? "Submitting..." : "Submit"}
                     </button>
                   </div>
                 </div>

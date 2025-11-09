@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSafeContext } from "@/context/journeyStore";
 import useGlobalStateAdaptor from "@/hooks/useGlobalStateAdaptor";
+import { useRetrieveQuoteByDetails } from "@/hooks/queries/useQuotes";
 import * as Yup from "yup";
 
 const QRLandingPage = () => {
@@ -13,6 +14,9 @@ const QRLandingPage = () => {
   const [_gState, setGState] = useSafeContext({
     componentName: "QRLandingPage",
   });
+
+  // React Query mutation for retrieving quotes by details
+  const retrieveQuoteByDetailsMutation = useRetrieveQuoteByDetails();
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const quoteId = params.get("PolicyReference") as string;
@@ -83,60 +87,54 @@ const QRLandingPage = () => {
       setLoading(true);
       setErrored(false);
       setExpired(false);
-      const url = `${import.meta.env.VITE_TRANSACTOR_API_ENDPOINT}/PedalCycle/RetrieveQuote`;
-      const options = {
-        method: "POST",
-        headers: {
-          authKey: import.meta.env.VITE_TRANSACTOR_AUTH_KEY,
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          QuoteReference: quoteId,
-          DOB: new Date(
-            Date.UTC(
-              Number(values.dob_y),
-              Number(values.dob_m) - 1,
-              Number(values.dob_d),
-            ),
+
+      const quoteDetails = {
+        QuoteReference: quoteId,
+        DOB: new Date(
+          Date.UTC(
+            Number(values.dob_y),
+            Number(values.dob_m) - 1,
+            Number(values.dob_d),
           ),
-          policyDetailsID: policyDetailsID,
-          postcode: values.postcode.replaceAll(" ", "").toUpperCase(),
-          newDD: true,
-        }),
-
-        mode: "cors" as RequestMode,
+        ),
+        postcode: values.postcode.replaceAll(" ", "").toUpperCase(),
+        policyDetailsID: policyDetailsID,
+        newDD: true,
       };
-      fetch(url, options)
-        .then((res) => {
-          if (!res.ok) {
-            setErrored(true);
-            setLoading(false);
-          }
-          return res.json();
-        })
-        .then((data) => {
-          if (data?.success === false) {
-            setErrored(true);
-            setLoading(false);
-            return;
-          }
 
-          if (data?.value?.coreQuote?.expired) {
-            setExpired(true);
-            setLoading(false);
-            return;
-          }
-
-          setVals(data.value);
-          setLoading(false);
-        })
-        .catch((_err) => {
-          setErrored(true);
-          setLoading(false);
-        });
+      retrieveQuoteByDetailsMutation.mutate(quoteDetails);
     },
   });
+
+  // Handle quote retrieval by details mutation response
+  useEffect(() => {
+    if (retrieveQuoteByDetailsMutation.isSuccess && retrieveQuoteByDetailsMutation.data) {
+      const data = retrieveQuoteByDetailsMutation.data;
+
+      if (data?.success === false) {
+        setErrored(true);
+        setLoading(false);
+        return;
+      }
+
+      if (data?.value?.coreQuote?.expired) {
+        setExpired(true);
+        setLoading(false);
+        return;
+      }
+
+      setVals(data.value);
+      setLoading(false);
+    }
+  }, [retrieveQuoteByDetailsMutation.isSuccess, retrieveQuoteByDetailsMutation.data]);
+
+  // Handle quote retrieval by details mutation error
+  useEffect(() => {
+    if (retrieveQuoteByDetailsMutation.isError) {
+      setErrored(true);
+      setLoading(false);
+    }
+  }, [retrieveQuoteByDetailsMutation.isError]);
 
   return (
     <div className="container-fluid mb-5 oh">
@@ -147,9 +145,9 @@ const QRLandingPage = () => {
         subheadlineLine1={"Retrieve your quote and purchase your insurance"}
         subheadlineLine2={""}
         hasCTA={"false"}
-        rotate={loading}
+        rotate={retrieveQuoteByDetailsMutation.isPending || loading}
       />
-      <div className={loading ? "overlay" : "overlay_hidden"}>
+      <div className={retrieveQuoteByDetailsMutation.isPending || loading ? "overlay" : "overlay_hidden"}>
         <h1 className="GettingQuoteOverlayH1">Getting your quote...</h1>
       </div>
       <section className="container container_narrow">

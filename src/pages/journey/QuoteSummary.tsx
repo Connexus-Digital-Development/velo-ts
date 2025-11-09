@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSafeContext } from "@/context/journeyStore";
 import useGlobalStateAdaptor from "@/hooks/useGlobalStateAdaptor";
-import useFetch from "@/hooks/useFetch";
+import { useRetrieveQuote } from "@/hooks/queries/useQuotes";
 import YourQuote from "@/components/journey/step-three/YourQuote";
 import TopNavBlank from "@/components/shared/TopNavBlank";
 import RegularBanner from "@/components/shared/RegularBanner";
@@ -32,21 +32,16 @@ const QuoteSummary = () => {
   const [clickedButton, setClickedButton] = useState(false);
   const [canProceedToPayment, setCanProceedToPayment] = useState(true);
   const [validateNextButton, setValidateNextButton] = useState(false);
-  const url = `${import.meta.env.VITE_AGGREGATOR_API_ENDPOINT}/AggregatorBackoffice/RetrieveQuote`;
-  const options = {
-    method: "POST",
-    headers: {
-      ApiKey: import.meta.env.VITE_AGGREGATOR_AUTH_KEY,
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ QuoteId: quoteId }),
-    mode: "cors" as RequestMode,
-  };
-  const response = useFetch(url, options);
+  // React Query hook for retrieving quotes
+  const {
+    data: quoteData,
+    isLoading: isQuoteLoading,
+    error: quoteError,
+  } = useRetrieveQuote(quoteId);
 
+  // Handle quote retrieval response
   useEffect(() => {
-    if (response.error !== null) {
+    if (quoteError) {
       setErrored(true);
       setError(
         <p>
@@ -59,22 +54,24 @@ const QuoteSummary = () => {
       );
       return;
     }
-    if (response.data === null || vals !== null) {
+
+    if (quoteData === null || vals !== null) {
       return;
     }
-    if (response !== null) {
-      if (response?.data?.coreQuote.inTransactor) {
+
+    if (quoteData) {
+      if (quoteData?.coreQuote.inTransactor) {
         setIncepted(true);
         return;
       }
-      if (response?.data?.coreQuote.expired) {
+      if (quoteData?.coreQuote.expired) {
         setExpired(true);
         return;
       }
 
-      setVals(response?.data);
+      setVals(quoteData);
     }
-  }, [response, vals]);
+  }, [quoteData, quoteError, vals]);
 
   useEffect(() => {
     if (!showQuoteDetails || errored) {
@@ -123,16 +120,16 @@ const QuoteSummary = () => {
         subheadlineLine1={"Tell us about you, your bike and cover you need."}
         subheadlineLine2={""}
         hasCTA={"false"}
-        rotate={response.isPending}
+        rotate={isQuoteLoading}
       />
       <div
-        className={response.isPending || loading ? "overlay" : "overlay_hidden"}
+        className={isQuoteLoading || loading ? "overlay" : "overlay_hidden"}
       >
         <h1 className="GettingQuoteOverlayH1">
           {loading ? "Getting your updated quote..." : "Getting your quote..."}
         </h1>
       </div>
-      {!response.isPending &&
+      {!isQuoteLoading &&
         !loading &&
         gState.performanceQuote !== null &&
         !incepted &&

@@ -11,6 +11,7 @@ import TopNavBlank from "@/components/shared/TopNavBlank";
 import QuoteReferral from "@/components/journey/step-three/QuoteReferral";
 import SummaryOfCover from "@/components/journey/step-three/SummaryOfCover";
 import YourQuote from "@/components/journey/step-three/YourQuote";
+import { useGenerateQuote } from "@/hooks/queries/useQuotes";
 
 const StepThree = () => {
   const { search } = useLocation();
@@ -19,6 +20,9 @@ const StepThree = () => {
   const [gState, setGState] = useSafeContext({
     componentName: "StepThree",
   });
+
+  // React Query mutation for quote generation
+  const generateQuoteMutation = useGenerateQuote();
 
   const [error, setError] = useState<any>(null);
   const [showQuoteDetails, setShowQuoteDetails] = useState(
@@ -81,154 +85,151 @@ const StepThree = () => {
 
   useEffect(() => {
     if (generateQuote) {
-      fetch(url, options)
-        .then((res) => {
-          if (!res.ok) {
-            loggingService.logError(JSON.stringify(res));
-            throw Error("No data gathered from that resource");
-          }
-
-          return res.json();
-        })
-        .then((r) => {
-          loggingService.logInfo(
-            `Called fetch for ${url} and get response ${JSON.stringify(r)}`,
-          );
-          setIsPending(false);
-          console.log("Quote response", r);
-          if (r.value) {
-            const performanceQuote = r.value.find(
-              (f: any) => !f.schemeName.toLowerCase().includes("core"),
-            );
-            // console.log("performanceQuote", performanceQuote);
-            const coreQuote = r.value.find((f: any) =>
-              f.schemeName.toLowerCase().includes("core"),
-            );
-
-            setIsLoadingQuote(false);
-            if (
-              performanceQuote.referralReason ||
-              performanceQuote.declineReason
-            ) {
-              if (showReferralPage) {
-                return;
-              }
-              loggingService.logWarning(
-                `Quote ${performanceQuote?.quoteReference} referred or declined with reason: ${performanceQuote.referralReason} ${performanceQuote.declineReason}`,
-              );
-              setError(null);
-              setGState({
-                ...gState,
-                annualGrossPremium: performanceQuote.annualGrossPremium,
-                basePremium: performanceQuote.basePremium,
-                commission: performanceQuote.commission,
-                declineReason: performanceQuote.declineReason,
-                instalmentsApr: performanceQuote.instalmentsApr,
-                instalmentsFirstPayment:
-                  performanceQuote.instalmentsFirstPayment,
-                instalmentsGrossPremium:
-                  performanceQuote.instalmentsGrossPremium,
-                instalmentsInterestPc: performanceQuote.instalmentsInterestPc,
-                instalmentsServiceCharge:
-                  performanceQuote.instalmentsServiceCharge,
-                deposit: performanceQuote.deposit,
-                instalmentsSubsequentPayments:
-                  performanceQuote.instalmentsSubsequentPayments,
-                ipt: performanceQuote.ipt,
-                netPremium: performanceQuote.netPremium,
-                quoteReference: performanceQuote.quoteReference,
-                referralReason: performanceQuote.referralReason,
-                schemeId: performanceQuote.schemeId,
-                schemeTable: performanceQuote.schemeTable,
-                //store the core version too - although we might not need this?
-                annualGrossPremiumCore: coreQuote.annualGrossPremium,
-                basePremiumCore: coreQuote.basePremium,
-                commissionCore: coreQuote.commission,
-                declineReasonCore: coreQuote.declineReason,
-                instalmentsAprCore: coreQuote.instalmentsApr,
-                instalmentsFirstPaymentCore: coreQuote.instalmentsFirstPayment,
-                instalmentsGrossPremiumCore: coreQuote.instalmentsGrossPremium,
-                instalmentsInterestPcCore: coreQuote.instalmentsInterestPc,
-                instalmentsServiceChargeCore:
-                  coreQuote.instalmentsServiceCharge,
-                depositCore: coreQuote.deposit,
-                instalmentsSubsequentPaymentsCore:
-                  coreQuote.instalmentsSubsequentPayments,
-                iptCore: coreQuote.ipt,
-                netPremiumCore: coreQuote.netPremium,
-                coreQuote: coreQuote,
-                paymentCrumb: 0,
-                yourDetailsCrumb:
-                  gState.yourDetailsCrumb === 2 ? 1 : gState.yourDetailsCrumb,
-                yourCoverCrumb:
-                  gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
-                yourQuoteCrumb: 2,
-                currentlyEditingABike: false,
-                currentlyAddingABike: false,
-              });
-              //console.log(performanceQuote);
-              // //console.log(coreQuote);
-
-              // //console.log("CoreQuote",gState.coreQuote);
-              setShowReferralPage(true);
-              setIsLoadingQuote(false);
-              return;
-            }
-
-            if (performanceQuote.annualGrossPremium > 0) {
-              setGState({
-                ...gState,
-                coreQuote: coreQuote,
-                performanceQuote: performanceQuote,
-                initQuote: performanceQuote,
-                annualGrossPremium: performanceQuote.annualGrossPremium,
-                instalmentsSubsequentPayments:
-                  performanceQuote.instalmentsSubsequentPayments,
-                generateQuote: false,
-                paymentCrumb: 0,
-                yourDetailsCrumb:
-                  gState.yourDetailsCrumb === 2 ? 1 : gState.yourDetailsCrumb,
-                yourCoverCrumb:
-                  gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
-                yourQuoteCrumb: 2,
-                currentlyEditingABike: false,
-                currentlyAddingABike: false,
-              });
-              // Force local state updates by also updating the local variables
-              setError(null);
-              setShowQuoteDetails(true);
-              setIsLoadingQuote(false);
-              //send a quote email - only ONCE!!
-              if (!emailSent) {
-                loggingService.logInfo(
-                  `Email sent ${sent} time(s) for Quotes: ${coreQuote.quoteReference} & ${performanceQuote.quoteReference}`,
-                );
-                setSent(sent + 1);
-                setEmailSent(true);
-                transactorService.sendQuoteEmails({
-                  quoteReferences: [
-                    performanceQuote.quoteReference,
-                    coreQuote.quoteReference,
-                  ],
-                });
-              }
-              return;
-            }
-          }
-          setGenerateQuote(false);
-          setError(null);
-          setIsPending(false);
-        })
-        .catch((err) => {
-          loggingService.logInfo(`Called fetch for ${url} errored :${err}`);
-          setGenerateQuote(false);
-          setError(err.message);
-          setIsPending(false);
-        });
-
-      //store response in state
+      const riskModel = JSON.stringify(useRiskModelAdaptor(gState));
+      generateQuoteMutation.mutate(riskModel);
     }
   }, [generateQuote]);
+
+  // Handle quote generation mutation response
+  useEffect(() => {
+    if (generateQuoteMutation.isSuccess && generateQuoteMutation.data) {
+      const r = generateQuoteMutation.data;
+      loggingService.logInfo(
+        `Quote generation successful: ${JSON.stringify(r)}`,
+      );
+      setIsPending(false);
+      console.log("Quote response", r);
+
+      if (r.value) {
+        const performanceQuote = r.value.find(
+          (f: any) => !f.schemeName.toLowerCase().includes("core"),
+        );
+        const coreQuote = r.value.find((f: any) =>
+          f.schemeName.toLowerCase().includes("core"),
+        );
+
+        setIsLoadingQuote(false);
+
+        if (
+          performanceQuote.referralReason ||
+          performanceQuote.declineReason
+        ) {
+          if (showReferralPage) {
+            return;
+          }
+          loggingService.logWarning(
+            `Quote ${performanceQuote?.quoteReference} referred or declined with reason: ${performanceQuote.referralReason} ${performanceQuote.declineReason}`,
+          );
+          setError(null);
+          setGState({
+            ...gState,
+            annualGrossPremium: performanceQuote.annualGrossPremium,
+            basePremium: performanceQuote.basePremium,
+            commission: performanceQuote.commission,
+            declineReason: performanceQuote.declineReason,
+            instalmentsApr: performanceQuote.instalmentsApr,
+            instalmentsFirstPayment:
+              performanceQuote.instalmentsFirstPayment,
+            instalmentsGrossPremium:
+              performanceQuote.instalmentsGrossPremium,
+            instalmentsInterestPc: performanceQuote.instalmentsInterestPc,
+            instalmentsServiceCharge:
+              performanceQuote.instalmentsServiceCharge,
+            deposit: performanceQuote.deposit,
+            instalmentsSubsequentPayments:
+              performanceQuote.instalmentsSubsequentPayments,
+            ipt: performanceQuote.ipt,
+            netPremium: performanceQuote.netPremium,
+            quoteReference: performanceQuote.quoteReference,
+            referralReason: performanceQuote.referralReason,
+            schemeId: performanceQuote.schemeId,
+            schemeTable: performanceQuote.schemeTable,
+            annualGrossPremiumCore: coreQuote.annualGrossPremium,
+            basePremiumCore: coreQuote.basePremium,
+            commissionCore: coreQuote.commission,
+            declineReasonCore: coreQuote.declineReason,
+            instalmentsAprCore: coreQuote.instalmentsApr,
+            instalmentsFirstPaymentCore: coreQuote.instalmentsFirstPayment,
+            instalmentsGrossPremiumCore: coreQuote.instalmentsGrossPremium,
+            instalmentsInterestPcCore: coreQuote.instalmentsInterestPc,
+            instalmentsServiceChargeCore:
+              coreQuote.instalmentsServiceCharge,
+            depositCore: coreQuote.deposit,
+            instalmentsSubsequentPaymentsCore:
+              coreQuote.instalmentsSubsequentPayments,
+            iptCore: coreQuote.ipt,
+            netPremiumCore: coreQuote.netPremium,
+            coreQuote: coreQuote,
+            paymentCrumb: 0,
+            yourDetailsCrumb:
+              gState.yourDetailsCrumb === 2 ? 1 : gState.yourDetailsCrumb,
+            yourCoverCrumb:
+              gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
+            yourQuoteCrumb: 2,
+            currentlyEditingABike: false,
+            currentlyAddingABike: false,
+          });
+          setShowReferralPage(true);
+          setIsLoadingQuote(false);
+          return;
+        }
+
+        if (performanceQuote.annualGrossPremium > 0) {
+          setGState({
+            ...gState,
+            coreQuote: coreQuote,
+            performanceQuote: performanceQuote,
+            initQuote: performanceQuote,
+            annualGrossPremium: performanceQuote.annualGrossPremium,
+            instalmentsSubsequentPayments:
+              performanceQuote.instalmentsSubsequentPayments,
+            generateQuote: false,
+            paymentCrumb: 0,
+            yourDetailsCrumb:
+              gState.yourDetailsCrumb === 2 ? 1 : gState.yourDetailsCrumb,
+            yourCoverCrumb:
+              gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
+            yourQuoteCrumb: 2,
+            currentlyEditingABike: false,
+            currentlyAddingABike: false,
+          });
+          setError(null);
+          setShowQuoteDetails(true);
+          setIsLoadingQuote(false);
+
+          //send a quote email - only ONCE!!
+          if (!emailSent) {
+            loggingService.logInfo(
+              `Email sent ${sent} time(s) for Quotes: ${coreQuote.quoteReference} & ${performanceQuote.quoteReference}`,
+            );
+            setSent(sent + 1);
+            setEmailSent(true);
+            transactorService.sendQuoteEmails({
+              quoteReferences: [
+                performanceQuote.quoteReference,
+                coreQuote.quoteReference,
+              ],
+            });
+          }
+          return;
+        }
+      }
+      setGenerateQuote(false);
+      setError(null);
+      setIsPending(false);
+    }
+  }, [generateQuoteMutation.isSuccess, generateQuoteMutation.data]);
+
+  // Handle quote generation mutation error
+  useEffect(() => {
+    if (generateQuoteMutation.isError) {
+      const error = generateQuoteMutation.error as Error;
+      loggingService.logInfo(`Quote generation failed: ${error.message}`);
+      setGenerateQuote(false);
+      setError(error.message);
+      setIsPending(false);
+    }
+  }, [generateQuoteMutation.isError, generateQuoteMutation.error]);
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     // next button
@@ -279,11 +280,11 @@ const StepThree = () => {
           subheadlineLine2={""}
           hasCTA={"false"}
           CTAText={"Get a quote"}
-          rotate={isPending || loading || loadingQuote === true}
+          rotate={generateQuoteMutation.isPending || loading || loadingQuote === true}
         />
         <div
           className={
-            isPending || loading || loadingQuote === true
+            generateQuoteMutation.isPending || loading || loadingQuote === true
               ? "overlay"
               : "overlay_hidden"
           }
@@ -297,7 +298,7 @@ const StepThree = () => {
 
         <Breadcrumbs />
 
-        {!isPending && !showReferralPage && (
+        {!generateQuoteMutation.isPending && !showReferralPage && (
           <YourQuote
             error={error}
             coreQuote={gState.coreQuote}
