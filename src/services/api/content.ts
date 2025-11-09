@@ -8,6 +8,15 @@ export const contentApi = {
       `/api/ConnexusCMS/Articles/GetNumberOfArticles/${brand}/${count}`,
     ),
 
+  getAllArticles: (brand: string): Promise<ExecResponse<any[]>> =>
+    veloApiClient.get(`/api/ConnexusCMS/Articles/GetArticles/${brand}`),
+
+  getCategories: (categoryType: string): Promise<ExecResponse<any[]>> =>
+    veloApiClient.get(`/api/ConnexusCMS/Categories/GetCategoriesByType/${categoryType}`),
+
+  getFAQs: (brand: string): Promise<ExecResponse<any[]>> =>
+    veloApiClient.get(`/api/ConnexusCMS/FAQs/GetFAQs/${brand}`),
+
   getArticleBySlug: (slug: string): Promise<ExecResponse<any>> =>
     veloApiClient.get(`/api/ConnexusCMS/Articles/GetArticleFromSlug/${slug}`),
 };

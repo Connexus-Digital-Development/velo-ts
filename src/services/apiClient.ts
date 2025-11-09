@@ -14,16 +14,29 @@ class ApiClient {
     options: RequestInit = {}
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
     const config: RequestInit = {
       ...options,
       headers: {
         ...this.headers,
         ...options.headers,
       },
+      signal: controller.signal,
     };
 
-    const response = await fetch(url, config);
-    return restApiCommBaseService.handleResponse(response);
+    try {
+      const response = await fetch(url, config);
+      clearTimeout(timeoutId);
+      return restApiCommBaseService.handleResponse(response);
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw new Error('Request timeout');
+      }
+      throw error;
+    }
   }
 
   async get<T>(endpoint: string, options?: RequestInit): Promise<T> {

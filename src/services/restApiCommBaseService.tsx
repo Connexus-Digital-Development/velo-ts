@@ -23,6 +23,14 @@ export const restApiCommBaseService = {
       }
 
       return data;
+    }).catch((parseError) => {
+      // Handle JSON parsing errors (including timeouts)
+      const error: ApiError = {
+        message: parseError instanceof Error ? parseError.message : 'Unknown error occurred',
+        status: 0, // Network or parsing error
+      };
+      loggingService.logError(error.message);
+      return Promise.reject(error);
     });
   },
 };

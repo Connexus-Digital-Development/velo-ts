@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { useArticles } from "@/hooks/queries/useContent";
 
 const PitstopPreview = () => {
   const getSize = () => {
@@ -9,34 +10,13 @@ const PitstopPreview = () => {
     return 3;
   };
 
-  const [articleData, setArticleData] = useState<any[]>([]);
   const [windowSize] = useState(window.innerWidth);
-  const [size] = useState(getSize());
+  const size = getSize();
+  const brand = import.meta.env.VITE_CONNEXUS_BRAND;
 
-  useEffect(() => {
-    getArticleData();
-  }, [windowSize]);
-
-  const getArticleData = async () => {
-    const options = {
-      method: "GET",
-      headers: {
-        "X-API-KEY": import.meta.env.VITE_VELOSURE_API_KEY,
-        "content-type": "application/json",
-      },
-    };
-
-    console.log(import.meta.env.VITE_VELOSURE_API_URL);
-
-    const articles = await fetch(
-      `${import.meta.env.VITE_VELOSURE_API_URL}/api/ConnexusCMS/Articles/GetNumberOfArticles/${import.meta.env.VITE_CONNEXUS_BRAND}/${size}`,
-      options,
-    )
-      .then((response) => response.json())
-      .then((data) => data);
-
-    setArticleData(articles);
-  };
+  const { data: articleResponse, isLoading, error } = useArticles(brand, size);
+  const articleData = articleResponse?.Value || [];
+  const hasApiError = error || (articleResponse && !articleResponse.Success);
 
   return (
     <div className="container-fluid rp oh greyBG">
@@ -47,40 +27,52 @@ const PitstopPreview = () => {
           cycling world.
         </h4>
         <div className="row">
-          {articleData.map((article) => (
-            <div className="col-xl-4  col-sm-6 mb-sm-5" key={article.id}>
-              <Link
-                className="pitstopAnchors"
-                to={`/FullBlog/${article.pageURL}`}
-              >
-                <div className="card card blog-card oh">
-                  <div className="card-header blog-card-header">
-                    <img src={article.imageUrl} alt={article.headline} />
-                    <div className="card-divider"></div>
-                    <div className="card-category">
-                      <p>{article.category.name}</p>
-                    </div>
-                  </div>
-                  <div className="card-body blog-card-body">
-                    <div className="blog-date">
-                      <p>
-                        {moment(article.publishedDate).format("D MMMM YYYY")}
-                      </p>
-                    </div>
-                    <div className="blog-author">
-                      <p>Written by {article.author}</p>
-                    </div>
-                    <div className="blog-heading">
-                      <h2>{article.headline}</h2>
-                    </div>
-                    <div className="blog-sub-heading">
-                      <p className="clampedToTwoLines">{article.subHeading}</p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+          {isLoading ? (
+            <div className="text-center py-5">
+              <p>Loading articles...</p>
             </div>
-          ))}
+          ) : hasApiError ? (
+            <div className="text-center py-5">
+              <p>Error loading articles. Please try again later.</p>
+            </div>
+          ) : (
+            articleData.map((article) => (
+              <div className="col-xl-4  col-sm-6 mb-sm-5" key={article.id}>
+                <Link
+                  className="pitstopAnchors"
+                  to={`/FullBlog/${article.pageURL}`}
+                >
+                  <div className="card card blog-card oh">
+                    <div className="card-header blog-card-header">
+                      <img src={article.imageUrl} alt={article.headline} />
+                      <div className="card-divider"></div>
+                      <div className="card-category">
+                        <p>{article.category.name}</p>
+                      </div>
+                    </div>
+                    <div className="card-body blog-card-body">
+                      <div className="blog-date">
+                        <p>
+                          {moment(article.publishedDate).format("D MMMM YYYY")}
+                        </p>
+                      </div>
+                      <div className="blog-author">
+                        <p>Written by {article.author}</p>
+                      </div>
+                      <div className="blog-heading">
+                        <h2>{article.headline}</h2>
+                      </div>
+                      <div className="blog-sub-heading">
+                        <p className="clampedToTwoLines">
+                          {article.subHeading}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))
+          )}
         </div>
         <div className="text-center mb-5">
           <Link className="pitstopAnchors btn btn-primary" to="/Pitstop">

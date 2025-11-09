@@ -1,6 +1,7 @@
 import Question from "./Question";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Spinner from "@/components/shared/Spinner";
+import { useFAQs, useCategories } from "@/hooks/queries/useContent";
 
 interface FAQItem {
   id: number;
@@ -25,62 +26,43 @@ interface StructuredDataItem {
 }
 
 const FAQSection = () => {
-  const [structuredData, setStructuredData] = useState<StructuredDataItem[]>(
-    [],
-  );
-  const [filteredData, setFilteredData] = useState<FAQItem[]>([]);
-  const [activeCategory, setActiveCategory] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const brand = import.meta.env.VITE_CONNEXUS_BRAND;
+  const faqCategoryType = import.meta.env.VITE_FAQS_CATEGORY_TYPE;
 
-  useEffect(() => {
-    generateAndDefaultData();
-  }, []);
+  const { data: faqsResponse, isLoading: faqsLoading, error: faqsError } =
+    useFAQs(brand);
+  const { data: categoriesResponse, isLoading: categoriesLoading, error: categoriesError } =
+    useCategories(faqCategoryType);
 
-  const generateAndDefaultData = async () => {
-    const options = {
-      method: "GET",
-      headers: {
-        "X-API-KEY": import.meta.env.VITE_VELOSURE_API_KEY,
-        "content-type": "application/json",
-      },
-    };
-    const categories = await fetch(
-      `${import.meta.env.VITE_VELOSURE_API_URL}/api/ConnexusCMS/Categories/GetCategoriesByType/${import.meta.env.VITE_FAQS_CATEGORY_TYPE}`,
-      options,
-    )
-      .then((response) => response.json())
-      .then((data) => data);
-    const faqs = await fetch(
-      `${import.meta.env.VITE_VELOSURE_API_URL}/api/ConnexusCMS/FAQs/GetFAQs/${import.meta.env.VITE_CONNEXUS_BRAND}`,
-      options,
-    )
-      .then((response) => response.json())
-      .then((data) => data);
+  const faqs = useMemo(() => faqsResponse?.Value || [], [faqsResponse]);
+  const categories = useMemo(() => categoriesResponse?.Value || [], [categoriesResponse]);
 
-    categories.forEach((category: CategoryItem) => {
+  const hasApiError = faqsError || categoriesError ||
+    (faqsResponse && !faqsResponse.Success) ||
+    (categoriesResponse && !categoriesResponse.Success);
+
+  const structuredData = useMemo(() => {
+    if (!faqs.length || !categories.length) return [];
+
+    const result = categories.map((category: CategoryItem) => {
       const filteredFaqs = faqs.filter(
         (faq: FAQItem) => faq.category.id === category.id,
       );
-      setStructuredData((prevState: StructuredDataItem[]) => [
-        ...prevState,
-        { name: category.name, faqs: filteredFaqs },
-      ]);
+      return { name: category.name, faqs: filteredFaqs };
     });
 
-    // Default to show all
-    setActiveCategory(0);
-    setFilteredData(
-      faqs.filter((faq: FAQItem) => faq.category.id === categories[0].id),
-    );
-    setLoading(false);
-  };
+    return result;
+  }, [faqs, categories]);
+
+  const [activeCategory, setActiveCategory] = useState(0);
+
+  const filteredData = structuredData[activeCategory]?.faqs || [];
 
   const handleCategoryFilterChange = (index: number) => {
     setActiveCategory(index);
-    setFilteredData((structuredData[index] as any).faqs);
   };
 
-  if (loading)
+  if (faqsLoading || categoriesLoading) {
     return (
       <div className="container my-5 py-5 text-center ">
         {" "}
@@ -90,6 +72,15 @@ const FAQSection = () => {
         </h4>
       </div>
     );
+  }
+
+  if (hasApiError) {
+    return (
+      <div className="container my-5 py-5 text-center">
+        <h4>Error loading FAQs. Please try again later.</h4>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-sm-5 mt-3 mb-5 oh ">
