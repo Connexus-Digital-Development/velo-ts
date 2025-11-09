@@ -20,25 +20,26 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
   const [showAddBikeMessage, setShowAddBikeMessage] = useState(false);
   const [isElectric, setIsElectric] = useState(false);
   const [electricAgreed, setElectricAgreed] = useState(false);
+
   useEffect(() => {
     if (validateNextButton && gState.currentlyAddingABike) {
       setShowAddBikeMessage(true);
     }
   }, [validateNextButton, gState.currentlyAddingABike]);
 
-  useEffect(() => {
-    // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
-    if (gState.bikes.length === 0) {
-      setGState({
-        ...gState,
-        yourCoverCrumb: 0,
-        paymentCrumb: 0,
-        yourQuoteCrumb: 0,
-        yourDetailsCrumb: 0,
-        generateQuote: true,
-      });
-    }
-  }, [gState, setGState]);
+  // useEffect(() => {
+  //   // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
+  //   if (gState.bikes.length === 0) {
+  //     setGState({
+  //       ...gState,
+  //       yourCoverCrumb: 0,
+  //       paymentCrumb: 0,
+  //       yourQuoteCrumb: 0,
+  //       yourDetailsCrumb: 0,
+  //       generateQuote: true,
+  //     });
+  //   }
+  // }, [gState, setGState]);
 
   const formik = useFormik<BikeFormValues>({
     initialValues: {

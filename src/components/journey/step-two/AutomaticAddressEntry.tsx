@@ -1,39 +1,33 @@
 import { type FormikProps } from "formik";
 import { type AboutYouFormValues } from "@/models/JourneyComponentTypes";
 import type { AddressLookupResult } from "@/models/api";
-import AddressPreview from "../AddressPreview";
-import ManualAddressEntry from "../ManualAddressEntry";
 import Spinner from "@/components/shared/Spinner";
 
-interface AddressSectionProps {
+interface AutomaticAddressEntryProps {
   formik: FormikProps<AboutYouFormValues>;
   gState: any;
   setGState: (state: any) => void;
   addressData: { Value?: AddressLookupResult[] } | undefined;
   error: string | null;
   addressesFound: boolean;
-  showManualAddress: boolean;
-  setShowManualAddress: (show: boolean) => void;
   isPending: boolean;
   postcodeRegex: RegExp;
   handleFindAddress: (e: React.FormEvent) => void;
   handleAddressSelect: (index: string) => void;
+  setShowManualAddress: (show: boolean) => void;
 }
 
-const AddressSection = ({
+const AutomaticAddressEntry = ({
   formik,
   gState,
-  setGState,
   addressData,
-  error,
   addressesFound,
-  showManualAddress,
-  setShowManualAddress,
   isPending,
   postcodeRegex,
   handleFindAddress,
   handleAddressSelect,
-}: AddressSectionProps) => {
+  setShowManualAddress,
+}: AutomaticAddressEntryProps) => {
   return (
     <>
       {gState.hideAddressForm === false && (
@@ -51,7 +45,6 @@ const AddressSection = ({
                 className="form-control"
                 id="houseNumber"
                 autoComplete="off"
-                // placeholder="Enter house name or house number"
                 value={formik.values.houseNumber}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -67,7 +60,6 @@ const AddressSection = ({
                 }`}
                 id="postalCode"
                 autoComplete="off"
-                // placeholder="Enter postcode to search"
                 value={formik.values.postalCode}
                 onChange={(e) => {
                   e.currentTarget.value = e.currentTarget.value.toUpperCase();
@@ -83,6 +75,7 @@ const AddressSection = ({
             </div>
             <div className="col-12 col-sm-12 ">
               <button
+                tabIndex={0}
                 className="btn btn-primary btn-wider col-12 col-md-5 mb-1"
                 disabled={
                   formik.values.postalCode.length < 5 ||
@@ -93,7 +86,9 @@ const AddressSection = ({
                 Find Address
               </button>
 
-              <a
+              <button
+                tabIndex={0}
+                type="button"
                 className="btn btn-green btn-wider col-12 col-md-5 offset-md-2"
                 onClick={() => {
                   formik.setFieldValue("showManualAddress", true);
@@ -103,34 +98,20 @@ const AddressSection = ({
                       formik.values.addressLine1?.length > 1,
                   );
                   setShowManualAddress(true);
-                  // setAddressesFound(false);
                 }}
               >
                 Enter manually
-              </a>
+              </button>
             </div>
             {isPending && <Spinner colour="velo-blue" />}
-            {showManualAddress && (
-              <div>
-                <p className="redFont mt-3">{error} </p>
-                <ManualAddressEntry
-                  formik={formik}
-                  gState={gState}
-                  setGState={setGState}
-                />
-              </div>
-            )}
-
             {addressesFound === true && (
               <select
-                // type="text"
                 className="form-control form-select mt-3"
                 id="AddressDD"
                 onChange={(e) => {
                   handleAddressSelect(e.target.value);
                 }}
                 onBlur={formik.handleBlur}
-                // placeholder="select "
               >
                 <option>Please select</option>
                 {addressData?.Value?.map((address, index) => {
@@ -150,10 +131,8 @@ const AddressSection = ({
           </div>
         </div>
       )}
-
-      {gState.hideAddressForm === true && <AddressPreview formik={formik} />}
     </>
   );
 };
 
-export default AddressSection;
+export default AutomaticAddressEntry;

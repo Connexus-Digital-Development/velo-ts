@@ -160,6 +160,7 @@ const StepOne = (): React.JSX.Element => {
       return;
     }
   };
+
   function handleSetSob() {
     setSearched(true);
     setGState({
@@ -217,15 +218,15 @@ const StepOne = (): React.JSX.Element => {
         <div className="row">
           <div className="col-12 mb-4 mt-5">
             {locationInvalid === false && gState.hasPreviousClaim !== null && (
-              <div
+              <button
                 id="move-to-step-two"
                 className="btn btn-wider btn-green float-end mb-2 lufga-medium"
-                onClick={async (e: React.MouseEvent<HTMLDivElement>) => {
+                onClick={async (e: React.MouseEvent<HTMLButtonElement>) => {
                   await handleNextButton(e as any);
                 }}
               >
                 Next step
-              </div>
+              </button>
             )}
           </div>
         </div>

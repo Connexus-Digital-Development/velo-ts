@@ -1,4 +1,4 @@
-import AboutYou from "@/components/journey/step-two/AboutYou";
+import AboutYouView from "@/components/journey/step-two/AboutYouView";
 import Breadcrumbs from "@/components/shared/Breadcrumbs";
 import RegularBanner from "@/components/shared/RegularBanner";
 import TopNavBlank from "@/components/shared/TopNavBlank";
@@ -18,7 +18,7 @@ const StepTwo = () => {
 
       <Breadcrumbs />
 
-      <AboutYou />
+      <AboutYouView />
     </div>
   );
 };

@@ -25,8 +25,9 @@ const PersonalDetails = ({
           <label className="form-label">Title*</label>
           <div className="row" id="title">
             <div className="col-6 col-sm-2">
-              <label
+              <button
                 id="title1"
+                type="button"
                 className={`btn mr-small btn-100 mb-1 ${
                   gState.title === "Mr" ? "btn-primary" : "btn-secondary"
                 } ${
@@ -46,10 +47,11 @@ const PersonalDetails = ({
                 }}
               >
                 Mr
-              </label>
+              </button>
             </div>
             <div className="col-6 col-sm-2">
-              <label
+              <button
+                type="button"
                 id="title2"
                 className={`btn mr-small btn-100 mb-1 ${
                   gState.title === "Mrs" ? "btn-primary" : "btn-secondary"
@@ -70,10 +72,11 @@ const PersonalDetails = ({
                 }}
               >
                 Mrs
-              </label>
+              </button>
             </div>
             <div className="col-6 col-sm-2">
-              <label
+              <button
+                type="button"
                 id="title3"
                 className={`btn mr-small btn-100 mb-1 ${
                   gState.title === "Ms" ? "btn-primary" : "btn-secondary"
@@ -94,10 +97,11 @@ const PersonalDetails = ({
                 }}
               >
                 Ms
-              </label>
+              </button>
             </div>
             <div className="col-6 col-sm-2">
-              <label
+              <button
+                type="button"
                 id="title4"
                 className={`btn mr-small btn-100 mb-1 ${
                   gState.title === "Miss" ? "btn-primary" : "btn-secondary"
@@ -118,10 +122,11 @@ const PersonalDetails = ({
                 }}
               >
                 Miss
-              </label>
+              </button>
             </div>
             <div className="col-6 col-sm-2">
-              <label
+              <button
+                type="button"
                 id="title5"
                 className={`btn mr-small btn-100 mb-1 ${
                   gState.title === "Dr" ? "btn-primary" : "btn-secondary"
@@ -142,10 +147,11 @@ const PersonalDetails = ({
                 }}
               >
                 Dr
-              </label>
+              </button>
             </div>
             <div className="col-6 col-sm-2">
-              <label
+              <button
+                type="button"
                 id="title6"
                 className={`btn mr-small btn-100 mb-1 ${
                   gState.title === "Mx" ? "btn-primary" : "btn-secondary"
@@ -167,7 +173,7 @@ const PersonalDetails = ({
                 }}
               >
                 Mx
-              </label>
+              </button>
             </div>
           </div>
           {formik.touched.title && formik.errors.title ? (

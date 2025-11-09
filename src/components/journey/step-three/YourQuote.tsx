@@ -78,34 +78,34 @@ const YourQuote: React.FC<YourQuoteProps> = ({
     setGState({
       ...gState,
       annualGrossPremium:
-        showCoreQuote?.annualGrossPremium ?? coreQuote.annualGrossPremium,
-      basePremium: showCoreQuote?.basePremium ?? coreQuote.basePremium,
-      commission: showCoreQuote?.commission ?? coreQuote.commission,
-      declineReason: showCoreQuote?.declineReason ?? coreQuote.declineReason,
-      instalmentsApr: showCoreQuote?.instalmentsApr ?? coreQuote.instalmentsApr,
-      deposit: showCoreQuote?.deposit ?? coreQuote.deposit,
+        showCoreQuote?.annualGrossPremium ?? coreQuote?.annualGrossPremium,
+      basePremium: showCoreQuote?.basePremium ?? coreQuote?.basePremium,
+      commission: showCoreQuote?.commission ?? coreQuote?.commission,
+      declineReason: showCoreQuote?.declineReason ?? coreQuote?.declineReason,
+      instalmentsApr: showCoreQuote?.instalmentsApr ?? coreQuote?.instalmentsApr,
+      deposit: showCoreQuote?.deposit ?? coreQuote?.deposit,
       instalmentsFirstPayment:
         showCoreQuote?.instalmentsFirstPayment ??
-        coreQuote.instalmentsFirstPayment,
+        coreQuote?.instalmentsFirstPayment,
       instalmentsGrossPremium:
         showCoreQuote?.instalmentsGrossPremium ??
-        coreQuote.instalmentsGrossPremium,
+        coreQuote?.instalmentsGrossPremium,
       instalmentsInterestPc:
-        showCoreQuote?.instalmentsInterestPc ?? coreQuote.instalmentsInterestPc,
+        showCoreQuote?.instalmentsInterestPc ?? coreQuote?.instalmentsInterestPc,
       instalmentsServiceCharge:
         showCoreQuote?.instalmentsServiceCharge ??
-        coreQuote.instalmentsServiceCharge,
+        coreQuote?.instalmentsServiceCharge,
       instalmentsSubsequentPayments:
         showCoreQuote?.instalmentsSubsequentPayments ??
-        coreQuote.instalmentsSubsequentPayments,
-      ipt: showCoreQuote?.ipt ?? coreQuote.ipt,
-      netPremium: showCoreQuote?.netPremium ?? coreQuote.netPremium,
-      quoteReference: showCoreQuote?.quoteReference ?? coreQuote.quoteReference,
+        coreQuote?.instalmentsSubsequentPayments,
+      ipt: showCoreQuote?.ipt ?? coreQuote?.ipt,
+      netPremium: showCoreQuote?.netPremium ?? coreQuote?.netPremium,
+      quoteReference: showCoreQuote?.quoteReference ?? coreQuote?.quoteReference,
       // policyDetailsId:
       //   showCoreQuote?.quoteReference ?? coreQuote.policyDetailsId,
-      referralReason: showCoreQuote?.referralReason ?? coreQuote.referralReason,
-      schemeId: showCoreQuote?.schemeId ?? coreQuote.schemeId,
-      schemeTable: showCoreQuote?.schemeTable ?? coreQuote.schemeTable,
+      referralReason: showCoreQuote?.referralReason ?? coreQuote?.referralReason,
+      schemeId: showCoreQuote?.schemeId ?? coreQuote?.schemeId,
+      schemeTable: showCoreQuote?.schemeTable ?? coreQuote?.schemeTable,
       selectedCoreScheme: true,
       coreQuote: showCoreQuote ?? coreQuote,
       // personalAccident: gState.personalAccidentCore,
@@ -123,52 +123,52 @@ const YourQuote: React.FC<YourQuoteProps> = ({
     setHighlightPerformance(true);
     console.log(
       "showPerformanceQuote",
-      showPerformanceQuote.annualGrossPremium,
+      showPerformanceQuote?.annualGrossPremium,
     );
-    console.log("performanceQuote,", performanceQuote.annualGrossPremium);
+    console.log("performanceQuote,", performanceQuote?.annualGrossPremium);
     setGState({
       ...gState,
       annualGrossPremium:
         showPerformanceQuote?.annualGrossPremium ??
-        performanceQuote.annualGrossPremium,
+        performanceQuote?.annualGrossPremium,
       basePremium:
-        showPerformanceQuote?.basePremium ?? performanceQuote.basePremium,
+        showPerformanceQuote?.basePremium ?? performanceQuote?.basePremium,
       commission:
-        showPerformanceQuote?.commission ?? performanceQuote.commission,
+        showPerformanceQuote?.commission ?? performanceQuote?.commission,
       declineReason:
-        showPerformanceQuote?.declineReason ?? performanceQuote.declineReason,
+        showPerformanceQuote?.declineReason ?? performanceQuote?.declineReason,
       instalmentsApr:
-        showPerformanceQuote?.instalmentsApr ?? performanceQuote.instalmentsApr,
-      deposit: showPerformanceQuote?.deposit ?? performanceQuote.deposit,
+        showPerformanceQuote?.instalmentsApr ?? performanceQuote?.instalmentsApr,
+      deposit: showPerformanceQuote?.deposit ?? performanceQuote?.deposit,
       instalmentsFirstPayment:
         showPerformanceQuote?.instalmentsFirstPayment ??
-        performanceQuote.instalmentsFirstPayment,
+        performanceQuote?.instalmentsFirstPayment,
       instalmentsGrossPremium:
         showPerformanceQuote?.instalmentsGrossPremium ??
-        performanceQuote.instalmentsGrossPremium,
+        performanceQuote?.instalmentsGrossPremium,
       instalmentsInterestPc:
         showPerformanceQuote?.instalmentsInterestPc ??
-        performanceQuote.instalmentsInterestPc,
+        performanceQuote?.instalmentsInterestPc,
       instalmentsServiceCharge:
         showPerformanceQuote?.instalmentsServiceCharge ??
-        performanceQuote.instalmentsServiceCharge,
+        performanceQuote?.instalmentsServiceCharge,
       instalmentsSubsequentPayments:
         showPerformanceQuote?.instalmentsSubsequentPayments ??
-        performanceQuote.instalmentsSubsequentPayments,
-      ipt: showPerformanceQuote?.ipt ?? performanceQuote.ipt,
+        performanceQuote?.instalmentsSubsequentPayments,
+      ipt: showPerformanceQuote?.ipt ?? performanceQuote?.ipt,
       netPremium:
-        showPerformanceQuote?.netPremium ?? performanceQuote.netPremium,
+        showPerformanceQuote?.netPremium ?? performanceQuote?.netPremium,
       quoteReference:
-        showPerformanceQuote?.quoteReference ?? performanceQuote.quoteReference,
+        showPerformanceQuote?.quoteReference ?? performanceQuote?.quoteReference,
       // TODO: confirm if needed, doesn't exist on JourneyState
       // policyDetailsId:
       //   showPerformanceQuote?.quoteReference ??
       //   performanceQuote.policyDetailsId,
       referralReason:
-        showPerformanceQuote?.referralReason ?? performanceQuote.referralReason,
-      schemeId: showPerformanceQuote?.schemeId ?? performanceQuote.schemeId,
+        showPerformanceQuote?.referralReason ?? performanceQuote?.referralReason,
+      schemeId: showPerformanceQuote?.schemeId ?? performanceQuote?.schemeId,
       schemeTable:
-        showPerformanceQuote?.schemeTable ?? performanceQuote.schemeTable,
+        showPerformanceQuote?.schemeTable ?? performanceQuote?.schemeTable,
       selectedCoreScheme: false,
       performanceQuote: showPerformanceQuote ?? performanceQuote,
       // personalAccident: gState.personalAccidentPerformance,

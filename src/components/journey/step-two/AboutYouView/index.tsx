@@ -17,7 +17,8 @@ import CoverSection from "./CoverSection";
 
 const postcodeRegex =
   /^(([A-Z][A-HJ-Y]?\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}|BFPO ?\d{1,4}|(KY\d|MSR|VG|AI)[ ]?\d{4}|[A-Z]{2} ?\d{2}|GE ?CX|GIR ?0A{2}|SAN ?TA1)$/;
-const AboutYou = () => {
+
+const AboutYouView = () => {
   const { search } = useLocation();
   const [gState, setGState] = useSafeContext({
     componentName: "AboutYou",
@@ -45,6 +46,19 @@ const AboutYou = () => {
   const [SOBId, setSOBId] = useState<number>(
     gState.sourceOfBusinessId ? parseInt(gState.sourceOfBusinessId) : 0,
   );
+
+  const YearsList = () => {
+    const years = [];
+
+    for (let i = upper; i >= lower; i--) {
+      years.push(i);
+    }
+    return years;
+  };
+
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const days = [...Array(32).keys()].slice(1);
+  const years = YearsList();
 
   const schema = Yup.object().shape({
     showManualAddress: Yup.boolean(),
@@ -311,14 +325,6 @@ const AboutYou = () => {
     return new Date(year, month, day + 45);
   };
 
-  useEffect(() => {
-    console.log("AboutYou useEffect on load");
-    // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
-    if (gState.bikes.length === 0) {
-      navigate(`/get-a-quote${search}`);
-    }
-  }, [gState.bikes.length, navigate, search]);
-
   const handleStartEndDate = (date: Date | null): void => {
     formik.setFieldValue("coverStart", date, false);
     setGState({
@@ -328,22 +334,6 @@ const AboutYou = () => {
       coverStartDate: date,
     });
   };
-
-  useEffect(() => {
-    const updatedState =
-      modelAdaptorHelper.resetAssumptionsAndDeclarations(gState);
-    setGState({
-      ...updatedState,
-      paymentCrumb: 0,
-      generateQuote: true,
-      yourQuoteCrumb: gState.yourQuoteCrumb === 2 ? 1 : gState.yourQuoteCrumb,
-      yourCoverCrumb: gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
-      yourDetailsCrumb: 2,
-      currentlyEditingABike: false,
-      currentlyAddingABike: false,
-      selectedCoreScheme: null,
-    });
-  }, [gState, setGState]);
 
   const showSingleAddress = useCallback(
     (selectedAddress: AddressLookupResult): void => {
@@ -398,75 +388,6 @@ const AboutYou = () => {
     },
     [gState, setGState, formik, setAddressesFound],
   );
-
-  useEffect(() => {
-    if (!addressData) {
-      //console.log("no address data");
-      return;
-    }
-
-    const filtered = addressData.Value?.filter((hn) => {
-      return (
-        `${hn.houseNumber} ${hn.street}`.startsWith(
-          formik.values.houseNumber,
-        ) ||
-        (hn.houseName &&
-          `${hn.houseName} ${hn.street}`.startsWith(formik.values.houseNumber))
-      );
-    });
-
-    if (filtered?.length === 1) {
-      //we found one matching address so lets hide all the guff and show this address.
-      showSingleAddress(filtered[0]);
-    }
-  }, [addressData, formik.values.houseNumber, showSingleAddress]);
-
-  // Handle React Query response
-  useEffect(() => {
-    if (isAddressLoading) {
-      setIsPending(true);
-      return;
-    }
-
-    setIsPending(false);
-
-    if (addressError) {
-      loggingService.logWarning(
-        `Address lookup failed with postcode: ${formik.values.postalCode}`,
-      );
-      setError(
-        "Address lookup failed for that postcode. Please try again or use the following form.",
-      );
-      formik.setFieldValue("showManualAddress", true);
-      setShowManualAddress(true);
-      return;
-    }
-
-    if (addressData) {
-      if (addressData.Success === false) {
-        loggingService.logWarning(
-          `Address lookup returned no results for postcode: ${formik.values.postalCode}`,
-        );
-        setError(
-          "Address lookup failed for that postcode. Please try again or use the following form.",
-        );
-        formik.setFieldValue("showManualAddress", true);
-        setShowManualAddress(true);
-        return;
-      }
-
-      // Success - show addresses
-      formik.setFieldValue("showManualAddress", false);
-      setError(null);
-      setAddressesFound(true);
-    }
-  }, [
-    addressData,
-    addressError,
-    isAddressLoading,
-    formik.values.postalCode,
-    formik,
-  ]);
 
   const handleAddressSelect = (index: string): void => {
     if (!addressData || !addressData.Value) return;
@@ -532,44 +453,6 @@ const AboutYou = () => {
     setAddressesFound(false);
   };
 
-  const YearsList = () => {
-    const years = [];
-
-    for (let i = upper; i >= lower; i--) {
-      years.push(i);
-    }
-    return years;
-  };
-
-  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const days = [...Array(32).keys()].slice(1);
-  const years = YearsList();
-
-  useEffect(() => {
-    if (
-      formik.isValid &&
-      formik.dirty &&
-      gState.AboutYouFormIsValid === false
-    ) {
-      setGState({
-        ...gState,
-        AboutYouFormIsValid: true,
-      });
-    }
-  }, [formik, gState, setGState]);
-
-  useEffect(() => {
-    if (!formik.isSubmitting) return;
-    const errors = Object.keys(formik.errors).filter(
-      (f) => f !== "showManualAddress",
-    );
-    if (errors.length > 0) {
-      const element = document.getElementById(errors[0]);
-      // scroll up to first error
-      element?.scrollIntoView({ behavior: "auto", block: "center" });
-    }
-  }, [formik]);
-
   const handleMarketingReferenceChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
@@ -607,6 +490,129 @@ const AboutYou = () => {
     setCustomReference(false);
     setRetailerReference(false);
   };
+
+  // Handle React Query response
+  useEffect(() => {
+    if (isAddressLoading) {
+      setIsPending(true);
+      return;
+    }
+
+    setIsPending(false);
+
+    if (addressError) {
+      loggingService.logWarning(
+        `Address lookup failed with postcode: ${formik.values.postalCode}`,
+      );
+      setError(
+        "Address lookup failed for that postcode. Please try again or use the following form.",
+      );
+      formik.setFieldValue("showManualAddress", true);
+      setShowManualAddress(true);
+      return;
+    }
+
+    if (addressData) {
+      if (addressData.Success === false) {
+        loggingService.logWarning(
+          `Address lookup returned no results for postcode: ${formik.values.postalCode}`,
+        );
+        setError(
+          "Address lookup failed for that postcode. Please try again or use the following form.",
+        );
+        formik.setFieldValue("showManualAddress", true);
+        setShowManualAddress(true);
+        return;
+      }
+
+      // Success - show addresses
+      formik.setFieldValue("showManualAddress", false);
+      setError(null);
+      setAddressesFound(true);
+    }
+  }, [
+    addressData,
+    addressError,
+    isAddressLoading,
+    formik.values.postalCode,
+    formik,
+  ]);
+
+  // on load checks
+  useEffect(() => {
+    console.log("AboutYou useEffect on load");
+    // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
+    if (gState.bikes.length === 0) {
+      navigate(`/get-a-quote${search}`);
+    }
+  }, [gState.bikes.length, navigate, search]);
+
+  //
+  // useEffect(() => {
+  //   const updatedState =
+  //     modelAdaptorHelper.resetAssumptionsAndDeclarations(gState);
+  //   setGState({
+  //     ...updatedState,
+  //     paymentCrumb: 0,
+  //     generateQuote: true,
+  //     yourQuoteCrumb: gState.yourQuoteCrumb === 2 ? 1 : gState.yourQuoteCrumb,
+  //     yourCoverCrumb: gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
+  //     yourDetailsCrumb: 2,
+  //     currentlyEditingABike: false,
+  //     currentlyAddingABike: false,
+  //     selectedCoreScheme: null,
+  //   });
+  // }, [gState, setGState]);
+
+  // Auto-select address if only one match
+  useEffect(() => {
+    if (!addressData) {
+      //console.log("no address data");
+      return;
+    }
+
+    const filtered = addressData.Value?.filter((hn) => {
+      return (
+        `${hn.houseNumber} ${hn.street}`.startsWith(
+          formik.values.houseNumber,
+        ) ||
+        (hn.houseName &&
+          `${hn.houseName} ${hn.street}`.startsWith(formik.values.houseNumber))
+      );
+    });
+
+    if (filtered?.length === 1) {
+      //we found one matching address so lets hide all the guff and show this address.
+      showSingleAddress(filtered[0]);
+    }
+  }, [addressData, formik.values.houseNumber, showSingleAddress]);
+
+  // set form valid state in global state
+  useEffect(() => {
+    if (
+      formik.isValid &&
+      formik.dirty &&
+      gState.AboutYouFormIsValid === false
+    ) {
+      setGState({
+        ...gState,
+        AboutYouFormIsValid: true,
+      });
+    }
+  }, [formik, gState, setGState]);
+
+  // scroll to first error on submit
+  useEffect(() => {
+    if (!formik.isSubmitting) return;
+    const errors = Object.keys(formik.errors).filter(
+      (f) => f !== "showManualAddress",
+    );
+    if (errors.length > 0) {
+      const element = document.getElementById(errors[0]);
+      // scroll up to first error
+      element?.scrollIntoView({ behavior: "auto", block: "center" });
+    }
+  }, [formik]);
 
   return (
     <section className="container container_narrow">
@@ -664,6 +670,7 @@ const AboutYou = () => {
         </div>
 
         <MarketingPreferences formik={formik} />
+
         <div className="container">
           <div className="row">
             <div className="col-6 mb-4 mt-5">
@@ -693,4 +700,4 @@ const AboutYou = () => {
   );
 };
 
-export default AboutYou;
+export default AboutYouView;

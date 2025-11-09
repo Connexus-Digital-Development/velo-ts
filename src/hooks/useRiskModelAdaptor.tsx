@@ -1,5 +1,5 @@
 import { modelAdaptorHelper as helper } from "@/utils/modelAdaptorHelper";
-import * as moment from "moment";
+import moment from "moment";
 // convert the collected globalState data into a model accepted by transactor API
 import { type JourneyState } from "@/models/JourneyTypes";
 import { type RiskModel } from "@/models/QuoteTypes";
