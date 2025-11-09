@@ -31,6 +31,7 @@ export const initialJourneyState: JourneyState = {
   addressLine2: "",
   addressLine3: "",
   addressLine4: "",
+  subHouseName: "",
   keptAtHome: true,
   coverStartDate: null,
   storageLocation: 1,

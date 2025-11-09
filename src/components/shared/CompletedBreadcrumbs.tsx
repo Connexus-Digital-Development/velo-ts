@@ -1,5 +1,9 @@
 
 import { Link } from "react-router-dom";
+import BreadcrumbStep1 from "@/assets/svgs/breadcrumb-step-1.svg?url";
+import BreadcrumbStep2 from "@/assets/svgs/breadcrumb-step-2.svg?url";
+import BreadcrumbStep3 from "@/assets/svgs/breadcrumb-step-3.svg?url";
+import BreadcrumbStep4 from "@/assets/svgs/breadcrumb-step-4.svg?url";
 
 const CompletedBreadcrumbs = () => {
 
@@ -37,16 +41,20 @@ const CompletedBreadcrumbs = () => {
           to={'#'}
           style={{ textDecoration: "none" }}
         >
-          <g>
-            <path
-              id="breadcrumbs1"
-              data-name="Path 2110"
-              d="M27.21,0H269.182l20.5,32.152a10.69,10.69,0,0,1,0,11.494L269.182,75.8H27.21A27.21,27.21,0,0,1,0,48.588V27.209A27.21,27.21,0,0,1,27.21,0"
-              transform="translate(10.5 15.5)"
-              style={visitedStyle}
-              strokeWidth="2"
+          <div style={{ position: "relative" }}>
+            <img
+              src={BreadcrumbStep1}
+              alt="Your cover breadcrumb step"
+              style={{
+                position: "absolute",
+                top: "15.5px",
+                left: "10.5px",
+                width: "269.182px",
+                height: "75.8px",
+                ...visitedStyle
+              }}
             />
-          </g>
+          </div>
           <text
             id="Your_cover"
             data-name="Your cover"
@@ -65,16 +73,20 @@ const CompletedBreadcrumbs = () => {
           to={'#'}
           style={{ textDecoration: "none" }}
         >
-          <g>
-            <path
-              id="breadcrumbs2"
-              data-name="Path 2111"
-              d="M550.832,0H280.858l20.5,32.152a10.686,10.686,0,0,1,0,11.494L280.858,75.8H550.832l20.5-32.152a10.69,10.69,0,0,0,0-11.494Z"
-              transform="translate(10.5 15.5)"
-              strokeWidth="2"
-              style={visitedStyle}
+          <div style={{ position: "relative" }}>
+            <img
+              src={BreadcrumbStep2}
+              alt="Your details breadcrumb step"
+              style={{
+                position: "absolute",
+                top: "15.5px",
+                left: "280.858px",
+                width: "290.332px",
+                height: "75.8px",
+                ...visitedStyle
+              }}
             />
-          </g>
+          </div>
           <text
             id="Your_details"
             style={visitedFontStyle}
@@ -92,16 +104,20 @@ const CompletedBreadcrumbs = () => {
           className="breadcrumbLink"
           style={{ textDecoration: "none" }}
         >
-          <g>
-            <path
-              id="breadcrumbs3"
-              data-name="Path 2112"
-              d="M832.505,0H562.531l20.5,32.152a10.69,10.69,0,0,1,0,11.494L562.531,75.8H832.505l20.5-32.152a10.69,10.69,0,0,0,0-11.494Z"
-              transform="translate(10 16)"
-              style={visitedStyle}
-              strokeWidth="2"
+          <div style={{ position: "relative" }}>
+            <img
+              src={BreadcrumbStep3}
+              alt="Your quote breadcrumb step"
+              style={{
+                position: "absolute",
+                top: "16px",
+                left: "562.531px",
+                width: "290.332px",
+                height: "75.8px",
+                ...visitedStyle
+              }}
             />
-          </g>
+          </div>
           <text
             id="Your_quote"
             transform="translate(550 36)"
@@ -120,16 +136,20 @@ const CompletedBreadcrumbs = () => {
           to={'#'}
           style={{ textDecoration: "none" }}
         >
-          <g>
-            <path
-              id="breadcrumbs4"
-              data-name="Path 2113"
-              d="M1085.87,0H844.2l20.5,32.152a10.69,10.69,0,0,1,0,11.494L844.2,75.8H1085.87a27.21,27.21,0,0,0,27.21-27.209V27.209A27.21,27.21,0,0,0,1085.87,0"
-              transform="translate(10.5 15.5)"
-              style={completedStyle}
-              strokeWidth="2"
+          <div style={{ position: "relative" }}>
+            <img
+              src={BreadcrumbStep4}
+              alt="Payment breadcrumb step"
+              style={{
+                position: "absolute",
+                top: "15.5px",
+                left: "844.2px",
+                width: "265.67px",
+                height: "75.8px",
+                ...completedStyle
+              }}
             />
-          </g>
+          </div>
           <text
             id="Payment"
             transform="translate(850 36)"

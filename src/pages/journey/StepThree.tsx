@@ -12,6 +12,7 @@ import QuoteReferral from "@/components/journey/step-three/QuoteReferral";
 import SummaryOfCover from "@/components/journey/step-three/SummaryOfCover";
 import YourQuote from "@/components/journey/step-three/YourQuote";
 import { useGenerateQuote } from "@/hooks/queries/useQuotes";
+import type { RiskModel } from "@/models";
 
 const StepThree = () => {
   const { search } = useLocation();
@@ -28,7 +29,7 @@ const StepThree = () => {
   const [showQuoteDetails, setShowQuoteDetails] = useState(
     !gState.generateQuote,
   );
-  const [isPending, setIsPending] = useState<any>(gState.generateQuote);
+  const [_isPending, setIsPending] = useState<any>(gState.generateQuote);
   const [generateQuote, setGenerateQuote] = useState<any>(gState.generateQuote);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [clickedButton, setClickedButton] = useState<boolean>(false);
@@ -43,7 +44,7 @@ const StepThree = () => {
     gState.selectedCoreScheme !== null,
   );
   const [showReferralPage, setShowReferralPage] = useState<boolean>(false);
-  const riskModel = JSON.stringify(useRiskModelAdaptor(gState));
+  // const riskModel = JSON.stringify(useRiskModelAdaptor(gState));
   const [loadingQuote, setIsLoadingQuote] = useState<any>(gState.generateQuote);
   const [showReQuoteCore, setShowReQuoteCore] = useState<boolean>(false);
   const [showReQuote, setShowReQuote] = useState<boolean>(false);
@@ -51,20 +52,22 @@ const StepThree = () => {
   const clearShowError = () => {
     setClickedButton(false);
   };
-  const TRANSACTOR_AUTH_KEY =
-    "Velosure|0o4ymBa41mIsQCXDFzQx+c6ttkMrfmWrLdeGANwffgs=";
+  // const TRANSACTOR_AUTH_KEY =
+  //   "Velosure|0o4ymBa41mIsQCXDFzQx+c6ttkMrfmWrLdeGANwffgs=";
 
-  const url = `${import.meta.env.VITE_TRANSACTOR_API_ENDPOINT}/PedalCycle/GetQuote`; // this method Generates the quote- poorly named!
+  // const url = `${import.meta.env.VITE_TRANSACTOR_API_ENDPOINT}/PedalCycle/GetQuote`; // this method Generates the quote- poorly named!
 
-  const options = {
-    method: "POST",
-    headers: {
-      authKey: TRANSACTOR_AUTH_KEY,
-      "Content-Type": "application/json",
-    },
-    body: riskModel,
-    mode: "cors" as RequestMode,
-  };
+  // const options = {
+  //   method: "POST",
+  //   headers: {
+  //     authKey: TRANSACTOR_AUTH_KEY,
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: riskModel,
+  //   mode: "cors" as RequestMode,
+  // };
+  //
+  const riskModel = useRiskModelAdaptor(gState);
 
   useEffect(() => {
     const updatedState =
@@ -85,8 +88,8 @@ const StepThree = () => {
 
   useEffect(() => {
     if (generateQuote) {
-      const riskModel = JSON.stringify(useRiskModelAdaptor(gState));
-      generateQuoteMutation.mutate(riskModel);
+      // const _riskModel = JSON.stringify(riskModel);
+      generateQuoteMutation.mutate(riskModel as RiskModel);
     }
   }, [generateQuote]);
 
@@ -100,20 +103,17 @@ const StepThree = () => {
       setIsPending(false);
       console.log("Quote response", r);
 
-      if (r.value) {
-        const performanceQuote = r.value.find(
+      if (r.Value) {
+        const performanceQuote = r.Value.find(
           (f: any) => !f.schemeName.toLowerCase().includes("core"),
         );
-        const coreQuote = r.value.find((f: any) =>
+        const coreQuote = r.Value.find((f: any) =>
           f.schemeName.toLowerCase().includes("core"),
         );
 
         setIsLoadingQuote(false);
 
-        if (
-          performanceQuote.referralReason ||
-          performanceQuote.declineReason
-        ) {
+        if (performanceQuote.referralReason || performanceQuote.declineReason) {
           if (showReferralPage) {
             return;
           }
@@ -128,13 +128,10 @@ const StepThree = () => {
             commission: performanceQuote.commission,
             declineReason: performanceQuote.declineReason,
             instalmentsApr: performanceQuote.instalmentsApr,
-            instalmentsFirstPayment:
-              performanceQuote.instalmentsFirstPayment,
-            instalmentsGrossPremium:
-              performanceQuote.instalmentsGrossPremium,
+            instalmentsFirstPayment: performanceQuote.instalmentsFirstPayment,
+            instalmentsGrossPremium: performanceQuote.instalmentsGrossPremium,
             instalmentsInterestPc: performanceQuote.instalmentsInterestPc,
-            instalmentsServiceCharge:
-              performanceQuote.instalmentsServiceCharge,
+            instalmentsServiceCharge: performanceQuote.instalmentsServiceCharge,
             deposit: performanceQuote.deposit,
             instalmentsSubsequentPayments:
               performanceQuote.instalmentsSubsequentPayments,
@@ -152,8 +149,7 @@ const StepThree = () => {
             instalmentsFirstPaymentCore: coreQuote.instalmentsFirstPayment,
             instalmentsGrossPremiumCore: coreQuote.instalmentsGrossPremium,
             instalmentsInterestPcCore: coreQuote.instalmentsInterestPc,
-            instalmentsServiceChargeCore:
-              coreQuote.instalmentsServiceCharge,
+            instalmentsServiceChargeCore: coreQuote.instalmentsServiceCharge,
             depositCore: coreQuote.deposit,
             instalmentsSubsequentPaymentsCore:
               coreQuote.instalmentsSubsequentPayments,
@@ -272,7 +268,7 @@ const StepThree = () => {
   return (
     <>
       <div className="container-fluid mb-5 blueBorderBott oh">
-        <TopNavBlank theme={"white"} />
+        <TopNavBlank />
         <RegularBanner
           headlineLine1={"Your bike "}
           headlineLine2={"insurance quote"}
@@ -280,7 +276,9 @@ const StepThree = () => {
           subheadlineLine2={""}
           hasCTA={"false"}
           CTAText={"Get a quote"}
-          rotate={generateQuoteMutation.isPending || loading || loadingQuote === true}
+          rotate={
+            generateQuoteMutation.isPending || loading || loadingQuote === true
+          }
         />
         <div
           className={

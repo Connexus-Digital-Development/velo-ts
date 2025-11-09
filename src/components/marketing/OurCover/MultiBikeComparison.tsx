@@ -15,8 +15,9 @@ const MultiBikeComparison = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (window.visualViewport?.width < 750) setIsMobile(true);
+    if (window.visualViewport?.width ?? 0 < 750) setIsMobile(true);
   }, []);
+
   const handlePerformanceClick = () => {
     setIsCoreSelected(false);
   };

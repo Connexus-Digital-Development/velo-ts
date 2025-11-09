@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState, useCallback, type ReactElement } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSafeContext } from "@/context/journeyStore";
 import FeatureListCore from "./FeatureList_CORE";
 import FeatureListPerformance from "./FeatureList_PERFORMANCE";
@@ -7,7 +7,7 @@ import currency from "currency.js";
 import { type Quote } from "@/models/JourneyComponentTypes";
 
 interface YourQuoteProps {
-  error: string | null;
+  error: string | null | ReactElement;
   coreQuote: Quote;
   performanceQuote: Quote;
   setIsLoading: (loading: boolean) => void;
@@ -45,10 +45,6 @@ const YourQuote: React.FC<YourQuoteProps> = ({
   setShowPerformanceReQuoteMessage,
   fromExternalLink = false,
 }) => {
-  const { search } = useLocation();
-  const [showPerformanceQuote, setPerformanceQuote] =
-    useState(performanceQuote);
-  const [showCoreQuote, setCoreQuote] = useState(coreQuote);
   const [gState, setGState] = useSafeContext({
     componentName: "YourQuote",
   });
@@ -58,8 +54,8 @@ const YourQuote: React.FC<YourQuoteProps> = ({
   const [highlightPerformance, setHighlightPerformance] = useState(
     gState.selectedCoreScheme === false,
   );
-  const [handledPreSelection, setHandledPreSelection] = useState(false);
-  const history = useHistory();
+  const [_handledPreSelection, setHandledPreSelection] = useState(false);
+  const navigate = useNavigate();
 
   const unSelectAll = () => {
     setHighlightCore(false);
@@ -69,47 +65,12 @@ const YourQuote: React.FC<YourQuoteProps> = ({
     console.log("YOURQUOTE COMPONENT - gState:", gState.coreQuote);
   };
 
-  // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
-  useEffect(() => {
-    if (gState.bikes.length === 0) {
-      setGState({ yourQuoteCrumb: 0 });
-      return history.push(`/get-a-quote${search}`);
-    }
-  }, []);
+  const { search } = useLocation();
+  const [showPerformanceQuote, setPerformanceQuote] =
+    useState(performanceQuote);
+  const [showCoreQuote, setCoreQuote] = useState(coreQuote);
 
-  useEffect(() => {
-    if (fromExternalLink && performanceQuote != null) {
-      setHandledPreSelection(true);
-      if (gState.selectedCoreScheme === true) {
-        handleCoreSelectedNoScroll();
-      } else {
-        handlePerformanceSelectedNoScroll();
-      }
-    }
-  }, [handledPreSelection]);
-
-  // Add this effect to sync local state with global state
-  useEffect(() => {
-    if (gState.coreQuote) {
-      setCoreQuote(gState.coreQuote);
-    }
-  }, [gState.coreQuote]);
-  useEffect(() => {
-    if (gState.performanceQuote) {
-      setPerformanceQuote(gState.performanceQuote);
-    }
-  }, [gState.performanceQuote]);
-
-  const handleCoreSelected = (e) => {
-    e.preventDefault();
-    handleCoreSelectedNoScroll();
-
-    const ele = document.getElementById("Quote-Summary");
-    const y = ele?.getBoundingClientRect().top ?? 0 + window.pageYOffset - 50;
-    window.scrollTo({ top: y, behavior: "smooth" });
-  };
-
-  function handleCoreSelectedNoScroll() {
+  const handleCoreSelectedNoScroll = useCallback(() => {
     setHighlightCore(true);
     setHighlightPerformance(false);
     canProceedToPayment(true);
@@ -140,8 +101,8 @@ const YourQuote: React.FC<YourQuoteProps> = ({
       ipt: showCoreQuote?.ipt ?? coreQuote.ipt,
       netPremium: showCoreQuote?.netPremium ?? coreQuote.netPremium,
       quoteReference: showCoreQuote?.quoteReference ?? coreQuote.quoteReference,
-      policyDetailsId:
-        showCoreQuote?.quoteReference ?? coreQuote.policyDetailsId,
+      // policyDetailsId:
+      //   showCoreQuote?.quoteReference ?? coreQuote.policyDetailsId,
       referralReason: showCoreQuote?.referralReason ?? coreQuote.referralReason,
       schemeId: showCoreQuote?.schemeId ?? coreQuote.schemeId,
       schemeTable: showCoreQuote?.schemeTable ?? coreQuote.schemeTable,
@@ -154,18 +115,9 @@ const YourQuote: React.FC<YourQuoteProps> = ({
       // worldwideCover: gState.worldwideCover,
       // personalAccidentPerformance: gState.personalAccidentPerformance,
     });
-  }
+  }, [canProceedToPayment, coreQuote, gState, setGState, showCoreQuote]);
 
-  const handlePerformanceSelected = (e: Event) => {
-    e.preventDefault();
-    handlePerformanceSelectedNoScroll();
-
-    const ele = document.getElementById("Quote-Summary");
-    const y = ele?.getBoundingClientRect().top ?? 0 + window.pageYOffset - 50;
-    window.scrollTo({ top: y, behavior: "smooth" });
-  };
-
-  function handlePerformanceSelectedNoScroll() {
+  const handlePerformanceSelectedNoScroll = useCallback(() => {
     setHighlightCore(false);
     canProceedToPayment(true);
     setHighlightPerformance(true);
@@ -208,9 +160,10 @@ const YourQuote: React.FC<YourQuoteProps> = ({
         showPerformanceQuote?.netPremium ?? performanceQuote.netPremium,
       quoteReference:
         showPerformanceQuote?.quoteReference ?? performanceQuote.quoteReference,
-      policyDetailsId:
-        showPerformanceQuote?.quoteReference ??
-        performanceQuote.policyDetailsId,
+      // TODO: confirm if needed, doesn't exist on JourneyState
+      // policyDetailsId:
+      //   showPerformanceQuote?.quoteReference ??
+      //   performanceQuote.policyDetailsId,
       referralReason:
         showPerformanceQuote?.referralReason ?? performanceQuote.referralReason,
       schemeId: showPerformanceQuote?.schemeId ?? performanceQuote.schemeId,
@@ -225,7 +178,68 @@ const YourQuote: React.FC<YourQuoteProps> = ({
       // worldwideCover: gState.worldwideCover,
       // personalAccidentPerformance: gState.personalAccidentPerformance,
     });
-  }
+  }, [
+    canProceedToPayment,
+    performanceQuote,
+    gState,
+    setGState,
+    showPerformanceQuote,
+  ]);
+
+  // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
+  useEffect(() => {
+    if (gState.bikes.length === 0) {
+      setGState({ ...gState, yourQuoteCrumb: 0 });
+      navigate(`/get-a-quote${search}`);
+    }
+  }, [gState.bikes.length, navigate, search, setGState]);
+
+  useEffect(() => {
+    if (fromExternalLink && performanceQuote != null) {
+      setHandledPreSelection(true);
+      if (gState.selectedCoreScheme === true) {
+        handleCoreSelectedNoScroll();
+      } else {
+        handlePerformanceSelectedNoScroll();
+      }
+    }
+  }, [
+    fromExternalLink,
+    performanceQuote,
+    gState.selectedCoreScheme,
+    handleCoreSelectedNoScroll,
+    handlePerformanceSelectedNoScroll,
+  ]);
+
+  // Add this effect to sync local state with global state
+  useEffect(() => {
+    if (gState.coreQuote) {
+      setCoreQuote(gState.coreQuote);
+    }
+  }, [gState.coreQuote]);
+  useEffect(() => {
+    if (gState.performanceQuote) {
+      setPerformanceQuote(gState.performanceQuote);
+    }
+  }, [gState.performanceQuote]);
+
+  const handleCoreSelected = (e: any) => {
+    e.preventDefault();
+    handleCoreSelectedNoScroll();
+
+    const ele = document.getElementById("Quote-Summary");
+    const y = ele?.getBoundingClientRect().top ?? 0 + window.pageYOffset - 50;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
+  const handlePerformanceSelected = (e: Event) => {
+    e.preventDefault();
+    handlePerformanceSelectedNoScroll();
+
+    const ele = document.getElementById("Quote-Summary");
+    const y = ele?.getBoundingClientRect().top ?? 0 + window.pageYOffset - 50;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
 
   return (
     <section className="container container_narrow" id="yourQuote">
@@ -306,7 +320,7 @@ const YourQuote: React.FC<YourQuoteProps> = ({
                       initCoreQuote={coreQuote}
                       setIsLoading={setIsLoading}
                       showReQuoteCore={showReQuoteCore}
-                      setShowReQuote={setShowReQuote}
+                      // setShowReQuote={setShowReQuote}
                       setShowReQuoteCore={setShowReQuoteCore}
                       showReQuoteMessage={showCoreReQuoteMessage}
                       setShowReQuoteMessage={setShowCoreReQuoteMessage}
@@ -461,7 +475,7 @@ const YourQuote: React.FC<YourQuoteProps> = ({
                       setIsLoading={setIsLoading}
                       showReQuote={showReQuote}
                       setShowReQuote={setShowReQuote}
-                      setShowReQuoteCore={setShowReQuoteCore}
+                      // setShowReQuote={setShowReQuoteCore}
                       showReQuoteMessage={showPerformanceReQuoteMessage}
                       setShowReQuoteMessage={setShowPerformanceReQuoteMessage}
                       setPerformanceQuote={setPerformanceQuote}

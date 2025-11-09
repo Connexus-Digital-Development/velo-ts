@@ -19,7 +19,7 @@ const StepFour = () => {
 
   return (
     <div className="container-fluid mb-5 blueBorderBott oh">
-      <TopNavBlank theme={"white"} />
+      <TopNavBlank />
       <RegularBanner
         headlineLine1={"Your bike "}
         headlineLine2={"insurance quote"}

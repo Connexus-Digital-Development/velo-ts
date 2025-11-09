@@ -85,7 +85,8 @@ const YourAddress = () => {
       //this effect will trigger on load, so ignore it unless the postcode box has been touched
       setAddressesFound(false);
       setGState({ ...gState, hideAddressForm: true });
-      formik.resetForm({ values: 0 });
+      formik.resetForm();
+      // formik.resetForm({ values: 0 });
     }
   }, [gState.showAddressPreview]);
 

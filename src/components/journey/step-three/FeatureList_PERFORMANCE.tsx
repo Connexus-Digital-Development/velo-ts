@@ -11,7 +11,6 @@ import crossIcon from "@/assets/svgs/cross-icon.svg?url";
 import tickIcon from "@/assets/svgs/tick-icon.svg?url";
 import chevronDownIcon from "@/assets/svgs/chevron-down-icon.svg?url";
 import chevronUpIcon from "@/assets/svgs/chevron-up-icon.svg?url";
-
 interface FeatureListPerformanceProps {
   isCore: boolean;
   initPerformanceQuote: Quote;
@@ -42,7 +41,7 @@ const FeatureListPerformance: React.FC<FeatureListPerformanceProps> = ({
   clearShowError,
 }) => {
   const [show, setShow] = useState(false);
-  const handleClick = (e, show) => {
+  const handleClick = (e: any, show: boolean) => {
     e.preventDefault();
     setShow(show);
   };
@@ -167,22 +166,25 @@ const Features = ({
     gState.sportsCover,
     gState.worldwideCover,
     gState.personalAccidentPerformance,
+    PCCheckbox,
+    includeWorldwideCoverCheckBox,
+    sportsCoverCheckBox,
   ]);
 
-  const handlePCCheckbox = (flag) => {
+  const handlePCCheckbox = (flag: boolean) => {
     // Personal Accident Checkbox
     // Only update local state - don't update global state until Update Quote is clicked
     setPCCheckbox(flag);
     setShowReQuote(true);
   };
 
-  const handleSCCheckbox = (flag) => {
+  const handleSCCheckbox = (flag: boolean) => {
     // Sports Cover Checkbox
     // Only update local state - don't update global state until Update Quote is clicked
     setSportsCoverCheckBox(flag);
     setShowReQuote(true);
   };
-  const handleWCCheckbox = (flag) => {
+  const handleWCCheckbox = (flag: boolean) => {
     // Worldwide Cover Checkbox
     // Only update local state - don't update global state until Update Quote is clicked
     setIncludeWorldwideCoverCheckBox(flag);
@@ -190,7 +192,7 @@ const Features = ({
   };
 
   // Cancel handler - revert to global state
-  const handleCancelClick = (e) => {
+  const handleCancelClick = (e: any) => {
     e.preventDefault();
     // Revert all checkboxes to global state values
     setSportsCoverCheckBox(gState.sportsCover || false);
@@ -201,13 +203,23 @@ const Features = ({
     clearShowError();
   };
 
-  const handleUpdateClick = (e) => {
+  const handleUpdateClick = (e: any) => {
     setShowPerformanceReQuoteMessage(false);
     clearShowError();
     e.preventDefault();
     setIsLoading(true);
     clearShowError(); // Clear the error message
     // SET GLOBAL STATE IMMEDIATELY - don't wait for API response
+    //
+
+    if (!riskModel) {
+      loggingService.logError(
+        "Risk model is undefined in FeatureListPerformance",
+      );
+      setIsLoading(false);
+      return;
+    }
+
     setGState({
       ...gState,
       personalAccidentPerformance: PCCheckbox,

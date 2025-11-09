@@ -1,6 +1,6 @@
-# Components with Inline SVGs
-
 This document lists all React components in the codebase that still contain inline SVG elements embedded directly in their JSX code.
+
+**Note:** Components in the `src/components/icons/` folder are intentionally excluded from migration as they are handled separately.
 
 ## Overview
 
@@ -17,7 +17,7 @@ However, many components still have inline SVG code that should be extracted to 
 
 ## Migration Progress
 
-### ✅ **Completed Components (7/33):**
+### ✅ **Completed Components (11/33):**
 
 **Journey Components (7/8):**
 - ✅ `src/components/journey/step-one/IndividualBike.tsx` - Electric & regular bike icons
@@ -28,7 +28,23 @@ However, many components still have inline SVG code that should be extracted to 
 - ✅ `src/components/journey/step-four/DDGuarantee.tsx` - Direct Debit guarantee logo
 - ✅ `src/components/journey/PolicyConfirmation.tsx` - Success confirmation icon
 
-**SVGs Created (12 total):**
+**Shared Components (5/8):**
+- ✅ `src/components/shared/Footer.tsx`
+- ✅ `src/components/shared/TopNavBar.tsx` - Mobile navbar logo
+- ✅ `src/components/shared/WhatOurCustomersSay.tsx` - Cog decorative icon
+- ✅ `src/components/shared/BlogBanner.tsx` - Background banner graphic
+- ✅ `src/components/shared/TopNavBlank.tsx` - Navigation logo (migrated to use VelosureLogoNavbar component)
+- ✅ `src/components/shared/Breadcrumbs.tsx` - Complex breadcrumb navigation SVG
+- ✅ `src/components/shared/CompletedBreadcrumbs.tsx` - Complex breadcrumb navigation SVG
+- ✅ `src/components/shared/ProtectYourBike.tsx` - Multiple icons
+
+**Marketing Components (1/17):**
+- ✅ `src/components/marketing/AboutUs/WhyInsureWithVelosure.tsx` - Sports & events cover icon
+- ✅ `src/components/marketing/BrandAmbassador/WhyJonnyChoseVelo.tsx` - Accessory cover, organised races & events, and worldwide cover icons
+- ✅ `src/components/marketing/CoverComparison/CompareOurCover.tsx` - Bike gear icon
+- ✅ `src/components/marketing/CoverComparison/ComparisonTableRow.tsx` - Checkmark icons (6 instances)
+
+**SVGs Created (25 total):**
 - `electric-bike-icon.svg`
 - `regular-bike-icon.svg`
 - `home-security-icon.svg`
@@ -41,24 +57,33 @@ However, many components still have inline SVG code that should be extracted to 
 - `chevron-up-icon.svg`
 - `dd-guarantee-icon.svg`
 - `policy-confirmation-success-icon.svg`
+- `velosure-logo-mobile.svg`
+- `what-our-customers-say-cog-icon.svg`
+- `blog-banner-background.svg`
+- `breadcrumb-step-1.svg`
+- `breadcrumb-step-2.svg`
+- `breadcrumb-step-3.svg`
+- `breadcrumb-step-4.svg`
+- `sports-events-cover-icon.svg`
+- `accessory-cover-icon.svg`
+- `organised-races-events-icon.svg`
+- `worldwide-cover-icon.svg`
+- `bike-gear-icon.svg`
+- `checkmark-icon.svg`
 
 ## Components Requiring Migration
 
-### Shared Components (8 files)
-- `src/components/shared/Footer.tsx`
-- `src/components/shared/Breadcrumbs.tsx`
-- `src/components/shared/BlogBanner.tsx`
-- `src/components/shared/CompletedBreadcrumbs.tsx`
-- `src/components/shared/ProtectYourBike.tsx`
-- `src/components/shared/TopNavBar.tsx`
-- `src/components/shared/TopNavBlank.tsx`
-- `src/components/shared/WhatOurCustomersSay.tsx`
+### Shared Components (5 files)
+- ✅ `src/components/shared/Footer.tsx`
+- `src/components/shared/Breadcrumbs.tsx` - Complex breadcrumb navigation SVG
+- `src/components/shared/CompletedBreadcrumbs.tsx` - Complex breadcrumb navigation SVG
+- `src/components/shared/ProtectYourBike.tsx` - Multiple icons
+- ✅ `src/components/shared/TopNavBlank.tsx` - Navigation logo (migrated to use VelosureLogoNavbar component)
+- `src/components/shared/BlogBanner.tsx` - Background banner graphic
 
-### Marketing Components (17 files)
+### Marketing Components (16 files)
 - `src/components/marketing/AboutUs/WhyInsureWithVelosure.tsx`
 - `src/components/marketing/BrandAmbassador/WhyJonnyChoseVelo.tsx`
-- `src/components/marketing/CoverComparison/CompareOurCover.tsx`
-- `src/components/marketing/CoverComparison/ComparisonTableRow.tsx`
 - `src/components/marketing/CoverComparison/ComparisonTableRowAlt.tsx`
 - `src/components/marketing/CoverComparison/ComparisonTableRowMobile.tsx`
 - `src/components/marketing/CoverFeatures/EBikeFeatures.tsx`
@@ -91,28 +116,37 @@ For each component with inline SVGs:
 - **Reusability**: SVGs can be shared across multiple components
 - **Tooling compatibility**: Works with the current Vite configuration
 
-## Next Steps
+### Priority Migration Order
+1. **Single SVG Components (High Priority - Low Risk)** - Start with TopNavBlank (1 SVG)
+2. **Complex Shared Components** - Breadcrumbs (large single SVG)
+3. **Marketing Components** - Multiple SVG components (highest complexity)
 
+### Single SVG Components (Recommended to migrate first):
+**Shared Components (1 file - 1 SVG):**
+- `src/components/shared/TopNavBlank.tsx` - Navigation logo (1 SVG)
+
+### Complex Components (Multiple SVGs - Higher Risk):
+**Shared Components:**
+- `src/components/shared/Breadcrumbs.tsx` - Complex multi-path breadcrumb SVG
+- `src/components/shared/CompletedBreadcrumbs.tsx` - Complex multi-path breadcrumb SVG
+
+**Marketing Components (with multiple SVGs):**
+- `src/components/marketing/CoverComparison/ComparisonTableRow.tsx` - Multiple SVGs (5+ different icons)
+- Other marketing components likely contain multiple SVGs each
+
+### Next Steps
 1. ✅ **Journey components migration complete** - All 7 journey components migrated
-2. Prioritize shared components by usage frequency (Footer.tsx, TopNavBar.tsx, etc.)
-3. Create SVG files with descriptive names
-4. Test each component after migration
-5. Update any CSS that targets the inline SVG elements
-6. Remove this documentation once migration is complete
-
-### Priority Migration Order (Shared Components)
-1. `Footer.tsx` - High usage, likely contains multiple SVGs
-2. `TopNavBar.tsx` - Navigation component, frequently rendered
-3. `Breadcrumbs.tsx` - Common UI element
-4. `CompletedBreadcrumbs.tsx` - Related to breadcrumbs
-5. `ProtectYourBike.tsx` - Marketing component
-6. `WhatOurCustomersSay.tsx` - Customer testimonials
-7. `BlogBanner.tsx` - Blog-related
-8. `TopNavBlank.tsx` - Less critical navigation variant
+2. ✅ **Single SVG migration complete** - TopNavBlank component migrated (using VelosureLogoNavbar component)
+3. **Complex shared components** - Breadcrumbs (large single SVG)
+4. **Marketing components** - Multiple SVG components (highest complexity)
+5. Create SVG files with descriptive names
+6. Test each component after migration
+7. Update any CSS that targets the inline SVG elements
+8. Remove this documentation once migration is complete
 
 ---
 
-*Updated on: 2025-11-08*
-*Total components migrated: 7/33*
-*Total SVGs created: 12*
-*Remaining components: 26*
+*Updated on: 2025-11-09*
+*Total components migrated: 14/32*
+*Total SVGs created: 25*
+*Remaining components: 18*

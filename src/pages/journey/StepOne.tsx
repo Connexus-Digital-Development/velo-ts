@@ -184,7 +184,7 @@ const StepOne = (): React.JSX.Element => {
       <Helmet>
         <link rel="canonical" href="https://www.velosure.co.uk/get-a-quote" />
       </Helmet>
-      <TopNavBlank theme={"white"} />
+      <TopNavBlank />
       <RegularBanner
         headlineLine1={"Your bike "}
         headlineLine2={"insurance quote"}

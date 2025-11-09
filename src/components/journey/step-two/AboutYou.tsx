@@ -16,7 +16,7 @@ import MarketingPreferences from "./MarketingPreferences";
 import { useAddressLookup } from "@/hooks/queries/useAddress";
 import {
   type AboutYouFormValues,
-  type AddressLookupResponse,
+  // type AddressLookupResponse,
   type AddressItem,
 } from "@/models/JourneyComponentTypes";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
@@ -34,7 +34,7 @@ const AboutYou = () => {
     MAX_AGE = 90;
   const upper = new Date().getFullYear() - MIN_AGE;
   const lower = upper - MAX_AGE + MIN_AGE;
-  const [data, setData] = useState<AddressLookupResponse | null>(null);
+  // const [data, setData] = useState<AddressLookupResponse | null>(null);
   const [isPending, setIsPending] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [addressesFound, setAddressesFound] = useState<boolean>(false); //use to show/hide the postcode select list
@@ -208,7 +208,7 @@ const AboutYou = () => {
       return;
     }
 
-    const filtered = addressData.value.filter((hn) => {
+    const filtered = addressData.Value?.filter((hn) => {
       return (
         `${hn.houseNumber} ${hn.street}`.startsWith(
           formik.values.houseNumber,
@@ -218,7 +218,7 @@ const AboutYou = () => {
       );
     });
 
-    if (filtered.length === 1) {
+    if (filtered?.length === 1) {
       //we found one matching address so lets hide all the guff and show this address.
       showSingleAddress(filtered[0]);
     }
@@ -246,7 +246,7 @@ const AboutYou = () => {
     }
 
     if (addressData) {
-      if (addressData.success === false) {
+      if (addressData.Success === false) {
         loggingService.logWarning(
           `Address lookup returned no results for postcode: ${formik.values.postalCode}`,
         );
@@ -266,23 +266,15 @@ const AboutYou = () => {
   }, [addressData, addressError, isAddressLoading, formik.values.postalCode]);
 
   const handleAddressSelect = (index: string): void => {
-    if (!addressData || !addressData.value) return;
-    const selectedAddress = addressData.value[parseInt(index)];
+    if (!addressData || !addressData.Value) return;
+    const selectedAddress = addressData.Value[parseInt(index)];
     if (!selectedAddress) return;
     setGState({
       ...gState,
-      organisation:
-        selectedAddress.organisation !== null
-          ? selectedAddress.organisation
-          : "",
-      houseNo:
-        selectedAddress.houseNumber !== null ? selectedAddress.houseNumber : "",
-      houseName:
-        selectedAddress.houseName !== null ? selectedAddress.houseName : "",
-      houseSubName:
-        selectedAddress.subHouseName !== null
-          ? selectedAddress.subHouseName
-          : "",
+      organisation: selectedAddress.organisation ?? "",
+      houseNo: selectedAddress.houseNumber ?? "",
+      houseName: selectedAddress.houseName ?? "",
+      houseSubName: selectedAddress.subHouseName ?? "",
       addressLine1: selectedAddress.street ?? "",
       addressLine2: selectedAddress.townOrCity ?? "",
       addressLine3: selectedAddress.locality ?? "",
@@ -839,7 +831,7 @@ const AboutYou = () => {
                       ? formik.touched.dob_d && "is-invalid"
                       : formik.touched.dob_d && "is-valid"
                   }`}
-                  value={formik.values.dob_d}
+                  value={formik.values.dob_d!}
                   onChange={(e) => {
                     formik.handleChange(e);
                     setGState({
@@ -868,12 +860,12 @@ const AboutYou = () => {
                       ? formik.touched.dob_m && "is-invalid"
                       : formik.touched.dob_m && "is-valid"
                   }`}
-                  value={formik.values.dob_m}
+                  value={formik.values.dob_m!}
                   onChange={(e) => {
                     formik.handleChange(e);
                     setGState({
                       ...gState,
-                      dob_m: Number(e.currentTarget.value),
+                      dob_m: Number(e.currentTarget.value!),
                       generateQuote: true,
                       yourQuoteCrumb: 0,
                     });
@@ -896,7 +888,7 @@ const AboutYou = () => {
                       ? formik.touched.dob_y && "is-invalid"
                       : formik.touched.dob_y && "is-valid"
                   }`}
-                  value={formik.values.dob_y}
+                  value={formik.values.dob_y!}
                   onChange={(e) => {
                     formik.handleChange(e);
                     setGState({
@@ -1078,7 +1070,7 @@ const AboutYou = () => {
                     // placeholder="select "
                   >
                     <option>Please select</option>
-                    {addressData?.value.map((address, index) => {
+                    {addressData?.Value?.map((address, index) => {
                       return (
                         <option key={index} id={`opt-${index}`} value={index}>
                           {address.organisation !== null &&
@@ -1145,10 +1137,8 @@ const AboutYou = () => {
                   Where did you hear about us?
                 </label>
                 <select
-                  type="text"
                   className="form-control form-select"
                   id="marketingReference"
-                  placeholder="select "
                   onChange={handleMarketingReferenceChange}
                   value={
                     customReference
@@ -1257,7 +1247,7 @@ const AboutYou = () => {
                 id="move-to-step-three"
                 onClick={(e) => {
                   e.preventDefault();
-                  formik.handleSubmit(e);
+                  formik.handleSubmit(e as any);
                 }}
               >
                 Next step

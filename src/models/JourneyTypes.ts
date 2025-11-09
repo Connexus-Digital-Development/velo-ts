@@ -44,6 +44,7 @@ export interface JourneyState {
   addressLine2: string;
   addressLine3: string;
   addressLine4: string;
+  subHouseName: string;
   keptAtHome: boolean;
   coverStartDate: Date | null;
   storageLocation: number;

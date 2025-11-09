@@ -34,10 +34,6 @@ export interface BaseComponentProps {
   children?: React.ReactNode;
 }
 
-// export interface AboutYouProps {
-//   // AboutYou component has no props, it's a standalone component
-// }
-
 // Address lookup API response types
 export interface AddressLookupResponse {
   success: boolean;
@@ -87,44 +83,10 @@ export interface AboutYouFormValues {
   iConfirm: boolean;
 }
 
-// YourAddress component types
-// export interface YourAddressProps {
-//   // YourAddress component has no props, it's a standalone component
-// }
-
 export interface YourAddressFormValues {
   postalCode: string;
   houseNumber: string;
 }
-
-// ManualAddressEntry component types
-// export interface ManualAddressEntryProps {
-//   formik: any; // TODO: Replace with proper Formik type when available
-//   gState: any; // TODO: Replace with proper JourneyState type when available
-//   setGState: (state: any) => void; // TODO: Replace with proper types when available
-// }
-
-// AddressPreview component types
-// export interface AddressPreviewProps {
-//   formik: any; // TODO: Replace with proper Formik type when available
-// }
-
-// AddressDropdown component types
-// export interface AddressDropdownProps {
-//   addressList: AddressLookupResponse | null;
-// }
-
-// MarketingPreferences component types
-// export interface MarketingPreferencesProps {
-//   formik: any; // TODO: Replace with proper Formik type when available
-// }
-
-// PreferenceButton component types
-// export interface PreferenceButtonProps {
-//   label: string;
-//   isActive: boolean;
-//   onClick: () => void;
-// }
 
 // Quote data structure
 export interface Quote {
@@ -145,180 +107,5 @@ export interface Quote {
   referralReason: string | null;
   schemeId: string;
   schemeTable: number;
+  deposit: number;
 }
-
-// YourQuote component types
-// export interface YourQuoteProps {
-//   error: string | null;
-//   coreQuote: Quote;
-//   performanceQuote: Quote;
-//   setIsLoading: (loading: boolean) => void;
-//   showError: boolean;
-//   clearShowError: () => void;
-//   canProceedToPayment: (canProceed: boolean) => void;
-//   showReQuote: boolean;
-//   showReQuoteCore: boolean;
-//   setShowReQuote: (show: boolean) => void;
-//   setShowReQuoteCore: (show: boolean) => void;
-//   showReQuoteMessage: boolean;
-//   setShowReQuoteMessage: (show: boolean) => void;
-//   showCoreReQuoteMessage: boolean;
-//   setShowCoreReQuoteMessage: (show: boolean) => void;
-//   showPerformanceReQuoteMessage: boolean;
-//   setShowPerformanceReQuoteMessage: (show: boolean) => void;
-//   fromExternalLink?: boolean;
-// }
-
-// SummaryOfCover component types
-// export interface SummaryOfCoverProps {
-//   detailsText?: string;
-//   fromExternalLink?: boolean;
-//   validateNextButton?: boolean;
-// }
-
-// SimpleBikeList component types
-// export interface SimpleBikeListProps {
-//   bikes: import("@/models/JourneyTypes").Bike[];
-// }
-
-// QuoteReferral component types
-// export interface QuoteReferralProps {
-//   quoteReference: string;
-// }
-
-// FeatureListPerformance component types
-// export interface FeatureListPerformanceProps {
-//   isCore: boolean;
-//   initPerformanceQuote: Quote;
-//   setIsLoading: (loading: boolean) => void;
-//   setPerformanceQuote: (quote: Quote) => void;
-//   unSelectAll: () => void;
-//   showReQuote: boolean;
-//   setShowReQuote: (show: boolean) => void;
-//   showReQuoteMessage: boolean;
-//   setShowReQuoteMessage: (show: boolean) => void;
-//   fromExternalLink: boolean;
-//   showReQuoteCore: boolean;
-//   clearShowError: () => void;
-// }
-
-// FeatureListCore component types
-// export interface FeatureListCoreProps {
-//   isCore: boolean;
-//   initCoreQuote: Quote;
-//   setIsLoading: (loading: boolean) => void;
-//   setPerformanceQuote: (quote: Quote) => void;
-//   setCoreQuote: (quote: Quote) => void;
-//   unSelectAll: () => void;
-//   showReQuoteCore: boolean;
-//   setShowReQuoteCore: (show: boolean) => void;
-//   showReQuoteMessage: boolean;
-//   setShowReQuoteMessage: (show: boolean) => void;
-//   fromExternalLink: boolean;
-//   showReQuote: boolean;
-//   clearShowError: () => void;
-// }
-
-// DocumentPreferences component types
-// export interface DocumentPreferencesProps {
-//   // No props required
-// }
-
-// Assumptions component types
-// export interface AssumptionsProps {
-//   setShowPaymentWindow: (show: boolean) => void;
-// }
-
-// Declarations component types
-// export interface DeclarationsProps {
-//   setShowPaymentWindow?: (show: boolean) => void;
-// }
-
-// DDGuarantee component types
-// export interface DDGuaranteeProps {
-//   readyToRead?: boolean;
-// }
-
-// IndividualBikeRow component types
-// export interface IndividualBikeRowProps {
-//   bikeMake: string;
-//   bikeModel: string;
-//   lockName: string;
-//   bikeId: number;
-//   lockChecked: boolean;
-//   updateLockChecked: (bikeId: number, checked: boolean) => void;
-// }
-
-// BikeListWithLockInfo component types
-// export interface BikeListWithLockInfoProps {
-//   bikes: import("@/models/JourneyTypes").Bike[];
-//   updateLockChecked: (bikeId: number, checked: boolean) => void;
-// }
-
-// PaymentMethodSelector component types
-// export interface PaymentMethodSelectorProps {
-//   setShowPaymentWindow?: (show: boolean) => void;
-// }
-
-// MonthlyPayments component types
-// export interface MonthlyPaymentsProps {
-//   // No props required
-// }
-
-// // OneOffPayment component types
-// export interface OneOffPaymentProps {
-//   // No props required
-// }
-
-// Payment helper component types
-// export interface SinglePaymentProps {
-//   successMethod: (result: any) => void;
-//   failureMethod: (error: any) => void;
-//   gState: any; // TODO: Replace with proper JourneyState type when available
-//   uiLock: (lock: boolean) => void;
-//   threeDS: (show: boolean) => void;
-//   ddPayment?: boolean;
-// }
-
-// export interface CardPayProps {
-//   formik: any; // TODO: Replace with proper Formik type when available
-// }
-
-// export interface CardPayProps {
-//   formik: any; // TODO: Replace with proper Formik type when available
-// }
-
-// export interface QuickPayProps {
-//   PaymentData: any;
-//   successMethod: (result: any) => void;
-//   failureMethod: (error: any) => void;
-//   uiLock: (lock: boolean) => void;
-//   gState: any; // TODO: Replace with proper JourneyState type when available
-//   errorMessage: (message: string) => void;
-//   ddPayment?: boolean;
-// }
-
-// Page component types
-// export interface StepOneProps {
-//   // Page components typically have no props
-// }
-
-// export interface StepTwoProps {
-//   // Page components typically have no props
-// }
-
-// export interface StepFourProps {
-//   // Page components typically have no props
-// }
-
-// export interface QuoteSummaryProps {
-//   // Page components typically have no props
-// }
-
-// export interface QRLandingPageProps {
-//   // Page components typically have no props
-// }
-
-// export interface BeforeYouBeginProps {
-//   // Page components typically have no props
-// }

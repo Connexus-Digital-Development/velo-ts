@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import veloAPIService from "../../services/veloAPIService";
+import { veloAPIService } from "../../services/veloAPIService";
 
 export const SOBQueryParamHandler = () => {
   const { search } = useLocation();
@@ -8,7 +8,10 @@ export const SOBQueryParamHandler = () => {
   const checkedForOffer = sessionStorage.getItem("checkedForOffer");
   const callCentreUserID = sessionStorage.getItem("CallCentreUserID");
   if (callCentreUserID == null && query.get("CallCentreUserID") != null) {
-    sessionStorage.setItem("CallCentreUserID", query.get("CallCentreUserID"));
+    sessionStorage.setItem(
+      "CallCentreUserID",
+      query.get("CallCentreUserID") ?? "",
+    );
   }
 
   if (
@@ -21,7 +24,9 @@ export const SOBQueryParamHandler = () => {
 
   if (checkedForOffer === null) {
     // loggingService.logInfo("Entered site on : " + window.location.href);
-    veloAPIService.CheckAndApplyOfferFull(query.get("sourcebusid") ?? null);
+    veloAPIService.CheckAndApplyOfferFull(
+      query.get("sourcebusid") ?? undefined,
+    );
   }
 };
 

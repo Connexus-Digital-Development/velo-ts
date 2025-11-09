@@ -44,7 +44,7 @@ const FeatureListCore: React.FC<FeatureListCoreProps> = ({
 }) => {
   const [show, setShow] = useState(false); // used for mobile view where content is hidden until clicking a chevron
 
-  const handleClickCore = (e, show) => {
+  const handleClickCore = (e: any, show: boolean) => {
     e.preventDefault();
     setShow(show);
   };
@@ -110,9 +110,25 @@ const FeatureListCore: React.FC<FeatureListCoreProps> = ({
 
 export default FeatureListCore;
 
-const FeaturesCore = ({
+interface FeaturesCoreProps {
+  isCore: boolean;
+  initCoreQuote?: Quote;
+  setIsLoading: (loading: boolean) => void;
+  setPerformanceQuote?: (quote: Quote) => void;
+  setCoreQuote: (quote: Quote) => void;
+  unSelectAll: () => void;
+  showReQuoteCore: boolean;
+  setShowReQuoteCore: (show: boolean) => void;
+  showReQuoteMessage: boolean;
+  setShowReQuoteMessage: (show: boolean) => void;
+  fromExternalLink: boolean;
+  showReQuote: boolean;
+  clearShowError: () => void;
+}
+
+const FeaturesCore: React.FC<FeaturesCoreProps> = ({
   isCore,
-  initCoreQuote = { initCoreQuote },
+  initCoreQuote,
   setIsLoading,
   setPerformanceQuote: _setPerformanceQuote,
   setCoreQuote,
@@ -129,7 +145,8 @@ const FeaturesCore = ({
     componentName: "FeatureListCore",
   });
   const riskModel = useRiskModelAdaptor(gState);
-  const [_showExtras, _setShowExtras] = useState(
+
+  const [showExtras, _setShowExtras] = useState(
     gState.bikes.length === 1 && gState.bikes[0].isElectric,
   );
   const [monthlyPriceDifferenceCore, setMonthlyPriceDifferenceCore] =
@@ -144,14 +161,14 @@ const FeaturesCore = ({
     // Optionally sync local state if global state changes externally
     setPCCheckboxCore(gState.personalAccidentCore || false);
   }, [gState.personalAccidentCore]);
-  const handlePCCheckboxCore = (flag) => {
+  const handlePCCheckboxCore = (flag: boolean) => {
     // Only update local state - don't update global state until Update Quote is clicked
     setPCCheckboxCore(flag);
     setShowReQuoteCore(true);
   };
 
   // Cancel handler - revert to global state
-  const handleCancelClickCore = (e) => {
+  const handleCancelClickCore = (e: any) => {
     e.preventDefault();
     // Revert to global state value
     setPCCheckboxCore(gState.personalAccidentCore || false);
@@ -160,7 +177,7 @@ const FeaturesCore = ({
     clearShowError(); // Clear the error message
   };
 
-  const handleUpdateClickCore = (e) => {
+  const handleUpdateClickCore = (e: any) => {
     setShowCoreReQuoteMessage(false);
     e.preventDefault();
     setIsLoading(true);
@@ -170,6 +187,12 @@ const FeaturesCore = ({
       ...gState,
       personalAccidentCore: PCCheckboxCore,
     });
+
+    if (!riskModel) {
+      loggingService.logError("Risk model is undefined in FeatureListCore");
+      setIsLoading(false);
+      return;
+    }
 
     //adjust the risk model here for core
     riskModel.policy.schemeTable = parseInt(
@@ -193,13 +216,13 @@ const FeaturesCore = ({
           coreQuote.instalmentsSubsequentPayments,
         basePremiumCore: coreQuote.basePremium,
         commissionCore: coreQuote.commission,
-        declineReasonCore: coreQuote.declineReason,
+        // declineReasonCore: coreQuote.declineReason, // TODO: Check if needed
         instalmentsAprCore: coreQuote.instalmentsApr,
         instalmentsFirstPaymentCore: coreQuote.instalmentsFirstPayment,
         instalmentsGrossPremiumCore: coreQuote.instalmentsGrossPremium,
         instalmentsInterestPcCore: coreQuote.instalmentsInterestPc,
         instalmentsServiceChargeCore: coreQuote.instalmentsServiceCharge,
-        depositCore: coreQuote.deposit,
+        // depositCore: coreQuote.deposit, // TODO: Check if needed
         iptCore: coreQuote.ipt,
         netPremiumCore: coreQuote.netPremium,
         schemeTable: 0,
@@ -215,6 +238,14 @@ const FeaturesCore = ({
         PCCheckboxCore,
         gState.personalAccidentCore,
       );
+
+      if (!initCoreQuote) {
+        loggingService.logError(
+          "Initial Core Quote is undefined in FeatureListCore",
+        );
+        setIsLoading(false);
+        return;
+      }
 
       unSelectAll();
       setMonthlyPriceDifferenceCore(
@@ -370,7 +401,7 @@ const FeaturesCore = ({
               <span className="footer-darkgrey">.</span>
             </p>
           </div>
-          {monthlyPriceDifferenceCore > 0 && ( //monthlyPriceDifferenceCore >0
+          {_showPriceDifference && monthlyPriceDifferenceCore !== 0 && (
             <div className="d-flex justify-content-center px-2">
               <p className="greyFont lufga-light ">
                 (£
@@ -451,18 +482,10 @@ const FeaturesCore = ({
   );
 };
 
-const crossSvg = (
-  <img src={CrossIcon} alt="Cross icon" />
-);
+const crossSvg = <img src={CrossIcon} alt="Cross icon" />;
 
-const tickSvg = (
-  <img src={TickIcon} alt="Tick icon" />
-);
+const tickSvg = <img src={TickIcon} alt="Tick icon" />;
 
-const chevronDown = (
-  <img src={ChevronDownIcon} alt="Chevron down icon" />
-);
+const chevronDown = <img src={ChevronDownIcon} alt="Chevron down icon" />;
 
-const chevronUp = (
-  <img src={ChevronUpIcon} alt="Chevron up icon" />
-);
+const chevronUp = <img src={ChevronUpIcon} alt="Chevron up icon" />;

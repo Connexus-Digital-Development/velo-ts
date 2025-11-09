@@ -60,11 +60,11 @@ const QuoteSummary = () => {
     }
 
     if (quoteData) {
-      if (quoteData?.coreQuote.inTransactor) {
+      if (quoteData?.Value.coreQuote.inTransactor) {
         setIncepted(true);
         return;
       }
-      if (quoteData?.coreQuote.expired) {
+      if (quoteData?.Value.coreQuote.expired) {
         setExpired(true);
         return;
       }
@@ -113,7 +113,7 @@ const QuoteSummary = () => {
 
   return (
     <div className="container-fluid mb-5 oh">
-      <TopNavBlank theme={"white"} />
+      <TopNavBlank />
       <RegularBanner
         headlineLine1={"Your bike"}
         headlineLine2={"insurance quote"}
@@ -122,9 +122,7 @@ const QuoteSummary = () => {
         hasCTA={"false"}
         rotate={isQuoteLoading}
       />
-      <div
-        className={isQuoteLoading || loading ? "overlay" : "overlay_hidden"}
-      >
+      <div className={isQuoteLoading || loading ? "overlay" : "overlay_hidden"}>
         <h1 className="GettingQuoteOverlayH1">
           {loading ? "Getting your updated quote..." : "Getting your quote..."}
         </h1>
@@ -142,6 +140,10 @@ const QuoteSummary = () => {
             fromExternalLink={true}
             canProceedToPayment={setCanProceedToPayment}
             performanceQuote={gState.performanceQuote}
+            // clearShowError={() => { }}
+            // showReQuote={false}
+            // showReQuoteCore={false}
+            // setShowReQuote={() => { }}
           />
         )}
       {incepted && (

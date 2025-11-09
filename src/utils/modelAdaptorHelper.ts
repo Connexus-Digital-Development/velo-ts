@@ -85,29 +85,26 @@ export const modelAdaptorHelper = {
     });
     return allChecked;
   },
-  getBikeCollection: (bikeList: Record<string, Bike>): BikeCollectionItem[] => {
+  getBikeCollection: (bikeList: Bike[]): BikeCollectionItem[] => {
     // build up an object for the bike list in the specific format ie
     //  [{make.model,value},{make.model,value},]
 
     const bikeCollection: BikeCollectionItem[] = [];
 
-    for (const bike in bikeList) {
-      if (Object.prototype.hasOwnProperty.call(bikeList, bike)) {
-        const bikeItem = bikeList[bike];
-        if (bikeItem) {
-          const bikeMake = bikeItem.make;
-          const bikeModel = bikeItem.model;
-          const bikeValue = Number(bikeItem.value || 0);
+    for (const bikeItem of bikeList) {
+      if (bikeItem) {
+        const bikeMake = bikeItem.make;
+        const bikeModel = bikeItem.model;
+        const bikeValue = Number(bikeItem.value || 0);
 
-          bikeCollection.push({
-            make: bikeMake,
-            model: bikeModel,
-            homeValue: bikeValue,
-            serialNumber: "",
-            purchaseDate: null,
-            hasDataTagFitted: null,
-          });
-        }
+        bikeCollection.push({
+          make: bikeMake,
+          model: bikeModel,
+          homeValue: bikeValue,
+          serialNumber: "",
+          purchaseDate: null,
+          hasDataTagFitted: null,
+        });
       }
     }
     return bikeCollection;

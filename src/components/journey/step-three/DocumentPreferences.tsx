@@ -1,11 +1,12 @@
 import { Checkbox } from "@mantine/core";
 import { useSafeContext } from "@/context/journeyStore";
+import type { ChangeEvent } from "react";
 
 const DocumentPreferences = () => {
   const [gState, setGState] = useSafeContext({
     componentName: "DocumentPreferences",
   });
-  const updateContactPref = (e) => {
+  const updateContactPref = (e: ChangeEvent<HTMLInputElement>) => {
     setGState({ ...gState, recieveByEmailOnly: e.target.checked });
   };
 

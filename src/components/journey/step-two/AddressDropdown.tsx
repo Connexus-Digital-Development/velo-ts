@@ -49,10 +49,7 @@ const AddressDropdown = ({ addressList }: AddressDropdownProps) => {
         selectedAddress.houseNumber !== null ? selectedAddress.houseNumber : "",
       houseName:
         selectedAddress.houseName !== null ? selectedAddress.houseName : "",
-      subHouseName:
-        selectedAddress.subHouseName !== null
-          ? selectedAddress.subHouseName
-          : "",
+      subHouseName: selectedAddress.subHouseName ?? "",
       addressLine1:
         selectedAddress.street !== null ? selectedAddress.street : "-",
       addressLine2:

@@ -4,9 +4,9 @@ import * as moment from "moment";
 import { type JourneyState } from "@/models/JourneyTypes";
 import { type RiskModel } from "@/models/QuoteTypes";
 
-const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | object => {
+const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | null => {
   if (!globalState.coverStartDate) {
-    return {};
+    return null;
   }
   const homeAwayValue = helper.getHomeValue(globalState.bikes);
   const riskModel: RiskModel = {
@@ -30,7 +30,7 @@ const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | object => {
     publicLiabilityCoverId: "3PSCQ606",
     includeFamilyCover: true,
     accessoriesCoverId: "3PTTPOB7",
-    hasPreviousClaims: globalState.hasPreviousClaim,
+    hasPreviousClaims: globalState.hasPreviousClaim ?? false,
     saleId: null,
     includeWorldwideCover: helper.AnyElectricBikes(globalState.bikes)
       ? globalState.worldwideCover
@@ -64,35 +64,28 @@ const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | object => {
     cycleHire: true,
     proposer: {
       title: globalState.title,
-      titleId: helper.getTitleId(globalState.title.toLowerCase()),
+      titleId: helper.getTitleId(globalState.title.toLowerCase()) as number,
       forename: globalState.forename,
       initials: "",
       surname: globalState.surname,
       emailAddress: globalState.email,
-      dateOfBirth: helper.getFormattedDOBFromDateParts(
-        globalState.dob_d,
-        globalState.dob_m - 1,
-        globalState.dob_y,
-      ),
+      dateOfBirth: helper
+        .getFormattedDOBFromDateParts(
+          parseInt(globalState.dob_d),
+          parseInt(globalState.dob_m) - 1,
+          parseInt(globalState.dob_y),
+        )
+        .toISOString(),
       gender: "",
       address: {
-        house: `${
-          globalState?.organisation?.length >= 1
-            ? globalState.organisation.trim()
-            : ""
-        } ${
-          globalState.subHouseName?.length >= 1
-            ? globalState.subHouseName.trim()
-            : ""
-        } ${
-          globalState.houseNo?.length >= 1 ? globalState.houseNo.trim() : ""
-        } ${
-          globalState.houseNo?.length < 1 && globalState.houseName?.length >= 1
-            ? globalState.houseName.trim()
-            : ""
-        } `
-          .trim()
-          .replace("  ", " "),
+        house: [
+          globalState?.organisation?.trim(),
+          globalState.houseNo?.trim(),
+          globalState.houseName?.trim(),
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .trim(),
         postcode: globalState.postcode.replaceAll(" ", ""),
         street: globalState.addressLine1,
         locality: globalState.addressLine3,
@@ -134,11 +127,11 @@ const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | object => {
     },
     marketing: {
       sourceOriginId: "3M7V0775",
-      sourceBusinessId: !globalState.sourceOfBusinessId?.length
-        ? "0"
-        : globalState.sourceOfBusinessId == "null"
-          ? "0"
-          : globalState.sourceOfBusinessId,
+      sourceBusinessId:
+        globalState.sourceOfBusinessId &&
+        globalState.sourceOfBusinessId !== "null"
+          ? globalState.sourceOfBusinessId
+          : "0",
       allowMailFromAdmin: globalState.adminEmail,
       allowMailFromThirdParty: globalState.thirdPartyEmail,
       allowTelephoneFromAdmin: globalState.adminPhone,
@@ -148,14 +141,13 @@ const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | object => {
         ? "3EHPHID8"
         : "3EHPHID7",
       reference: globalState.customSource
-        ? globalState.marketingReference
-        : globalState.marketingReference?.startsWith("Retailer")
-          ? globalState.marketingReference
-              ?.replace("Retailer -", "")
-              ?.replace("Retailer", "")
-              ?.trim()
-          : "0",
-      contactByPostAndEmail: globalState.recieveByEmailOnly ? true : false,
+        ? globalState.marketingReference!
+        : (
+            globalState.marketingReference
+              ?.replace(/^Retailer\s*-?\s*/, "")
+              .trim() ?? "0"
+          ).toString(),
+      contactByPostAndEmail: globalState.recieveByEmailOnly,
     },
     paymentDetails: {
       paymentTypeId: null,

@@ -117,7 +117,11 @@ const SummaryOfCover: React.FC<SummaryOfCoverProps> = ({
               )}
         </p>
         <p className="lowerOpacity lufga-light summaryTitle">Previous claims</p>
-        <p className="summaryDetail">{gState.previousClaims ? "Yes" : "No"}</p>
+        <p className="summaryDetail">
+          {gState.hasPreviousClaim ? "Yes" : "No"}
+        </p>
+        {/*// TODO: Check the mapping is correct*/}
+        {/*<p className="summaryDetail">{gState.previousClaims ? "Yes" : "No"}</p>*/}
       </div>
     </section>
   );
