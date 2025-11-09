@@ -3,7 +3,7 @@ export interface Bike {
   make: string;
   model: string;
   value: string | number;
-  isElectric: boolean;
+  isElectric: boolean | null;
   AccessoryCover: boolean;
   SportsCover: boolean;
   WorldWideCover: boolean;
@@ -26,7 +26,7 @@ export interface JourneyState {
   bikes: Bike[];
   hasPreviousClaim: boolean | null;
   title: string;
-  titleId: number | null;
+  titleId: string | null;
   forename: string;
   surname: string;
   dob: string;

@@ -29,8 +29,8 @@ interface SanctionsResult {
 }
 
 export const modelAdaptorHelper = {
-  getTitleId: (title: string | undefined | null): string | number => {
-    if (title === undefined || title === "" || title == null) return 0;
+  getTitleId: (title: string | undefined | null): string => {
+    if (title === undefined || title === "" || title == null) return "0";
     switch (title) {
       case "mr":
         return "003";

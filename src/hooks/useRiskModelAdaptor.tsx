@@ -64,7 +64,7 @@ const useRiskModelAdaptor = (globalState: JourneyState): RiskModel | null => {
     cycleHire: true,
     proposer: {
       title: globalState.title,
-      titleId: helper.getTitleId(globalState.title.toLowerCase()) as number,
+      titleId: helper.getTitleId(globalState.title.toLowerCase()),
       forename: globalState.forename,
       initials: "",
       surname: globalState.surname,

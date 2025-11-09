@@ -31,7 +31,9 @@ const FullBlog = () => {
   const { id } = useParams() as { id: string };
 
   // Fetch article using React Query
-  const { data: articleData, isLoading } = useArticle(id);
+  const { data, isLoading } = useArticle(id);
+
+  const articleData = data?.Value;
 
   // Handle SEO updates when article data changes
   useEffect(() => {
@@ -41,7 +43,11 @@ const FullBlog = () => {
         (articleData as ArticleData).seoDescription,
         articleTagsToCSV(articleData as ArticleData),
       );
-      socialMediaTags((articleData as ArticleData).seoTitle, (articleData as ArticleData).seoDescription, (articleData as ArticleData).imageUrl);
+      socialMediaTags(
+        (articleData as ArticleData).seoTitle,
+        (articleData as ArticleData).seoDescription,
+        (articleData as ArticleData).imageUrl,
+      );
     }
     return () => {
       seoTags("velosure ", "", "");
@@ -104,7 +110,9 @@ const FullBlog = () => {
 
               <div
                 className="col-12 col-md-7 font-27 mt-5 mb-3"
-                dangerouslySetInnerHTML={{ __html: (articleData as ArticleData)?.subHeading }}
+                dangerouslySetInnerHTML={{
+                  __html: (articleData as ArticleData)?.subHeading,
+                }}
               />
 
               {/* <div className="d-none d-md-block shareToSocialsBigVersion">
@@ -113,7 +121,9 @@ const FullBlog = () => {
 
               <div
                 className="col-12 "
-                dangerouslySetInnerHTML={{ __html: (articleData as ArticleData)?.body }}
+                dangerouslySetInnerHTML={{
+                  __html: (articleData as ArticleData)?.body,
+                }}
               />
             </div>
 

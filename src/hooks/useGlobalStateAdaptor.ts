@@ -7,6 +7,7 @@ import type {
 
 import { modelAdaptorHelper as helper } from "@/utils/modelAdaptorHelper";
 import * as moment from "moment";
+
 const useGlobalStateAdaptor = (
   coreQuote: CoreQuote,
   performanceQuote: PerformanceQuote,
@@ -33,9 +34,9 @@ const useGlobalStateAdaptor = (
   const state: JourneyState = {
     id: 0,
     loading: false,
-    make: "",
-    model: "",
-    value: 0,
+    // make: "",
+    // model: "",
+    // value: 0,
     combinedHomeValue: 0,
     isElectric: coreQuote?.isElectric ?? coreQuote?.isElectric ?? false,
     accessoryCover: coreQuote.includeAccessoriesCover,
@@ -58,6 +59,10 @@ const useGlobalStateAdaptor = (
             coreQuote.bicycles.length === 1
               ? coreQuote?.isElectric
               : (m?.isElectric ?? false),
+          AccessoryCover: coreQuote.includeAccessoriesCover,
+          SportsCover: coreQuote?.includeSportCover ?? false,
+          WorldWideCover: coreQuote.includeWorldWideCover,
+          PublicAccidentRoadRage: coreQuote.includePersonalAccidentCover,
         };
       },
     ),
@@ -67,15 +72,15 @@ const useGlobalStateAdaptor = (
     forename: coreQuote.forename,
     surname: coreQuote.surname,
     dob: coreQuote.dateOfBirth,
-    dob_d: new Date(coreQuote.dateOfBirth).getDate(),
-    dob_m: new Date(coreQuote.dateOfBirth).getMonth() + 1,
-    dob_y: new Date(coreQuote.dateOfBirth).getFullYear(),
+    dob_d: new Date(coreQuote.dateOfBirth).getDate().toString(),
+    dob_m: (new Date(coreQuote.dateOfBirth).getMonth() + 1).toString(),
+    dob_y: new Date(coreQuote.dateOfBirth).getFullYear().toString(),
     telephoneNo: coreQuote.number,
     email: coreQuote.emailaddress,
-    houseNo: null,
-    houseName: coreQuote.house,
-    houseSubName: null,
-    organisation: null,
+    houseNo: "",
+    houseName: coreQuote.house ?? "",
+    houseSubName: "",
+    organisation: "",
     postcode: coreQuote.postcode,
     addressLine1: coreQuote.street,
     addressLine2: coreQuote.city,
@@ -123,6 +128,58 @@ const useGlobalStateAdaptor = (
     awayValue: coreQuote.awayValue,
     personalAccidentCore: coreQuote.includePersonalAccidentCover,
     personalAccidentPerformance: performanceQuote.includePersonalAccidentCover,
+    subHouseName: "",
+    assumptionsTicked: false,
+    annualGrossPremium: coreQuote.quoteResponse.annualGrossPremium,
+    annualGrossPremiumCore: coreQuote.quoteResponse.annualGrossPremium,
+    basePremium: coreQuote.quoteResponse.basePremium,
+    basePremiumCore: coreQuote.quoteResponse.basePremium,
+    commission: coreQuote.quoteResponse.commission,
+    commissionCore: coreQuote.quoteResponse.commission,
+    deposit: coreQuote.quoteResponse.deposit,
+    instalmentsApr: coreQuote.quoteResponse.instalmentsApr,
+    instalmentsAprCore: coreQuote.quoteResponse.instalmentsApr,
+    instalmentsFirstPayment: coreQuote.quoteResponse.instalmentsFirstPayment,
+    instalmentsFirstPaymentCore:
+      coreQuote.quoteResponse.instalmentsFirstPayment,
+    instalmentsGrossPremium: coreQuote.quoteResponse.instalmentsGrossPremium,
+    instalmentsGrossPremiumCore:
+      coreQuote.quoteResponse.instalmentsGrossPremium,
+    instalmentsInterestPc: coreQuote.quoteResponse.instalmentsInterestPc,
+    instalmentsInterestPcCore: coreQuote.quoteResponse.instalmentsInterestPc,
+    instalmentsServiceCharge: coreQuote.quoteResponse.instalmentsServiceCharge,
+    instalmentsServiceChargeCore:
+      coreQuote.quoteResponse.instalmentsServiceCharge,
+    instalmentsSubsequentPayments:
+      coreQuote.quoteResponse.instalmentsSubsequentPayments,
+    instalmentsSubsequentPaymentsCore:
+      coreQuote.quoteResponse.instalmentsSubsequentPayments,
+    ipt: coreQuote.quoteResponse.ipt,
+    iptCore: coreQuote.quoteResponse.ipt,
+    netPremium: coreQuote.quoteResponse.netPremium,
+    netPremiumCore: coreQuote.quoteResponse.netPremium,
+    schemeId: coreQuote.quoteResponse.schemeId,
+    schemeTable: coreQuote.quoteResponse.schemeTable,
+    optIn: false,
+    groupOptIn: false,
+    iConfirm: false,
+    preferredMethodOfContact: "",
+    recieveByEmailOnly: false,
+    preferTelephone: false,
+    preferEmail: false,
+    clickedPayNow: false,
+    paymentAttempts: 0,
+    adminOptOut: false,
+    eBikeTicked: false,
+    storageLocationTicked: false,
+    readDocumentsTicked: false,
+    accountName: "",
+    accountNumber: "",
+    accountSortCode: "",
+    accountBankName: "",
+    DDFormIsValid: false,
+    validatedRules: null,
+    resetAwayValue: false,
   };
   console.log("useGlobalStateAdaptor", state);
   sessionStorage.setItem(

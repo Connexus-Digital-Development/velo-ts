@@ -23,7 +23,7 @@
       id="Group_1682"
       data-name="Group 1682"
       transform="translate(0 0)"
-      clipPath="url(#clip-path234234)"
+      clip-path="url(#clip-path234234)"
     >
       <path
         id="Path_2024"
@@ -34,10 +34,3 @@
                   fillRule="evenodd"
                 />
               </svg>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};

@@ -14,7 +14,8 @@ import { seoTags } from "@/components/shared/SeoEdit";
 import { Helmet } from "react-helmet-async";
 
 const RetailerAffiliate = () => {
-  const signupRef = createRef<HTMLElement>() as React.RefObject<HTMLElement>;
+  const signupRef =
+    createRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>;
   useEffect(() => {
     seoTags(
       "Retailer Affiliate Scheme",

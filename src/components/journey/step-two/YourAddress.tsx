@@ -81,12 +81,11 @@ const YourAddress = () => {
   };
 
   useEffect(() => {
-    if (formik.touched.postalCode) {
-      //this effect will trigger on load, so ignore it unless the postcode box has been touched
+    // Reset address form when showAddressPreview changes to false
+    if (gState.showAddressPreview === false) {
       setAddressesFound(false);
       setGState({ ...gState, hideAddressForm: true });
       formik.resetForm();
-      // formik.resetForm({ values: 0 });
     }
   }, [gState.showAddressPreview]);
 

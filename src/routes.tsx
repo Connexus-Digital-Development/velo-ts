@@ -1,51 +1,49 @@
 import { Route, Routes as RouterRoutes } from "react-router-dom";
-import Home from "@/pages/marketing/Home";
-import MakeAComplaint from "@/pages/marketing/MakeAComplaint";
-import OurCoverLevels from "@/pages/marketing/OurCoverLevels";
-import FullBlog from "@/pages/marketing/FullBlog";
-import Pitstop from "@/pages/marketing/Pitstop";
-import PolicyInformation from "@/pages/marketing/PolicyInformation";
-import ReferAFriend from "@/pages/marketing/ReferAFriend";
-import RetailerAffiliate from "@/pages/marketing/RetailerAffiliate";
-import Reviews from "@/pages/marketing/Reviews";
-import SecurityRequirements from "@/pages/marketing/SecurityRequirements";
-import SubmitAClaim from "@/pages/marketing/SubmitAClaim";
-// import BrandAmbassador from "@/pages/BRAND_AMBASSADOR/BrandAmbassador";
-// import "./CSS/site.css";
-import Payment from "@/components/journey/aggregator/Payment";
-import QuoteSummary from "@/pages/journey/QuoteSummary";
-import InceptFailed from "@/components/journey/InceptFailed";
-import PaymentError from "@/components/journey/PaymentError";
-import PolicyConfirmation from "@/components/journey/PolicyConfirmation";
-import QuoteReferred from "@/components/journey/QuoteReferred";
-import QRLandingPage from "@/pages/journey/QRLandingPage";
-import QRPayment from "@/components/journey/quote-retrieval/QRPayment";
-import QRQuoteSummary from "@/components/journey/quote-retrieval/QRQuoteSummary";
-import StepFour from "@/pages/journey/StepFour";
-import StepOne from "@/pages/journey/StepOne";
-import StepThree from "@/pages/journey/StepThree";
-import StepTwo from "@/pages/journey/StepTwo";
-import AccessoryCover from "@/pages/marketing/AccessoryCover";
-import EBikeCover from "@/pages/marketing/EBikeCover";
-import MultiBikeCover from "@/pages/marketing/MultiBikeCover";
-import SingleBikeCover from "@/pages/marketing/SingleBikeCover";
-// import CookiePolicy from "@/pages/legal/CookiePolicy";
-// import Privacy from "@/pages/legal/Privacy";
-// import TermsAndConditions from "@/pages/legal/TermsAndConditions";
-import Travel from "@/pages/marketing/Travel";
-// import VulnerabilityPolicy from "@/pages/legal/VulnerabilityPolicy";
-import Redirector from "./redirector";
-import AboutUs from "@/pages/marketing/AboutUs";
-import ContactUs from "@/pages/marketing/ContactUs";
-import BrandAmbassador from "@/components/marketing/BrandAmbassador/BrandAmbassador";
-import FAQ from "@/pages/marketing/FAQ";
-import CoverComparison from "@/pages/marketing/CoverComparison";
-import BikesWeCover from "@/pages/marketing/BikesWeCover";
+import { lazy, Suspense } from "react";
+
+// Lazy load all components for code splitting
+const Home = lazy(() => import("@/pages/marketing/Home"));
+const MakeAComplaint = lazy(() => import("@/pages/marketing/MakeAComplaint"));
+const OurCoverLevels = lazy(() => import("@/pages/marketing/OurCoverLevels"));
+const FullBlog = lazy(() => import("@/pages/marketing/FullBlog"));
+const Pitstop = lazy(() => import("@/pages/marketing/Pitstop"));
+const PolicyInformation = lazy(() => import("@/pages/marketing/PolicyInformation"));
+const ReferAFriend = lazy(() => import("@/pages/marketing/ReferAFriend"));
+const RetailerAffiliate = lazy(() => import("@/pages/marketing/RetailerAffiliate"));
+const Reviews = lazy(() => import("@/pages/marketing/Reviews"));
+const SecurityRequirements = lazy(() => import("@/pages/marketing/SecurityRequirements"));
+const SubmitAClaim = lazy(() => import("@/pages/marketing/SubmitAClaim"));
+const Payment = lazy(() => import("@/components/journey/aggregator/Payment"));
+const QuoteSummary = lazy(() => import("@/pages/journey/QuoteSummary"));
+const InceptFailed = lazy(() => import("@/components/journey/InceptFailed"));
+const PaymentError = lazy(() => import("@/components/journey/PaymentError"));
+const PolicyConfirmation = lazy(() => import("@/components/journey/PolicyConfirmation"));
+const QuoteReferred = lazy(() => import("@/components/journey/QuoteReferred"));
+const QRLandingPage = lazy(() => import("@/pages/journey/QRLandingPage"));
+const QRPayment = lazy(() => import("@/components/journey/quote-retrieval/QRPayment"));
+const QRQuoteSummary = lazy(() => import("@/components/journey/quote-retrieval/QRQuoteSummary"));
+const StepFour = lazy(() => import("@/pages/journey/StepFour"));
+const StepOne = lazy(() => import("@/pages/journey/StepOne"));
+const StepThree = lazy(() => import("@/pages/journey/StepThree"));
+const StepTwo = lazy(() => import("@/pages/journey/StepTwo"));
+const AccessoryCover = lazy(() => import("@/pages/marketing/AccessoryCover"));
+const EBikeCover = lazy(() => import("@/pages/marketing/EBikeCover"));
+const MultiBikeCover = lazy(() => import("@/pages/marketing/MultiBikeCover"));
+const SingleBikeCover = lazy(() => import("@/pages/marketing/SingleBikeCover"));
+const Travel = lazy(() => import("@/pages/marketing/Travel"));
+const Redirector = lazy(() => import("./redirector"));
+const AboutUs = lazy(() => import("@/pages/marketing/AboutUs"));
+const ContactUs = lazy(() => import("@/pages/marketing/ContactUs"));
+const BrandAmbassador = lazy(() => import("@/components/marketing/BrandAmbassador/BrandAmbassador"));
+const FAQ = lazy(() => import("@/pages/marketing/FAQ"));
+const CoverComparison = lazy(() => import("@/pages/marketing/CoverComparison"));
+const BikesWeCover = lazy(() => import("@/pages/marketing/BikesWeCover"));
 import { JourneyStore } from "@/context/journeyStore";
 
 const AppRoutes = () => {
   return (
-    <RouterRoutes>
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterRoutes>
       <Route path="/" element={<Home />} />
       {/* =======================================JOURNEY ROUTES =============================*/}
 
@@ -154,6 +152,7 @@ const AppRoutes = () => {
       <Route path="/VulnerabilityPolicy" element={<VulnerabilityPolicy />} />*/}
       <Route path="*" element={<Redirector />} />
     </RouterRoutes>
+    </Suspense>
   );
 };
 

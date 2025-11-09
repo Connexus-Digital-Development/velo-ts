@@ -103,11 +103,12 @@ const AboutYou = () => {
       .max(upper),
     postalCode: Yup.string().when("showManualAddress", {
       is: false,
-      then: Yup.string()
-        .min(5, "This postcode is too short")
-        .required("Please enter your post code to complete your address")
-        .matches(postcodeRegex, "This postcode is not valid"),
-      otherwise: Yup.string(),
+      then: (schema) =>
+        schema
+          .min(5, "This postcode is too short")
+          .required("Please enter your post code to complete your address")
+          .matches(postcodeRegex, "This postcode is not valid"),
+      otherwise: (schema) => schema,
     }),
     addressLine1: Yup.string()
       .nullable()
@@ -118,13 +119,14 @@ const AboutYou = () => {
       ),
     addressLine2: Yup.string().when("showManualAddress", {
       is: true,
-      then: Yup.string()
-        .required("Address line 2 is required")
-        .matches(
-          new RegExp("^[A-Za-z ./-]+$"),
-          "Address line 2 can only contain letters, spaces, full stops, hyphens and forward slashes",
-        ),
-      otherwise: Yup.string(),
+      then: (schema) =>
+        schema
+          .required("Address line 2 is required")
+          .matches(
+            new RegExp("^[A-Za-z ./-]+$"),
+            "Address line 2 can only contain letters, spaces, full stops, hyphens and forward slashes",
+          ),
+      otherwise: (schema) => schema,
     }),
     houseNo: Yup.string()
       .nullable()
@@ -146,28 +148,31 @@ const AboutYou = () => {
       ),
     postcode: Yup.string().when("showManualAddress", {
       is: true,
-      then: Yup.string()
-        .required("Postcode is required")
-        .min(5, "This postcode is too short")
-        .matches(postcodeRegex, "This postcode is not valid")
-        .max(10, "This postcode is too long"),
-      otherwise: Yup.string(),
+      then: (schema) =>
+        schema
+          .required("Postcode is required")
+          .min(5, "This postcode is too short")
+          .matches(postcodeRegex, "This postcode is not valid")
+          .max(10, "This postcode is too long"),
+      otherwise: (schema) => schema,
     }),
     coverStart: Yup.date()
       .nullable()
       .required("Please select the date that you would like cover to start."),
     hideAddressForm: Yup.boolean().when("showManualAddress", {
       is: false,
-      then: Yup.boolean().oneOf([true], "Please select / enter your Address."),
-      otherwise: Yup.boolean(),
+      then: (schema) =>
+        schema.oneOf([true], "Please select / enter your Address."),
+      otherwise: (schema) => schema,
     }),
     marketingReference: Yup.string().when("disableSOB", {
       is: false,
-      then: Yup.string()
-        .nullable()
-        .required("Marketing Reference is required")
-        .min(1, "Marketing Reference you've entered is too short"),
-      otherwise: Yup.string(),
+      then: (schema) =>
+        schema
+          .nullable()
+          .required("Marketing Reference is required")
+          .min(1, "Marketing Reference you've entered is too short"),
+      otherwise: (schema) => schema,
     }),
     marketingPreferences: Yup.boolean()
       .oneOf([true], "Please select your marketing preference or opt out")
@@ -209,6 +214,7 @@ const AboutYou = () => {
         gState?.adminPhone || gState?.adminEmail || gState?.adminOptOut,
       preferredMethodOfContact: gState.preferredMethodOfContact,
       iConfirm: gState.iConfirm ?? false,
+      marketingOptIn: gState.optIn ?? false,
     },
     validationSchema: schema,
 
@@ -221,17 +227,19 @@ const AboutYou = () => {
         ...gState,
         forename: values.forename,
         surname: values.surname,
-        dob_d: values.dob_d ? values.dob_d.toString() : null,
-        dob_m: values.dob_m ? values.dob_m.toString() : null,
-        dob_y: values.dob_y ? values.dob_y.toString() : null,
+        dob_d: values.dob_d ? values.dob_d.toString() : "",
+        dob_m: values.dob_m ? values.dob_m.toString() : "",
+        dob_y: values.dob_y ? values.dob_y.toString() : "",
 
-        dob: modelAdaptorHelper.getFormattedDOBFromDateParts(
-          values.dob_d!,
-          values.dob_m!,
-          values.dob_y!,
-        ),
-        houseSubName: showManualAddress ? null : gState.houseSubName,
-        houseName: showManualAddress ? null : gState.houseName,
+        dob: modelAdaptorHelper
+          .getFormattedDOBFromDateParts(
+            values.dob_d!,
+            values.dob_m!,
+            values.dob_y!,
+          )
+          .toString(),
+        houseSubName: showManualAddress ? "" : gState.houseSubName,
+        houseName: showManualAddress ? "" : gState.houseName,
         houseNo: showManualAddress
           ? values.houseNo
           : isEmpty(gState.houseNo)
@@ -345,11 +353,62 @@ const AboutYou = () => {
       );
     });
 
+    const showSingleAddress = (selectedAddress: AddressLookupResult): void => {
+      //set the globalstate with these address details
+
+      setGState({
+        ...gState,
+        organisation: selectedAddress.organisation ?? "",
+        houseNo: selectedAddress.houseNumber ?? "",
+        houseName: selectedAddress.houseName ?? "",
+        houseSubName: selectedAddress.subHouseName ?? "",
+        addressLine1: selectedAddress.street ?? "",
+        addressLine2: selectedAddress.townOrCity ?? "",
+        addressLine3: selectedAddress.locality ?? "",
+        addressLine4: selectedAddress.county ?? "",
+        postcode: selectedAddress.postcode ?? "",
+        hideAddressForm: true,
+      });
+
+      const houseNo = (
+        (selectedAddress.organisation !== null
+          ? selectedAddress.organisation + ", "
+          : "") +
+        (selectedAddress.subHouseName && selectedAddress.subHouseName.length > 1
+          ? selectedAddress.subHouseName
+          : "") +
+        " " +
+        (selectedAddress.houseName && selectedAddress.houseName.length > 1
+          ? selectedAddress.houseName
+          : "")
+      ).trim();
+
+      formik.setFieldValue(
+        "houseNo",
+        houseNo?.length < 1 ? selectedAddress.houseNumber : houseNo,
+      );
+      formik.setFieldValue(
+        "addressLine1",
+        houseNo?.length < 1
+          ? selectedAddress.street
+          : selectedAddress.houseNumber + " " + selectedAddress.street,
+      );
+      formik.setFieldValue("addressLine2", selectedAddress.townOrCity);
+      formik.setFieldValue("addressLine3", selectedAddress.locality);
+      formik.setFieldValue("addressLine4", selectedAddress.county);
+      formik.setFieldValue("postcode", selectedAddress.postcode);
+      formik.setFieldValue("showManualAddress", false);
+      formik.setFieldValue("hideAddressForm", true);
+      formik.setFieldValue("addressLine1IsValid", true);
+      formik.setFieldValue("houseIsValid", true);
+      setAddressesFound(false);
+    };
+
     if (filtered?.length === 1) {
       //we found one matching address so lets hide all the guff and show this address.
       showSingleAddress(filtered[0]);
     }
-  }, [addressData, formik.values.houseNumber, showSingleAddress]);
+  }, [addressData, formik, formik.values.houseNumber, gState, setGState]);
 
   // Handle React Query response
   useEffect(() => {
@@ -440,57 +499,6 @@ const AboutYou = () => {
     formik.setFieldValue("showManualAddress", false);
     formik.setFieldValue("showManualAddress", true);
     formik.setFieldValue("addressIsValid", true);
-    setAddressesFound(false);
-  };
-
-  const showSingleAddress = (selectedAddress: AddressLookupResult): void => {
-    //set the globalstate with these address details
-
-    setGState({
-      ...gState,
-      organisation: selectedAddress.organisation ?? "",
-      houseNo: selectedAddress.houseNumber ?? "",
-      houseName: selectedAddress.houseName ?? "",
-      houseSubName: selectedAddress.subHouseName ?? "",
-      addressLine1: selectedAddress.street ?? "",
-      addressLine2: selectedAddress.townOrCity ?? "",
-      addressLine3: selectedAddress.locality ?? "",
-      addressLine4: selectedAddress.county ?? "",
-      postcode: selectedAddress.postcode ?? "",
-      hideAddressForm: true,
-    });
-
-    const houseNo = (
-      (selectedAddress.organisation !== null
-        ? selectedAddress.organisation + ", "
-        : "") +
-      (selectedAddress.subHouseName && selectedAddress.subHouseName.length > 1
-        ? selectedAddress.subHouseName
-        : "") +
-      " " +
-      (selectedAddress.houseName && selectedAddress.houseName.length > 1
-        ? selectedAddress.houseName
-        : "")
-    ).trim();
-
-    formik.setFieldValue(
-      "houseNo",
-      houseNo?.length < 1 ? selectedAddress.houseNumber : houseNo,
-    );
-    formik.setFieldValue(
-      "addressLine1",
-      houseNo?.length < 1
-        ? selectedAddress.street
-        : selectedAddress.houseNumber + " " + selectedAddress.street,
-    );
-    formik.setFieldValue("addressLine2", selectedAddress.townOrCity);
-    formik.setFieldValue("addressLine3", selectedAddress.locality);
-    formik.setFieldValue("addressLine4", selectedAddress.county);
-    formik.setFieldValue("postcode", selectedAddress.postcode);
-    formik.setFieldValue("showManualAddress", false);
-    formik.setFieldValue("hideAddressForm", true);
-    formik.setFieldValue("addressLine1IsValid", true);
-    formik.setFieldValue("houseIsValid", true);
     setAddressesFound(false);
   };
 
@@ -616,7 +624,7 @@ const AboutYou = () => {
                         setGState({
                           ...gState,
                           title: "Mr",
-                          titleId: 106,
+                          titleId: "106",
                           generateQuote: true,
                           yourQuoteCrumb: 0,
                         });
@@ -640,7 +648,7 @@ const AboutYou = () => {
                         setGState({
                           ...gState,
                           title: "Mrs",
-                          titleId: 107,
+                          titleId: "107",
                           generateQuote: true,
                           yourQuoteCrumb: 0,
                         });
@@ -664,7 +672,7 @@ const AboutYou = () => {
                         setGState({
                           ...gState,
                           title: "Ms",
-                          titleId: 107,
+                          titleId: "107",
                           generateQuote: true,
                           yourQuoteCrumb: 0,
                         });
@@ -690,7 +698,7 @@ const AboutYou = () => {
                         setGState({
                           ...gState,
                           title: "Miss",
-                          titleId: 107,
+                          titleId: "107",
                           generateQuote: true,
                           yourQuoteCrumb: 0,
                         });
@@ -714,7 +722,7 @@ const AboutYou = () => {
                         setGState({
                           ...gState,
                           title: "Dr",
-                          titleId: 107,
+                          titleId: "107",
                           generateQuote: true,
                           yourQuoteCrumb: 0,
                         });
@@ -739,7 +747,7 @@ const AboutYou = () => {
                         setGState({
                           ...gState,
                           title: "Mx",
-                          titleId: 107,
+                          titleId: "107",
                           generateQuote: true,
                           yourQuoteCrumb: 0,
                         });
@@ -819,9 +827,9 @@ const AboutYou = () => {
                 <br />
                 <select
                   id="dob_d"
-                  placeholder="DD"
-                  min="1"
-                  max="31"
+                  // placeholder="DD"
+                  // min="1"
+                  // max="31"
                   className={`form-control Individual_Dateparts Individual_Dateparts_Day ${
                     formik.errors.dob_d
                       ? formik.touched.dob_d && "is-invalid"
@@ -847,9 +855,9 @@ const AboutYou = () => {
 
                 <select
                   id="dob_m"
-                  placeholder="MM"
-                  min="1"
-                  max="12"
+                  // placeholder="MM"
+                  // min="1"
+                  // max="12"
                   className={`form-control Individual_Dateparts Individual_Dateparts_Month ${
                     formik.errors.dob_m
                       ? formik.touched.dob_m && "is-invalid"
@@ -874,9 +882,9 @@ const AboutYou = () => {
                 </select>
                 <select
                   id="dob_y"
-                  placeholder="YYYY"
-                  min={lower.toString()}
-                  max={upper.toString()}
+                  // placeholder="YYYY"
+                  // min={lower.toString()}
+                  // max={upper.toString()}
                   className={`form-control Individual_Dateparts_Year Individual_Dateparts  ${
                     formik.errors.dob_y
                       ? formik.touched.dob_y && "is-invalid"

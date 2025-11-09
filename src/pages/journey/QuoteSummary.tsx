@@ -32,6 +32,11 @@ const QuoteSummary = () => {
   const [clickedButton, setClickedButton] = useState(false);
   const [canProceedToPayment, setCanProceedToPayment] = useState(true);
   const [validateNextButton, setValidateNextButton] = useState(false);
+  const [showReQuote, setShowReQuote] = useState(false);
+  const [showReQuoteCore, setShowReQuoteCore] = useState(false);
+  const [showReQuoteMessage, setShowReQuoteMessage] = useState(false);
+  const [showCoreReQuoteMessage, setShowCoreReQuoteMessage] = useState(false);
+  const [showPerformanceReQuoteMessage, setShowPerformanceReQuoteMessage] = useState(false);
   // React Query hook for retrieving quotes
   const {
     data: quoteData,
@@ -140,10 +145,17 @@ const QuoteSummary = () => {
             fromExternalLink={true}
             canProceedToPayment={setCanProceedToPayment}
             performanceQuote={gState.performanceQuote}
-            // clearShowError={() => { }}
-            // showReQuote={false}
-            // showReQuoteCore={false}
-            // setShowReQuote={() => { }}
+            clearShowError={() => setClickedButton(false)}
+            showReQuote={showReQuote}
+            showReQuoteCore={showReQuoteCore}
+            setShowReQuote={setShowReQuote}
+            setShowReQuoteCore={setShowReQuoteCore}
+            showReQuoteMessage={showReQuoteMessage}
+            setShowReQuoteMessage={setShowReQuoteMessage}
+            showCoreReQuoteMessage={showCoreReQuoteMessage}
+            setShowCoreReQuoteMessage={setShowCoreReQuoteMessage}
+            showPerformanceReQuoteMessage={showPerformanceReQuoteMessage}
+            setShowPerformanceReQuoteMessage={setShowPerformanceReQuoteMessage}
           />
         )}
       {incepted && (

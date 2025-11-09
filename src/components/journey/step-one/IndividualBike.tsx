@@ -89,6 +89,10 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
         model: values.bikeModel,
         value: values.bikeValue,
         isElectric: values.isElectric,
+        AccessoryCover: bike.AccessoryCover,
+        SportsCover: bike.SportsCover,
+        WorldWideCover: bike.WorldWideCover,
+        PublicAccidentRoadRage: bike.PublicAccidentRoadRage,
       };
 
       const bikes = gState.bikes.map((bike: Bike) => {
@@ -115,7 +119,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setShowEditBikeMessage(false);
-    setIsElectric(bike.isElectric);
+    setIsElectric(bike.isElectric ?? false);
     formik.values.isElectric = bike.isElectric;
     resetForm();
     formik.resetForm();
@@ -164,7 +168,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
     setGState((prevState) => {
       return {
         ...prevState,
-        id: null,
+        id: undefined,
         make: "",
         model: "",
         value: 0,
@@ -190,8 +194,6 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
     setIsElectric(flag);
     formik.values.isElectric = flag;
   };
-  const _center = true;
-  const _fs = false;
 
   return (
     <section className="container container_narrow mt-3">
@@ -292,7 +294,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                   gState.currentlyEditingABike || gState.currentlyAddingABike
                 }
                 onClick={(_e) => {
-                  handleEdit(bike.id);
+                  handleEdit();
                 }}
               >
                 EDIT

@@ -59,7 +59,7 @@ export interface SelectedCoreScheme {
 // Risk Model types for useRiskModelAdaptor
 export interface RiskModelProposer {
   title: string;
-  titleId: number;
+  titleId: string;
   forename: string;
   initials: string;
   surname: string;

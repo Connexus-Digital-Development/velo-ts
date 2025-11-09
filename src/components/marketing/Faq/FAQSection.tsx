@@ -1,5 +1,5 @@
 import Question from "./Question";
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import Spinner from "@/components/shared/Spinner";
 import { useFAQs, useCategories } from "@/hooks/queries/useContent";
 
@@ -20,24 +20,35 @@ interface CategoryItem {
   [key: string]: any;
 }
 
-interface StructuredDataItem {
-  name: string;
-  faqs: FAQItem[];
-}
+// interface StructuredDataItem {
+//   name: string;
+//   faqs: FAQItem[];
+// }
 
 const FAQSection = () => {
   const brand = import.meta.env.VITE_CONNEXUS_BRAND;
   const faqCategoryType = import.meta.env.VITE_FAQS_CATEGORY_TYPE;
 
-  const { data: faqsResponse, isLoading: faqsLoading, error: faqsError } =
-    useFAQs(brand);
-  const { data: categoriesResponse, isLoading: categoriesLoading, error: categoriesError } =
-    useCategories(faqCategoryType);
+  const {
+    data: faqsResponse,
+    isLoading: faqsLoading,
+    error: faqsError,
+  } = useFAQs(brand);
+  const {
+    data: categoriesResponse,
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useCategories(faqCategoryType);
 
   const faqs = useMemo(() => faqsResponse?.Value || [], [faqsResponse]);
-  const categories = useMemo(() => categoriesResponse?.Value || [], [categoriesResponse]);
+  const categories = useMemo(
+    () => categoriesResponse?.Value || [],
+    [categoriesResponse],
+  );
 
-  const hasApiError = faqsError || categoriesError ||
+  const hasApiError =
+    faqsError ||
+    categoriesError ||
     (faqsResponse && !faqsResponse.Success) ||
     (categoriesResponse && !categoriesResponse.Success);
 

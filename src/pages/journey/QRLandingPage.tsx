@@ -4,9 +4,10 @@ import RegularBanner from "@/components/shared/RegularBanner";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSafeContext } from "@/context/journeyStore";
-import useGlobalStateAdaptor from "@/hooks/useGlobalStateAdaptor";
+// import useGlobalStateAdaptor from "@/hooks/useGlobalStateAdaptor";
 import { useRetrieveQuoteByDetails } from "@/hooks/queries/useQuotes";
 import * as Yup from "yup";
+import useGlobalStateAdaptor from "@/hooks/useGlobalStateAdaptor";
 
 const QRLandingPage = () => {
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ const QRLandingPage = () => {
           ),
         ),
         postcode: values.postcode.replaceAll(" ", "").toUpperCase(),
-        policyDetailsID: policyDetailsID,
+        policyDetailsID: policyDetailsID ?? undefined,
         newDD: true,
       };
 
@@ -108,25 +109,31 @@ const QRLandingPage = () => {
 
   // Handle quote retrieval by details mutation response
   useEffect(() => {
-    if (retrieveQuoteByDetailsMutation.isSuccess && retrieveQuoteByDetailsMutation.data) {
+    if (
+      retrieveQuoteByDetailsMutation.isSuccess &&
+      retrieveQuoteByDetailsMutation.data
+    ) {
       const data = retrieveQuoteByDetailsMutation.data;
 
-      if (data?.success === false) {
+      if (data?.Success === false) {
         setErrored(true);
         setLoading(false);
         return;
       }
 
-      if (data?.value?.coreQuote?.expired) {
+      if (data?.Value?.coreQuote?.expired) {
         setExpired(true);
         setLoading(false);
         return;
       }
 
-      setVals(data.value);
+      setVals(data.Value);
       setLoading(false);
     }
-  }, [retrieveQuoteByDetailsMutation.isSuccess, retrieveQuoteByDetailsMutation.data]);
+  }, [
+    retrieveQuoteByDetailsMutation.isSuccess,
+    retrieveQuoteByDetailsMutation.data,
+  ]);
 
   // Handle quote retrieval by details mutation error
   useEffect(() => {
@@ -138,7 +145,7 @@ const QRLandingPage = () => {
 
   return (
     <div className="container-fluid mb-5 oh">
-      <TopNavBlank theme={"white"} />
+      <TopNavBlank />
       <RegularBanner
         headlineLine1={"Retrieve"}
         headlineLine2={"your quote"}
@@ -147,7 +154,13 @@ const QRLandingPage = () => {
         hasCTA={"false"}
         rotate={retrieveQuoteByDetailsMutation.isPending || loading}
       />
-      <div className={retrieveQuoteByDetailsMutation.isPending || loading ? "overlay" : "overlay_hidden"}>
+      <div
+        className={
+          retrieveQuoteByDetailsMutation.isPending || loading
+            ? "overlay"
+            : "overlay_hidden"
+        }
+      >
         <h1 className="GettingQuoteOverlayH1">Getting your quote...</h1>
       </div>
       <section className="container container_narrow">
@@ -161,7 +174,7 @@ const QRLandingPage = () => {
               <br />
               <select
                 id="dob_d"
-                placeholder="DD"
+                // placeholder="DD"
                 className={`form-control Individual_Dateparts Individual_Dateparts_Day ${
                   formik.errors.dob_d
                     ? formik.touched.dob_d && "is-invalid"
@@ -181,7 +194,7 @@ const QRLandingPage = () => {
 
               <select
                 id="dob_m"
-                placeholder="MM"
+                // placeholder="MM"
                 className={`form-control Individual_Dateparts Individual_Dateparts_Month ${
                   formik.errors.dob_m
                     ? formik.touched.dob_m && "is-invalid"
@@ -200,7 +213,7 @@ const QRLandingPage = () => {
               </select>
               <select
                 id="dob_y"
-                placeholder="YYYY"
+                // placeholder="YYYY"
                 className={`form-control Individual_Dateparts_Year Individual_Dateparts  ${
                   formik.errors.dob_y
                     ? formik.touched.dob_y && "is-invalid"

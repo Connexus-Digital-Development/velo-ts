@@ -7,7 +7,7 @@ import SignUpFailed from "./SIGNUP_COMPONENTS/SignUpFailed";
 const ReadyToSignUp = ({
   signupRef,
 }: {
-  signupRef: RefObject<HTMLElement>;
+  signupRef: RefObject<HTMLDivElement>;
 }) => {
   const [formSubmitted, setFormSubmitted] = useState<boolean | null>(false);
   const [submitSuccessful, setSubmitSuccessful] = useState<boolean | null>(

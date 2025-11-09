@@ -60,7 +60,7 @@ const QRQuoteSummary = () => {
 
   return (
     <div className="container-fluid mb-5 oh">
-      <TopNavBlank theme={"white"} />
+      <TopNavBlank />
       <RegularBanner
         headlineLine1={"Retrieve"}
         headlineLine2={"your quote"}
