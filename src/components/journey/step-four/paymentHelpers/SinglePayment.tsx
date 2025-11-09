@@ -7,7 +7,8 @@ import * as Yup from "yup";
 import valid from "card-validator";
 import "./AnnualPayment.css";
 import CardPayments from "./CardPayments";
-import PaymentData from "./PaymentData";
+import { createPaymentData } from "./PaymentDataFactory";
+import { useProcessCardPayment } from "@/hooks/queries/usePayments";
 
 interface SinglePaymentProps {
   successMethod: (result: any) => void;
@@ -28,43 +29,54 @@ const SinglePayment = ({
 }: SinglePaymentProps) => {
   const [paymentError, setPaymentError] = useState("");
   const [qPaymentError, setQPaymentError] = useState("");
-  const [messageTriggered, setMessageTrigger] = useState(null);
+  const [messageTriggered, setMessageTrigger] = useState<{
+    data: {
+      transStatus: string;
+      threeDSServerTransID: string;
+    };
+  } | null>(null);
 
-  const paymentData = new PaymentData();
+  const processCardPayment = useProcessCardPayment();
 
-  function lockUI(display) {
+  const paymentData = createPaymentData();
+
+  function lockUI(display: boolean) {
     uiLock(display);
   }
+
+  const paymentSchema = Yup.object({
+    cardNumber: Yup.string()
+      .required("Card Number is required")
+      .min(15, "Card Number is too short")
+      .max(19, "Card Number is too long")
+      .test(
+        "test-number",
+        "Credit Card number is invalid",
+        (value) => valid.number(value).isValid,
+      ),
+    cardExpiry: Yup.date()
+      .nullable()
+      .required("Please select the date that you would like cover to start.")
+      .default(new Date()),
+    cardCVN: Yup.string()
+      .required("CVV is required")
+      .min(3, "CVV is too short")
+      .max(4, "CVV is too long"),
+    cardHolderName: Yup.string()
+      .required("Cardholder Name required")
+      .min(2, "Cardholder Name is too short"),
+  });
 
   const formik = useFormik({
     initialValues: {
       cardNumber: "",
-      cardExpiry: null,
+      cardExpiry: null as Date | null,
       cardCVN: "",
       cardHolderName: "",
     },
-    validationSchema: Yup.object({
-      cardNumber: Yup.string()
-        .required("Card Number is required")
-        .min(15, "Card Number is too short")
-        .max(19, "Card Number is too long")
-        .test(
-          "test-number",
-          "Credit Card number is invalid",
-          (value) => valid.number(value).isValid,
-        ),
-      cardExpiry: Yup.date()
-        .nullable()
-        .required("Please select the date that you would like cover to start."),
-      cardCVN: Yup.string()
-        .required("CVV is required")
-        .min(3, "CVV is too short")
-        .max(4, "CVV is too long"),
-      cardHolderName: Yup.string()
-        .required("Cardholder Name required")
-        .min(2, "Cardholder Name is too short"),
-    }),
-    onSubmit: (values, { resetForm }) => {
+    validationSchema: paymentSchema,
+    onSubmit: (values) => {
+      // eslint-disable-line @typescript-eslint/no-unused-vars
       let expiryMonth = 0;
       let expiryYear = 0;
 
@@ -82,8 +94,29 @@ const SinglePayment = ({
       );
 
       uiLock(true);
-      CardPayments.processPayment(paymentData.forPost())
-        .then((result) => {
+      const paymentDataForApi = {
+        authData: {
+          merchant: import.meta.env.VITE_PAYMENTS_MERCHANT,
+          account: import.meta.env.VITE_PAYMENTS_ACCOUNT,
+          key: import.meta.env.VITE_PAYMENTS_KEY,
+          appId: import.meta.env.VITE_PAYMENTS_API_TOKEN,
+          appKey: import.meta.env.VITE_PAYMENTS_API_KEY,
+          apiPath: `${import.meta.env.VITE_PAYMENTS_API_PATH}/api/payments`,
+          testMode: import.meta.env.VITE_PAYMENTS_TEST_MODE === "true",
+        },
+        paymentRef: paymentData.forPost().paymentRef,
+        payment: paymentData.forPost().payment,
+        address: paymentData.forPost().address,
+        retry: {
+          challenged: paymentData.forPost().challenged,
+          transactionID: paymentData.forPost().transactionID,
+          browserData: paymentData.forPost().browserData,
+          store: paymentData.forPost().store,
+        },
+      };
+
+      processCardPayment.mutate(paymentDataForApi, {
+        onSuccess: (result) => {
           if (!CheckForError(result)) {
             if (result.requiresChallenge) {
               CardPayments.trigger3dsChallenge(
@@ -106,19 +139,20 @@ const SinglePayment = ({
               }
             }
           }
-        })
-        .catch((err) => {
-          resetForm({ values: "" });
+        },
+        onError: (err: any) => {
+          formik.resetForm();
           paymentData.incrementRetries();
           uiLock(false);
           threeDS(false);
           failureMethod(err);
           setPaymentError(err.message);
-        });
+        },
+      });
     },
   });
 
-  const CheckForError = (result) => {
+  const CheckForError = (result: any) => {
     if (result.isErrored) {
       setPaymentError("Something went wrong, please try again");
       uiLock(false);
@@ -138,10 +172,10 @@ const SinglePayment = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function messageTrig(e) {
+  function messageTrig(e: MessageEvent) {
     if (e.origin === import.meta.env.VITE_PAYMENTS_API_PATH) {
       if (e.data.transStatus === "Y") {
-        setMessageTrigger(e);
+        setMessageTrigger(e as any);
       } else {
         uiLock(false);
         setPaymentError("3DS Auth was not completed");
@@ -153,7 +187,13 @@ const SinglePayment = ({
     }
   }
 
-  function populatePaymentData(number, expMonth, expYear, cvn, holder) {
+  function populatePaymentData(
+    number: string,
+    expMonth: number,
+    expYear: number,
+    cvn: string,
+    holder: string,
+  ) {
     const lineOne = `${
       gState?.organisation?.length >= 1 ? gState.organisation.trim() : ""
     } ${gState.subHouseName?.length >= 1 ? gState.subHouseName.trim() : ""} ${
@@ -172,8 +212,8 @@ const SinglePayment = ({
         : "0.00",
       "GBP",
       number,
-      expMonth,
-      expYear,
+      expMonth.toString(),
+      expYear.toString(),
       cvn,
       holder,
     );
@@ -205,11 +245,32 @@ const SinglePayment = ({
 
     if (messageTriggered != null) {
       paymentData.setRetryData(
-        messageTriggered.data.transStatus === "Y",
+        (messageTriggered.data.transStatus === "Y").toString(),
         messageTriggered.data.threeDSServerTransID,
       );
-      CardPayments.processPayment(paymentData.forPost())
-        .then((result) => {
+      const retryPaymentDataForApi = {
+        authData: {
+          merchant: import.meta.env.VITE_PAYMENTS_MERCHANT,
+          account: import.meta.env.VITE_PAYMENTS_ACCOUNT,
+          key: import.meta.env.VITE_PAYMENTS_KEY,
+          appId: import.meta.env.VITE_PAYMENTS_API_TOKEN,
+          appKey: import.meta.env.VITE_PAYMENTS_API_KEY,
+          apiPath: `${import.meta.env.VITE_PAYMENTS_API_PATH}/api/payments`,
+          testMode: import.meta.env.VITE_PAYMENTS_TEST_MODE === "true",
+        },
+        paymentRef: paymentData.forPost().paymentRef,
+        payment: paymentData.forPost().payment,
+        address: paymentData.forPost().address,
+        retry: {
+          challenged: paymentData.forPost().challenged,
+          transactionID: paymentData.forPost().transactionID,
+          browserData: paymentData.forPost().browserData,
+          store: paymentData.forPost().store,
+        },
+      };
+
+      processCardPayment.mutate(retryPaymentDataForApi, {
+        onSuccess: (result) => {
           if (!CheckForError(result)) {
             if (result.requiresChallenge) {
               CardPayments.trigger3dsChallenge(
@@ -232,19 +293,20 @@ const SinglePayment = ({
               }
             }
           }
-        })
-        .catch((err) => {
-          formik.resetForm({ values: "" });
+        },
+        onError: (err: any) => {
+          formik.resetForm();
           paymentData.incrementRetries();
           uiLock(false);
           threeDS(false);
           failureMethod(err);
           setPaymentError(err.message);
-        });
+        },
+      });
 
-      paymentData.setRetryData(false, "");
+      paymentData.setRetryData("false", "");
     }
-  }, [messageTriggered]);
+  }, [messageTriggered]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>

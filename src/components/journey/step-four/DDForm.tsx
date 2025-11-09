@@ -1,8 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { loggingService } from "@/services/loggingService";
-import { paymentService } from "@/services/paymentService";
-import { restApiCommBaseService } from "@/services/restApiCommBaseService";
+import { useValidateBankAccount } from "@/hooks/queries/usePayments";
 
 interface DDFormProps {
   formik: any; // TODO: Replace with proper Formik type when available
@@ -15,17 +14,8 @@ const DDForm = ({ formik }: DDFormProps) => {
   const [error, setError] = useState("");
   const [checkBottomLine, setCheckBottomLine] = useState(true);
 
-  useEffect(() => {
-    if (
-      checkBottomLine === true &&
-      formik.values.accountName.length > 1 &&
-      formik.values.accountSortCode.toString().length === 6 &&
-      formik.values.accountNumber.toString().length === 8
-    ) {
-      setCheckBottomLine(false);
-      bottomLineCheck();
-    }
-  }, [formik, checkBottomLine, bottomLineCheck]);
+  // Bank validation hook
+  const validateBankAccount = useValidateBankAccount();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -38,36 +28,55 @@ const DDForm = ({ formik }: DDFormProps) => {
   const bottomLineCheck = useCallback(() => {
     // check bottom line...
     //console.log("checking bottom Line");
-    paymentService
-      .bottomLineCheck(
-        formik.values.accountSortCode,
-        formik.values.accountNumber,
-      )
-      .then(restApiCommBaseService.handleResponse)
-      .then((json) => {
-        return json.value;
-      })
-      .then((data) => {
-        setError("");
-        if (data.ukBankBranch.bankName) {
-          formik.setFieldValue(
-            "accountBankName",
-            data.ukBankBranch.bankName,
-            false,
+    validateBankAccount.mutate(
+      {
+        sortCode: formik.values.accountSortCode,
+        accNo: formik.values.accountNumber,
+      },
+      {
+        onSuccess: (data) => {
+          setError("");
+          if (data.ukBankBranch?.bankName) {
+            formik.setFieldValue(
+              "accountBankName",
+              data.ukBankBranch.bankName,
+              false,
+            );
+          }
+        },
+        onError: () => {
+          setError(
+            "These Direct Debit details could not be verified, please double check them and try again.",
           );
-        }
-      })
-      .catch(() => {
-        setError(
-          "These Direct Debit details could not be verified, please double check them and try again.",
-        );
-        loggingService.logWarning(
-          `These Direct Debit details could not be verified, for Quote: ${gState.quoteReference}`,
-        );
-        setGState({ ...gState, DDFormIsValid: false }); // this flag is used to trigger the Bottom Line API call, it might be needed again
-      });
-  }, [formik.values.accountSortCode, formik.values.accountNumber, formik.setFieldValue, formik, setError, gState.quoteReference, setGState, gState]);
+          loggingService.logWarning(
+            `These Direct Debit details could not be verified, for Quote: ${gState.quoteReference}`,
+          );
+          setGState({ ...gState, DDFormIsValid: false }); // this flag is used to trigger the Bottom Line API call, it might be needed again
+        },
+      }
+    );
+  }, [
+    validateBankAccount,
+    formik.values.accountSortCode,
+    formik.values.accountNumber,
+    formik.setFieldValue,
+    setError,
+    gState.quoteReference,
+    setGState,
+    gState,
+  ]);
 
+  useEffect(() => {
+    if (
+      checkBottomLine === true &&
+      formik.values.accountName.length > 1 &&
+      formik.values.accountSortCode.toString().length === 6 &&
+      formik.values.accountNumber.toString().length === 8
+    ) {
+      setCheckBottomLine(false);
+      bottomLineCheck();
+    }
+  }, [formik, checkBottomLine, bottomLineCheck]);
   return (
     <form id="ddForm" onSubmit={formik.handleSubmit} noValidate>
       <div className="row">

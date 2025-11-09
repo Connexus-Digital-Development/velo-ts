@@ -5,7 +5,7 @@ interface CardPayProps {
 }
 
 const CardPay = ({ formik }: CardPayProps) => {
-  const handleStartEndDate = (date) => {
+  const handleStartEndDate = (date: Date | null) => {
     formik.setFieldValue("cardExpiry", date, false);
   };
 
@@ -77,24 +77,16 @@ const CardPay = ({ formik }: CardPayProps) => {
             <label className="form-label">Expiry MM/YYYY</label>
 
             <DatePicker
-              onChange={(date) => handleStartEndDate(date)}
+              onChange={(date: Date | null) => handleStartEndDate(date)}
               onBlur={formik.handleBlur}
               selected={formik.values.cardExpiry}
               autoComplete="on"
-              openTo="year"
               showMonthYearPicker
-              type="date"
+              // selectsMultiple={false}
               placeholderText={"Click to select"}
               dateFormat="MM/yyyy"
               popperPlacement="top-start"
-              popperModifiers={{
-                offset: { enabled: true },
-                preventOverflow: {
-                  enabled: true,
-                  escapeWithReference: false,
-                  boundariesElement: "viewport",
-                },
-              }}
+              popperModifiers={[]}
               className={`form-control ${
                 formik.errors.cardExpiry
                   ? formik.touched.cardExpiry && "is-invalid"

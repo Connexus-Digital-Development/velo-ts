@@ -221,7 +221,7 @@ export const transactorService = {
   // method to incept policy from Transactor API given risk data
   // param transactorRequest - the populated request inclusive of config and risk data
   inceptPolicy: (
-    riskData: PolicyInceptionRequest,
+    riskData: PolicyInceptionRequest | string,
     fromExternalLink: boolean,
   ): Promise<any> => {
     const endpoint = String(

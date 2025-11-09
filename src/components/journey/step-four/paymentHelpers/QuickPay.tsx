@@ -1,9 +1,31 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import GooglePayButton from "@google-pay/button-react";
-import ApplePayments from "./ApplePayments";
-import GooglePayments from "./GooglePayments";
-import PaypalPayments from "./PaypalPayments";
+// import ApplePayments from "./ApplePayments";
+// import PaymentSupport from "./PaymentSupport";
+import {
+  useProcessPaypalPayment,
+  useCancelPaypalPayment,
+  useLogPaypalError,
+  useProcessGooglePayment,
+  useCancelGooglePayment,
+  useLogGoogleError,
+  useProcessApplePayment,
+  useValidateAppleSession,
+  useCancelApplePayment,
+  useLogAppleError,
+} from "@/hooks/queries/usePayments";
 import { useState } from "react";
+
+// Auth data object for payment operations
+const paymentAuthData = {
+  merchant: import.meta.env.VITE_PAYMENTS_MERCHANT,
+  account: import.meta.env.VITE_PAYMENTS_ACCOUNT,
+  key: import.meta.env.VITE_PAYMENTS_KEY,
+  appId: import.meta.env.VITE_PAYMENTS_API_TOKEN,
+  appKey: import.meta.env.VITE_PAYMENTS_API_KEY,
+  apiPath: `${import.meta.env.VITE_PAYMENTS_API_PATH}/api/payments`,
+  testMode: import.meta.env.VITE_PAYMENTS_TEST_MODE === "true"
+};
 
 interface QuickPayProps {
   PaymentData: any;
@@ -15,6 +37,18 @@ interface QuickPayProps {
   ddPayment?: boolean;
 }
 
+interface ApplePayValidationEvent {
+  validationURL: string;
+}
+
+interface ApplePayPaymentEvent {
+  payment: any;
+}
+
+const typedAppleWindow = window as typeof window & {
+  ApplePaySession: any;
+};
+
 const QuickPay = ({
   PaymentData,
   successMethod,
@@ -25,6 +59,21 @@ const QuickPay = ({
   ddPayment,
 }: QuickPayProps) => {
   const [applePayErrored, setApplePayErrored] = useState(false);
+
+  // Payment hooks
+  const processPaypalMutation = useProcessPaypalPayment();
+  const cancelPaypalMutation = useCancelPaypalPayment();
+  const logPaypalErrorMutation = useLogPaypalError();
+
+  const processGoogleMutation = useProcessGooglePayment();
+  const cancelGoogleMutation = useCancelGooglePayment();
+  const logGoogleErrorMutation = useLogGoogleError();
+
+  const processAppleMutation = useProcessApplePayment();
+  const validateAppleSessionMutation = useValidateAppleSession();
+  const cancelAppleMutation = useCancelApplePayment();
+  const logAppleErrorMutation = useLogAppleError();
+
   function getPaymentValue() {
     return gState !== null
       ? ddPayment === true
@@ -33,10 +82,13 @@ const QuickPay = ({
       : "0.00";
   }
 
-  const getApplePaySession = async (urlSession) => {
+  const getApplePaySession = async (urlSession: string) => {
     try {
-      // Call your own server to request a new merchant session.
-      const response = await ApplePayments.validateSession(urlSession);
+      const response = await validateAppleSessionMutation.mutateAsync({
+        appleUrl: urlSession,
+        store: "Velosure",
+        host: window.location.host,
+      });
       return response.token;
     } catch (error) {
       errorMessage(
@@ -46,19 +98,22 @@ const QuickPay = ({
         "Something went wrong processing your apple pay " +
           JSON.stringify(error),
       );
-      ApplePayments.logError(JSON.stringify(error), gState.quoteReference, {
+      logAppleErrorMutation.mutate({
+        authData: paymentAuthData,
+        paymentRef: gState.quoteReference,
         payment: {
           card: {},
           amount: getPaymentValue(),
           currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
         },
+        errorMessage: JSON.stringify(error),
       });
     }
   };
 
   function onApplePayButtonClicked() {
     try {
-      if (!window.ApplePaySession) {
+      if (!typedAppleWindow.ApplePaySession) {
         errorMessage("Apple pay not support on this device");
         failureMethod("Apple pay not support on this device");
         return;
@@ -78,15 +133,15 @@ const QuickPay = ({
       };
 
       // Create ApplePaySession
-      const session = new window.ApplePaySession(3, request);
+      const session = new typedAppleWindow.ApplePaySession(3, request);
 
-      session.onvalidatemerchant = async (event) => {
+      session.onvalidatemerchant = async (event: ApplePayValidationEvent) => {
         // Call your own server to request a new merchant session.
         const merchantSession = await getApplePaySession(event.validationURL);
         session.completeMerchantValidation(JSON.parse(merchantSession));
       };
 
-      session.onpaymentauthorized = async (event) => {
+      session.onpaymentauthorized = async (event: ApplePayPaymentEvent) => {
         const paymentInfo = event.payment;
         processApplePayment(
           gState.quoteReference,
@@ -108,7 +163,9 @@ const QuickPay = ({
           return;
         }
         errorMessage("Apple pay Window Closed by User");
-        ApplePayments.logCancellation(gState.quoteReference, {
+        cancelAppleMutation.mutate({
+          authData: paymentAuthData,
+          paymentRef: gState.quoteReference,
           payment: {
             card: {},
             amount: getPaymentValue(),
@@ -126,12 +183,15 @@ const QuickPay = ({
         "Something went wrong processing your apple pay " +
           JSON.stringify(error),
       );
-      ApplePayments.logError(JSON.stringify(error), gState.quoteReference, {
+      logAppleErrorMutation.mutate({
+        authData: paymentAuthData,
+        paymentRef: gState.quoteReference,
         payment: {
           card: {},
           amount: getPaymentValue(),
           currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
         },
+        errorMessage: JSON.stringify(error),
       });
     }
   }
@@ -140,19 +200,30 @@ const QuickPay = ({
    * To finalize the transaction, you need to pass the encrypted payment token
    * to your payment processor using their API.
    */
-  const processApplePayment = (orderRef, tokenData, PaymentData, session) => {
+  const processApplePayment = (
+    orderRef: string,
+    tokenData: any,
+    PaymentData: any,
+    session: any,
+  ) => {
     try {
-      ApplePayments.processPayment(orderRef, tokenData, PaymentData)
+      processAppleMutation
+        .mutateAsync({
+          authData: paymentAuthData,
+          token: JSON.stringify(tokenData.token.paymentData),
+          paymentRef: orderRef,
+          payment: PaymentData.payment,
+        })
         .then((json) => {
           if (json.responseCode == "SUCCESS") {
             const result = {
-              status: window.ApplePaySession.STATUS_SUCCESS,
+              status: typedAppleWindow.ApplePaySession.STATUS_SUCCESS,
             };
             session.completePayment(result);
             successMethod(json);
           } else {
             const result = {
-              status: window.ApplePaySession.STATUS_FAILURE,
+              status: typedAppleWindow.ApplePaySession.STATUS_FAILURE,
             };
             setApplePayErrored(true);
             errorMessage(
@@ -162,23 +233,22 @@ const QuickPay = ({
               "Something went wrong processing your apple pay " +
                 JSON.stringify(json),
             );
-            ApplePayments.logError(
-              JSON.stringify(json),
-              gState.quoteReference,
-              {
-                payment: {
-                  card: {},
-                  amount: getPaymentValue(),
-                  currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
-                },
+            logAppleErrorMutation.mutate({
+              authData: paymentAuthData,
+              paymentRef: gState.quoteReference,
+              payment: {
+                card: {},
+                amount: getPaymentValue(),
+                currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
               },
-            );
+              errorMessage: JSON.stringify(json),
+            });
             session.completePayment(result);
           }
         })
         .catch((err) => {
           const result = {
-            status: window.ApplePaySession.STATUS_FAILURE,
+            status: typedAppleWindow.ApplePaySession.STATUS_FAILURE,
           };
           setApplePayErrored(true);
           errorMessage(
@@ -188,18 +258,21 @@ const QuickPay = ({
             "Something went wrong processing your apple pay " +
               JSON.stringify(err),
           );
-          ApplePayments.logError(JSON.stringify(err), gState.quoteReference, {
+          logAppleErrorMutation.mutate({
+            authData: paymentAuthData,
+            paymentRef: gState.quoteReference,
             payment: {
               card: {},
               amount: getPaymentValue(),
               currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
             },
+            errorMessage: JSON.stringify(err),
           });
           session.completePayment(result);
         });
     } catch (error) {
       const result = {
-        status: window.ApplePaySession.STATUS_FAILURE,
+        status: typedAppleWindow.ApplePaySession.STATUS_FAILURE,
       };
       setApplePayErrored(true);
       errorMessage(
@@ -209,12 +282,15 @@ const QuickPay = ({
         "Something went wrong processing your apple pay " +
           JSON.stringify(error),
       );
-      ApplePayments.logError(JSON.stringify(error), gState.quoteReference, {
+      logAppleErrorMutation.mutate({
+        authData: paymentAuthData,
+        paymentRef: gState.quoteReference,
         payment: {
           card: {},
           amount: getPaymentValue(),
           currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
         },
+        errorMessage: JSON.stringify(error),
       });
       session.completePayment(result);
     }
@@ -266,69 +342,69 @@ const QuickPay = ({
                 countryCode: import.meta.env.VITE_PAYMENTS_COUNTRY_CODE,
               },
             }}
-            onLoadPaymentData={(paymentRequest) => {
+            onLoadPaymentData={async (paymentRequest) => {
               uiLock(true);
-              GooglePayments.processPayment(
-                gState.quoteReference,
-                paymentRequest,
-                {
+              try {
+                const json = await processGoogleMutation.mutateAsync({
+                  authData: paymentAuthData,
+                  token:
+                    paymentRequest.paymentMethodData.tokenizationData.token,
+                  paymentRef: gState.quoteReference,
                   payment: {
                     card: {},
                     amount: getPaymentValue(),
                     currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
                   },
-                },
-              )
-                .then((json) => {
-                  if (json.responseCode == "SUCCESS") {
-                    successMethod(json);
-                  } else {
-                    errorMessage(
-                      "Something went wrong processing your google pay request please try again",
-                    );
-                    failureMethod(
-                      "Something went wrong processing your google pay " +
-                        JSON.stringify(json),
-                    );
-                    GooglePayments.logError(
-                      JSON.stringify(json),
-                      gState.quoteReference,
-                      {
-                        payment: {
-                          card: {},
-                          amount: getPaymentValue(),
-                          currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
-                        },
-                      },
-                    );
-                    uiLock(false);
-                  }
-                })
-                .catch((err) => {
+                });
+
+                if (json.responseCode == "SUCCESS") {
+                  successMethod(json);
+                } else {
                   errorMessage(
                     "Something went wrong processing your google pay request please try again",
                   );
-                  GooglePayments.logError(
-                    JSON.stringify(err),
-                    gState.quoteReference,
-                    {
-                      payment: {
-                        card: {},
-                        amount: getPaymentValue(),
-                        currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
-                      },
-                    },
-                  );
                   failureMethod(
                     "Something went wrong processing your google pay " +
-                      JSON.stringify(err),
+                      JSON.stringify(json),
                   );
+                  logGoogleErrorMutation.mutate({
+                    authData: paymentAuthData,
+                    paymentRef: gState.quoteReference,
+                    payment: {
+                      card: {},
+                      amount: getPaymentValue(),
+                      currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
+                    },
+                    errorMessage: JSON.stringify(json),
+                  });
                   uiLock(false);
+                }
+              } catch (err) {
+                errorMessage(
+                  "Something went wrong processing your google pay request please try again",
+                );
+                logGoogleErrorMutation.mutate({
+                  authData: paymentAuthData,
+                  paymentRef: gState.quoteReference,
+                  payment: {
+                    card: {},
+                    amount: getPaymentValue(),
+                    currencyCode: import.meta.env.VITE_PAYMENTS_CURRENCY,
+                  },
+                  errorMessage: JSON.stringify(err),
                 });
+                failureMethod(
+                  "Something went wrong processing your google pay " +
+                    JSON.stringify(err),
+                );
+                uiLock(false);
+              }
             }}
             onCancel={(_reason) => {
               errorMessage("Google Window Closed by User");
-              GooglePayments.logCancellation(gState.quoteReference, {
+              cancelGoogleMutation.mutate({
+                authData: paymentAuthData,
+                paymentRef: gState.quoteReference,
                 payment: {
                   card: {},
                   amount: getPaymentValue(),
@@ -342,61 +418,67 @@ const QuickPay = ({
         {import.meta.env.VITE_Enable_PAYPAL === "true" && (
           <PayPalScriptProvider
             options={{
-              "client-id": import.meta.env.VITE_PAYPAL_CLIENT,
+              clientId: import.meta.env.VITE_PAYPAL_CLIENT,
               currency: PaymentData.payment.currencyCode,
             }}
           >
             <PayPalButtons
-              style={{ layout: "horizontal", tagline: "false" }}
-              createOrder={(data, actions) => {
+              style={{ layout: "horizontal", tagline: false }}
+              createOrder={(_data, actions) => {
                 return actions.order.create({
+                  intent: "CAPTURE",
                   purchase_units: [
                     {
                       amount: {
+                        currency_code: PaymentData.payment.currencyCode,
                         value: getPaymentValue(),
                       },
                     },
                   ],
                 });
               }}
-              onApprove={(data, actions) => {
-                return actions.order.capture().then((details) => {
+              onApprove={(_data, actions) => {
+                if (!actions.order) return Promise.resolve();
+                return actions.order.capture().then(async (details) => {
                   uiLock(true);
-                  PaypalPayments.processPayment(
-                    details,
-                    gState.quoteReference,
-                    PaymentData.payment.amount,
-                  )
-                    .then((json) => {
-                      if (json.responseCode == "SUCCESS") {
-                        successMethod(json);
-                      } else {
-                        errorMessage(
-                          "Something went wrong processing your paypal request please try again",
-                        );
-                        failureMethod(
-                          "Something went wrong processing your paypal " +
-                            JSON.stringify(json),
-                        );
-                      }
-                    })
-                    .catch((err) => {
+                  try {
+                    const json = await processPaypalMutation.mutateAsync({
+                      authData: paymentAuthData,
+                      paypalResponse: details,
+                      orderId: gState.quoteReference,
+                      amount: PaymentData.payment.amount,
+                    });
+
+                    if (json.responseCode == "SUCCESS") {
+                      successMethod(json);
+                    } else {
                       errorMessage(
                         "Something went wrong processing your paypal request please try again",
                       );
                       failureMethod(
                         "Something went wrong processing your paypal " +
-                          JSON.stringify(err),
+                          JSON.stringify(json),
                       );
-                    });
+                    }
+                  } catch (err) {
+                    errorMessage(
+                      "Something went wrong processing your paypal request please try again",
+                    );
+                    failureMethod(
+                      "Something went wrong processing your paypal " +
+                        JSON.stringify(err),
+                    );
+                  }
                 });
               }}
               onCancel={(_reason) => {
                 errorMessage("Paypal Window Closed by User");
-                PaypalPayments.logCancellation(
-                  gState.quoteReference,
-                  PaymentData.payment.amount,
-                );
+                cancelPaypalMutation.mutate({
+                  authData: paymentAuthData,
+                  paypalResponse: null,
+                  orderId: gState.quoteReference,
+                  amount: PaymentData.payment.amount,
+                });
                 uiLock(false);
               }}
               onError={(reason) => {
@@ -407,11 +489,13 @@ const QuickPay = ({
                   "Something went wrong processing your paypal " +
                     JSON.stringify(reason),
                 );
-                PaypalPayments.logError(
-                  reason,
-                  gState.quoteReference,
-                  PaymentData.payment.amount,
-                );
+                logPaypalErrorMutation.mutate({
+                  authData: paymentAuthData,
+                  paypalResponse: null,
+                  orderId: gState.quoteReference,
+                  amount: PaymentData.payment.amount,
+                  errorMessage: JSON.stringify(reason),
+                });
                 uiLock(false);
               }}
             />
@@ -419,11 +503,11 @@ const QuickPay = ({
         )}
 
         {import.meta.env.VITE_Enable_APPLEPAY === "true" &&
-          window.ApplePaySession && (
-            <div class="apple-pay">
+          typedAppleWindow.ApplePaySession && (
+            <div className="apple-pay">
               <button
                 lang="US"
-                class="apple-pay buy"
+                className="apple-pay buy"
                 onClick={onApplePayButtonClicked}
               ></button>
             </div>

@@ -1,14 +1,35 @@
-import PaymentSupport from "./PaymentSupport";
+import { paymentsApiClient } from "@/services/apiClient";
 
-export class CardPayments
-{
-    static processPayment(data)
-    {
-        return PaymentSupport.PaymentAPIRequest('ProcessCard', data);
-    }
+// Auth data object for payment operations
+const paymentAuthData = {
+  merchant: import.meta.env.VITE_PAYMENTS_MERCHANT,
+  account: import.meta.env.VITE_PAYMENTS_ACCOUNT,
+  key: import.meta.env.VITE_PAYMENTS_KEY,
+  appId: import.meta.env.VITE_PAYMENTS_API_TOKEN,
+  appKey: import.meta.env.VITE_PAYMENTS_API_KEY,
+  apiPath: `${import.meta.env.VITE_PAYMENTS_API_PATH}/api/payments`,
+  testMode: import.meta.env.VITE_PAYMENTS_TEST_MODE === "true"
+};
 
-    static trigger3dsChallenge(target, requestData)
-    {
+interface ChallengeRequestData {
+    requiresChallenge: boolean;
+    challengeLocation: string;
+    challengeData: string;
+}
+
+export const cardPayments = {
+    processPayment: (data: any) => {
+        const paymentData = {
+            authData: paymentAuthData,
+            paymentRef: data.paymentRef,
+            payment: data.payment,
+            address: data.address,
+            retry: data.retry
+        };
+        return paymentsApiClient.post("/ProcessCard", paymentData);
+    },
+
+    trigger3dsChallenge: (target: string, requestData: ChallengeRequestData) => {
         if (requestData.requiresChallenge) {
             const form = document.createElement("form");
             form.setAttribute("method", "POST");
@@ -27,7 +48,7 @@ export class CardPayments
             form.submit();
         }
     }
-}
+};
 
-export default CardPayments;
+export default cardPayments;
 

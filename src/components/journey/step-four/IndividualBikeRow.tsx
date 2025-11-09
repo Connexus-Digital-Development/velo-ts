@@ -29,7 +29,7 @@ const IndividualBikeRow: React.FC<IndividualBikeRowProps> = ({
     const bike = gState.bikes.find((x: Bike) => x.id === bikeId);
     editClassName(
       ref,
-      gState.clickedPayNow && bike && !bike.lockChecked,
+      (gState.clickedPayNow && bike && !bike.lockChecked) ?? false,
       "mantine-Checkbox-error",
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

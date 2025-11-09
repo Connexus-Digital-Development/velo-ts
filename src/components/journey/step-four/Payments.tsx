@@ -4,13 +4,16 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSafeContext } from "@/context/journeyStore/useSafeContext";
 import { useNavigate, useLocation } from "react-router-dom";
-import TransactorService from "@/services/transactorService";
+import { transactorService } from "@/services/transactorService";
 import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
 import DDForm from "./DDForm";
 import DDGuarantee from "./DDGuarantee";
 import { type Bike } from "@/models/bike";
 import { type RiskModel } from "@/models/QuoteTypes";
 import SinglePayment from "./paymentHelpers/SinglePayment";
+import { sanctionsSearchService } from "@/services";
+import { loggingService } from "@/services/loggingService";
+import type { JourneyState } from "@/models";
 
 interface PaymentsProps {
   fromExternalLink?: boolean;
@@ -23,10 +26,10 @@ interface PaymentsProps {
 
 const Payments: React.FC<PaymentsProps> = ({
   fromExternalLink = false,
-  setRotate,
+  setRotate = () => {},
   showPaymentWindow,
   setShowPaymentWindow,
-  setPending,
+  setPending = () => {},
 }) => {
   const { search } = useLocation();
   const [gState, setGState] = useSafeContext({
@@ -45,6 +48,7 @@ const Payments: React.FC<PaymentsProps> = ({
     assumptionsAndDeclarationsAllChecked,
     setAssumptionsAndDeclarationsAllChecked,
   ] = useState(false);
+
   const amendDetails = (
     <Link
       className="btn btn-wider btn-red float-start"
@@ -68,7 +72,7 @@ const Payments: React.FC<PaymentsProps> = ({
     // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
     if (gState.bikes.length === 0) {
       setGState((prev) => ({ ...prev, yourQuoteCrumb: 0 }));
-      return navigate(`/get-a-quote${search}`);
+      navigate(`/get-a-quote${search}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -325,11 +329,12 @@ const Payments: React.FC<PaymentsProps> = ({
       navigate("/PaymentError?quoteReference=" + gState.quoteReference);
     }
   }
+
   useEffect(() => {
     // add the bike values in the bikes array
     let runningTotal = 0;
     gState.bikes.forEach((bike) => {
-      runningTotal = parseInt(runningTotal) + parseInt(bike.value);
+      runningTotal = runningTotal + +bike.value;
     });
 
     setGState((prev) => ({
@@ -341,10 +346,7 @@ const Payments: React.FC<PaymentsProps> = ({
       yourCoverCrumb: prev.yourCoverCrumb === 2 ? 1 : prev.yourCoverCrumb,
       paymentCrumb: 2,
     }));
-  }, [
-    gState.bikes,
-    setGState,
-  ]);
+  }, [gState.bikes, setGState]);
 
   return (
     <>
@@ -532,7 +534,7 @@ const Payments: React.FC<PaymentsProps> = ({
 
 export default Payments;
 
-function tryInceptPolicy(
+async function tryInceptPolicy(
   riskModelString: string,
   setPending: (pending: boolean) => void,
   setRotate: (rotate: boolean) => void,
@@ -542,50 +544,50 @@ function tryInceptPolicy(
   fromAggregator?: boolean,
 ) {
   window.scrollTo(0, 0);
-  const promise = TransactorService.inceptPolicy(
-    riskModelString,
-    fromAggregator,
-  );
-  promise.then(
-    function (result) {
-      if (result.success) {
-        setRotate(false);
-        setPending(false);
 
-        setGState((prev) => ({
-          ...prev,
-          policyReference: result.value.policyReference,
-          paymentSuccessful: true,
-          paymentCrumb: 3,
-          yourCoverCrumb: 0,
-          yourDetailsCrumb: 0,
-          yourQuoteCrumb: 0,
-        }));
-        loggingService.logInfo(
-          `Inception succeeded for quote reference: ${gState.quoteReference}, converted to policy: ${result.value.policyReference} `,
-        );
-        navigate(
-          `/PolicyConfirmation?policyReference=${result.value.policyReference}`,
-        );
-      } else {
-        loggingService.logError(
-          `Inception failed : ${JSON.stringify(result)}, quote reference: ${
-            gState.quoteReference
-          } `,
-        );
-        navigate("/InceptFailed");
-        setPending(false);
-        setRotate(false);
-      }
-    },
-    function (err) {
+  try {
+    const result = await transactorService.inceptPolicy(
+      riskModelString,
+      fromAggregator ?? false,
+    );
+
+    if (!result.success) {
       loggingService.logError(
-        `Inception failed : ${err}, quote reference: ${gState.quoteReference} `,
+        `Inception failed : ${JSON.stringify(result)}, quote reference: ${
+          gState.quoteReference
+        } `,
       );
       navigate("/InceptFailed");
       setPending(false);
       setRotate(false);
       return;
-    },
-  );
+    }
+
+    setRotate(false);
+    setPending(false);
+
+    setGState((prev: JourneyState) => ({
+      ...prev,
+      policyReference: result.value.policyReference,
+      paymentSuccessful: true,
+      paymentCrumb: 3,
+      yourCoverCrumb: 0,
+      yourDetailsCrumb: 0,
+      yourQuoteCrumb: 0,
+    }));
+    loggingService.logInfo(
+      `Inception succeeded for quote reference: ${gState.quoteReference}, converted to policy: ${result.value.policyReference} `,
+    );
+    navigate(
+      `/PolicyConfirmation?policyReference=${result.value.policyReference}`,
+    );
+  } catch (error) {
+    loggingService.logError(
+      `Inception failed : ${error}, quote reference: ${gState.quoteReference} `,
+    );
+    navigate("/InceptFailed");
+    setPending(false);
+    setRotate(false);
+    return;
+  }
 }

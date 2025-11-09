@@ -69,3 +69,12 @@ export const aggregatorApiClient = new ApiClient(
     'Content-Type': 'application/json',
   }
 );
+
+export const paymentsApiClient = new ApiClient(
+  `${import.meta.env.VITE_PAYMENTS_API_PATH}/api/payments`,
+  {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  }
+);

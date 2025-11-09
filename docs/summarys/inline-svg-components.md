@@ -134,6 +134,10 @@ For each component with inline SVGs:
 - `src/components/marketing/CoverComparison/ComparisonTableRow.tsx` - Multiple SVGs (5+ different icons)
 - Other marketing components likely contain multiple SVGs each
 
+
+**NOTE**
+If an SVG is dynamic in that the comopnent controls any aspect of the SVG (like color, size, animation), we need to move it to a component in src/components/icons/ instead of converting to an img tag. See the other icon components for an example of this pattern.
+
 ### Next Steps
 1. ✅ **Journey components migration complete** - All 7 journey components migrated
 2. ✅ **Single SVG migration complete** - TopNavBlank component migrated (using VelosureLogoNavbar component)
