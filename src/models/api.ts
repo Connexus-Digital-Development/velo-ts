@@ -16,6 +16,38 @@ export interface ApiResponse {
   Success: boolean;
 }
 
+// Article-related types
+export interface ArticleCategory {
+  id: number;
+  name: string;
+}
+
+export interface ArticleSEOTag {
+  id: number;
+  name: string;
+}
+
+export interface ArticleSEOTagsEntry {
+  tagsId: number;
+  tag: ArticleSEOTag;
+}
+
+export interface Article {
+  id: number;
+  headline: string;
+  subHeading: string;
+  category: ArticleCategory;
+  imageUrl: string;
+  body: string;
+  author: string;
+  authorImage: string;
+  publishedDate: string;
+  seoTitle: string;
+  seoDescription: string;
+  articleSEOTags: ArticleSEOTagsEntry[];
+  pageURL: string;
+}
+
 // Payment API Types
 export interface CycleInsurancePurchase {
   houseNameNumber?: string;

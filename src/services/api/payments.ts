@@ -84,6 +84,13 @@ export interface CardCancelData {
   payment: any;
 }
 
+export interface PaypalErrorData {
+  authData: PaymentAuthData;
+  paypalResponse: any;
+  orderId: string;
+  errorMessage: string;
+}
+
 // API service functions for payment operations
 export const paymentsApi = {
   // Process PayPal payment
@@ -95,7 +102,7 @@ export const paymentsApi = {
     paymentsApiClient.post("/CancelPaypal", data),
 
   // Log PayPal error
-  errorPaypal: (data: any): Promise<any> =>
+  errorPaypal: (data: PaypalErrorData): Promise<any> =>
     paymentsApiClient.post("/ErrorPaypal", data),
 
   // Process Google payment

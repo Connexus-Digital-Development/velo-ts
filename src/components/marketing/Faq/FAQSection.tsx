@@ -40,17 +40,13 @@ const FAQSection = () => {
     error: categoriesError,
   } = useCategories(faqCategoryType);
 
-  const faqs = useMemo(() => faqsResponse?.Value || [], [faqsResponse]);
+  const faqs = useMemo(() => faqsResponse || [], [faqsResponse]);
   const categories = useMemo(
-    () => categoriesResponse?.Value || [],
+    () => categoriesResponse || [],
     [categoriesResponse],
   );
 
-  const hasApiError =
-    faqsError ||
-    categoriesError ||
-    (faqsResponse && !faqsResponse.Success) ||
-    (categoriesResponse && !categoriesResponse.Success);
+  const hasApiError = faqsError || categoriesError;
 
   const structuredData = useMemo(() => {
     if (!faqs.length || !categories.length) return [];

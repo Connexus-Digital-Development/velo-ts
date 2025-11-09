@@ -15,7 +15,7 @@ const LatestBlog = (props: LatestBlogProps) => {
             <div id="left" className="col-12 col-md-6 mb-3">
               <img
                 src={props.latestBlog.imageUrl}
-                alt="{props.latestBlog.Headline}"
+                alt={props.latestBlog.Headline}
                 className="latestBlogImage mb-1"
               />
             </div>

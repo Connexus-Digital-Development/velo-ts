@@ -27,20 +27,13 @@ const Pitstop = () => {
     error: categoriesError,
   } = useCategories(categoryType);
 
-  const articles = useMemo(
-    () => articlesResponse?.Value || [],
-    [articlesResponse],
-  );
+  const articles = useMemo(() => articlesResponse || [], [articlesResponse]);
   const categories = useMemo(
-    () => categoriesResponse?.Value || [],
+    () => categoriesResponse || [],
     [categoriesResponse],
   );
 
-  const hasApiError =
-    articlesError ||
-    categoriesError ||
-    (articlesResponse && !articlesResponse.Success) ||
-    (categoriesResponse && !categoriesResponse.Success);
+  const hasApiError = articlesError || categoriesError;
 
   const structuredData = useMemo(() => {
     if (!articles.length || !categories.length) return [];

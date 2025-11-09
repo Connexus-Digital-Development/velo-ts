@@ -15,8 +15,8 @@ const PitstopPreview = () => {
   const brand = import.meta.env.VITE_CONNEXUS_BRAND;
 
   const { data: articleResponse, isLoading, error } = useArticles(brand, size);
-  const articleData = articleResponse?.Value || [];
-  const hasApiError = error || (articleResponse && !articleResponse.Success);
+  const articleData = articleResponse || [];
+  const hasApiError = error;
 
   return (
     <div className="container-fluid rp oh greyBG">

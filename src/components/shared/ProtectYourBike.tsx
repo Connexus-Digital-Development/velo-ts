@@ -4,6 +4,10 @@ import ProtectYourBikeBlueBicycle from "@/assets/svgs/protect-your-bike-blue-bic
 import ProtectYourBikeMultiBike from "@/assets/svgs/protect-your-bike-multi-bike.svg?url";
 import ProtectYourBikeEBike from "@/assets/svgs/protect-your-bike-e-bike.svg?url";
 import ProtectYourBikeMustardBicycle from "@/assets/svgs/protect-your-bike-mustard-bicycle.svg?url";
+import { BikeMulti } from "../icons/BikeMulti";
+import { BikeBlue } from "../icons/BikeBlue";
+import { BikeEBike } from "../icons/BikeEBike";
+import { BikeMustard } from "../icons/BikeMustard";
 //
 const ProtectYourBike = ({ variant }: { variant: number }) => {
   //prop variant 1 = single bike,multibike = 2 or electric = 3, or Travel version =4
@@ -62,25 +66,16 @@ const ProtectYourBike = ({ variant }: { variant: number }) => {
             />
             {/* </div>
         <div className="col-sm-1"> */}
-            {variant === 1 && (
-              <img
-                className="footerRidingBlueBikeSVG"
-                src={ProtectYourBikeBlueBicycle}
-                alt="Blue bicycle icon"
-              />
-            )}
+            {variant === 1 && <BikeBlue />}
             {variant === 2 && (
-              <img src={ProtectYourBikeMultiBike} alt="Multi bike icon" />
+              <BikeMulti />
+              // <img src={ProtectYourBikeMultiBike} alt="Multi bike icon" />
             )}
             {variant === 3 && (
-              <img src={ProtectYourBikeEBike} alt="E-Bike icon" />
+              <BikeEBike />
+              // <img src={ProtectYourBikeEBike} alt="E-Bike icon" />
             )}
-            {variant === 4 && (
-              <img
-                src={ProtectYourBikeMustardBicycle}
-                alt="Protect Your Bike"
-              />
-            )}
+            {variant === 4 && <BikeMustard />}
           </div>
         </div>
       </div>

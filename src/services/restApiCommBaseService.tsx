@@ -5,10 +5,11 @@ import { type ApiError } from "@/models/ServiceTypes";
 export const restApiCommBaseService = {
   // Deserialize JSON response received from API and handle errors
   // param response is the response
-  handleResponse: (response: Response): Promise<any> => {
-    ////console.log(response);
-    return response.text().then((text) => {
-      const data = text ? JSON.parse(text) : null;
+  handleResponse: async (response: Response): Promise<any> => {
+    try {
+      const data = await response.json();
+
+      console.log({ data });
 
       if (!response.ok) {
         const error: ApiError = {
@@ -19,18 +20,21 @@ export const restApiCommBaseService = {
           status: response.status,
         };
         loggingService.logError(error.message);
-        return Promise.reject(error);
+        throw error;
       }
 
       return data;
-    }).catch((parseError) => {
+    } catch (error) {
       // Handle JSON parsing errors (including timeouts)
-      const error: ApiError = {
-        message: parseError instanceof Error ? parseError.message : 'Unknown error occurred',
+      const apiError: ApiError = {
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unknown error occurred",
         status: 0, // Network or parsing error
       };
-      loggingService.logError(error.message);
-      return Promise.reject(error);
-    });
+      loggingService.logError(apiError.message);
+      throw apiError;
+    }
   },
 };

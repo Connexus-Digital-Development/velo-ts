@@ -36,6 +36,10 @@
   font-weight: normal;
 }
 
+.App {
+  width: 100vw;
+}
+
 span[data-toggle="tooltip"] {
   cursor: pointer;
 }
@@ -237,6 +241,7 @@ textarea {
 html {
   font-size: 16px !important;
   min-width: 320px;
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 /*prevent any labels from being selected*/
@@ -1184,6 +1189,7 @@ body {
   z-index: 0;
   margin: 0 !important;
   padding: 0 !important;
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 /* Banners ========================================== */
@@ -2913,7 +2919,7 @@ input[type="number"] {
   bottom: 0;
   right: 0;
   width: 50%;
-  background-image: url("./../../src/Images/what_we_dont_cover_cutout.png"); /* Path to your image */
+  background-image: url("../assets/images/what_we_dont_cover_cutout.png"); /* Path to your image */
   background-size: cover;
   background-repeat: no-repeat; /* Prevents the image from repeating */
   padding: 10px;

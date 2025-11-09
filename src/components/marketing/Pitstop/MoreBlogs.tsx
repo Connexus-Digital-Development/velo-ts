@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { useArticles } from "@/hooks/queries/useContent";
+import { type Article } from "@/models/api";
 
 const size = window.innerWidth < 800 ? 1 : 3;
 
@@ -19,11 +20,11 @@ const MoreBlogs = (params: MoreBlogsProps) => {
   const brand = import.meta.env.VITE_CONNEXUS_BRAND || "1";
 
   // Fetch articles using React Query
-  const { data: allArticles = [], isLoading } = useArticles(brand, size + 1);
+  const { data: allArticles = [], isLoading, error } = useArticles(brand, size + 1);
 
   // Filter out the excluded article and limit to the desired size
-  const articleData = (allArticles as any[])
-    .filter((article: any) => article.id !== parseInt(excludedId))
+  const articleData: Article[] = (allArticles as Article[])
+    .filter((article: Article) => article.id !== parseInt(excludedId))
     .slice(0, size);
 
   return (
@@ -37,8 +38,12 @@ const MoreBlogs = (params: MoreBlogsProps) => {
             <div className="text-center">
               <p>Loading articles...</p>
             </div>
+          ) : error ? (
+            <div className="text-center">
+              <p>There was an error loading articles. Please try again later.</p>
+            </div>
           ) : (
-            articleData.map((article, index) => (
+            articleData.map((article: Article, index) => (
               <div className="col-sm-4" key={index}>
                   <Link className="pitstopAnchors" to={`/FullBlog/${article.pageURL}`}>
                   <div className="card blog-card oh">

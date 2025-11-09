@@ -1,3 +1,5 @@
+import { CheckmarkIcon } from "@/components/icons/CheckmarkIcon";
+
 interface ComparisonTableRowProps {
   row: {
     c1: any;
@@ -12,8 +14,6 @@ interface ComparisonTableRowProps {
   themeClass: string;
 }
 
-import CheckmarkIcon from "@/assets/svgs/checkmark-icon.svg?url";
-
 const ComparisonTableRow = (props: ComparisonTableRowProps) => {
   const data = props.row;
   //console.log("desktop");
@@ -25,87 +25,39 @@ const ComparisonTableRow = (props: ComparisonTableRowProps) => {
       case 0:
         return "-";
       case 1:
-        return (
-          <div>
-            <img
-              src={CheckmarkIcon}
-              alt="Checkmark"
-              style={{
-                width: "23px",
-                height: "23px",
-                color: fillColour
-              }}
-            />
-          </div>
-        );
+        return <CheckmarkIcon currentColor={fillColour} />;
       case 2:
         return "-";
       case 1000:
         return (
           <div>
-            <img
-              src={CheckmarkIcon}
-              alt="Checkmark"
-              style={{
-                width: "23px",
-                height: "23px",
-                color: fillColour
-              }}
-            />
+            <CheckmarkIcon currentColor={fillColour} />
             <p className={`smallPrint1000 ${themeClass}`}></p>
           </div>
         );
       case 250:
         return (
           <div>
-            <img
-              src={CheckmarkIcon}
-              alt="Checkmark"
-              style={{
-                width: "23px",
-                height: "23px",
-                color: fillColour
-              }}
-            />
+            <CheckmarkIcon currentColor={fillColour} />
             {/* <p className={`smallPrint250 ${themeClass}`}></p> */}
-            <p style={{marginTop:"2px"}} className={`${themeClass}`}>up to £250</p>
+            <p style={{ marginTop: "2px" }} className={`${themeClass}`}>
+              up to £250
+            </p>
           </div>
         );
       case 3:
-       return <span className="optional-text lufga-medium">Optional</span>;
+        return <span className="optional-text lufga-medium">Optional</span>;
       case 10000:
         return (
-         <div>
-            <img
-              src={CheckmarkIcon}
-              alt="Checkmark"
-              style={{
-                width: "23px",
-                height: "23px",
-                color: fillColour
-              }}
-            />
+          <div>
+            <CheckmarkIcon currentColor={fillColour} />
             {/* <p className={`smallPrint250 ${themeClass}`}></p> */}
-            <p style={{marginTop:"2px"}} className={`${themeClass}`}>up to £10k</p>
-          </div>
-        );
-         case 100001:
-        return (
-         <div>
-           <p
-              style={{
-                color: "#7a7a7a",
-                fontSize: "1em",
-                lineHeight: "0",
-                paddingTop: "10px",
-              }}
-            >
-              Optional
+            <p style={{ marginTop: "2px" }} className={`${themeClass}`}>
+              up to £10k
             </p>
-            <p style={{marginTop:"2px"}} className={`${themeClass}`}>up to £10k</p>
           </div>
         );
-      case 2000:
+      case 100001:
         return (
           <div>
             <p
@@ -118,38 +70,44 @@ const ComparisonTableRow = (props: ComparisonTableRowProps) => {
             >
               Optional
             </p>
+            <p style={{ marginTop: "2px" }} className={`${themeClass}`}>
+              up to £10k
+            </p>
+          </div>
+        );
+      case 2000:
+        return (
+          <div>
+            <p
+              style={{
+                color: "#7a7a7a",
+                fontSize: "1em",
+                lineHeight: "0",
+                paddingTop: "25px",
+              }}
+            >
+              Optional
+            </p>
             <p className={`${themeClass}`}>up to £2000</p>
           </div>
         );
-        case 25000:
+      case 25000:
         return (
           <div>
-            <img
-              src={CheckmarkIcon}
-              alt="Checkmark"
-              style={{
-                width: "23px",
-                height: "23px",
-                color: fillColour
-              }}
-            />
+            <CheckmarkIcon currentColor={fillColour} />
             {/* <p className={`smallPrint250 ${themeClass}`}></p> */}
-            <p style={{marginTop:"2px"}} className={`${themeClass}`}>up to £25k</p>
+            <p style={{ marginTop: "2px" }} className={`${themeClass}`}>
+              up to £25k
+            </p>
           </div>
         );
       case 500000:
         return (
           <div>
-            <img
-              src={CheckmarkIcon}
-              alt="Checkmark"
-              style={{
-                width: "23px",
-                height: "23px",
-                color: fillColour
-              }}
-            />
-            <p style={{marginTop:"2px"}} className={`${themeClass}`}>up to £500k</p>
+            <CheckmarkIcon currentColor={fillColour} />
+            <p style={{ marginTop: "2px" }} className={`${themeClass}`}>
+              up to £500k
+            </p>
           </div>
         );
       default:

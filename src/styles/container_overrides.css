@@ -1,8 +1,36 @@
-﻿/*  Bootstrap container Overrides  
+﻿/*  Bootstrap container Overrides
 
     * note that we are not altering container fluid
     creating 3 content widths 1400, 1259 and 1109 ( these are at width 1920 and will need media query equivs)
 */
+
+/* Override Bootstrap's default container max-widths for containers inside container-fluid */
+.container-fluid .container {
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+}
+
+/* Remove max-width constraints from container-fluid so background images can span full width */
+.container-fluid {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+/* On mobile, constrain container-fluid to prevent overflow */
+@media (max-width: 767px) {
+  .container-fluid {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  /* Reduce content max-width on mobile for better readability */
+  .container-fluid .container {
+    max-width: 100% !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
 
 .container_mega_wide {
   max-width: 2000px !important;
@@ -21,9 +49,4 @@
 
 .container_narrow {
   max-width: 1109px !important;
-}
-
-.container-fluid {
-  margin: 0 !important;
-  padding: 0 !important;
 }

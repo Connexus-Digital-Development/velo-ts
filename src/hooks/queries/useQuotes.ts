@@ -1,5 +1,5 @@
 import { type ExecResponse } from "@/models/api";
-import { type RiskModel } from "@/models/QuoteTypes";
+import { type RiskModel, type CoreQuote } from "@/models/QuoteTypes";
 import { quotesApi } from "@/services/api/quotes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -7,7 +7,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 export const useGenerateQuote = () => {
   return useMutation({
     mutationFn: (riskModel: RiskModel) => quotesApi.generateQuote(riskModel),
-    onSuccess: (data: ExecResponse<any[]>) => {
+    onSuccess: (data: ExecResponse<CoreQuote[]>) => {
       // Handle successful quote generation
       // This will be called when the mutation succeeds
       console.log("Quote generated successfully:", data);
@@ -38,7 +38,7 @@ export const useRetrieveQuoteByDetails = () => {
       policyDetailsID?: string;
       newDD: boolean;
     }) => quotesApi.retrieveQuoteByDetails(data),
-    onSuccess: (data: ExecResponse<any>) => {
+    onSuccess: (data: ExecResponse<CoreQuote>) => {
       console.log("Quote retrieved by details successfully:", data);
     },
     onError: (error: Error) => {

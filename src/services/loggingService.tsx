@@ -15,7 +15,7 @@ export const loggingService = {
 const log = (url: string, message: unknown): Promise<Response> => {
   const logEntry: Partial<LogEntry> = {
     message: String(message),
-    applicationName: "Velosure",
+    applicationName: "VelosureNext",
     level:
       url === "LogError" ? "error" : url === "LogWarning" ? "warn" : "info",
     timestamp: new Date(),
