@@ -1,8 +1,9 @@
-import { paymentsApi, type PaymentAuthData } from "@/services/api/payments";
+import { paymentsApi } from "@/services/api/payments";
+import type { AuthData } from "@/models/api-payments";
 
 export const paypalService = {
   processPayment: (
-    authData: PaymentAuthData,
+    authData: AuthData,
     details: any,
     orderRef: string,
     paymentAmount: string | number,
@@ -11,31 +12,36 @@ export const paypalService = {
       authData,
       paypalResponse: details,
       orderId: orderRef,
-      amount: paymentAmount,
+      amount: typeof paymentAmount === 'string' ? parseFloat(paymentAmount) : paymentAmount,
+      success: true,
     });
   },
 
-  logCancellation: (authData: PaymentAuthData, orderRef: string, paymentAmount: string | number) => {
+  logCancellation: (
+    authData: AuthData,
+    orderRef: string,
+    paymentAmount: string | number,
+  ) => {
     return paymentsApi.cancelPaypal({
       authData,
-      paypalResponse: null,
+      paypalResponse: undefined,
       orderId: orderRef,
-      amount: paymentAmount,
+      amount: typeof paymentAmount === 'string' ? parseFloat(paymentAmount) : paymentAmount,
+      success: false,
     });
   },
 
   logError: (
-    authData: PaymentAuthData,
+    authData: AuthData,
     message: string,
     orderRef: string,
-    paymentAmount: string | number,
   ) => {
     return paymentsApi.errorPaypal({
       authData,
-      paypalResponse: null,
+      paypalResponse: undefined,
       orderId: orderRef,
-      amount: paymentAmount,
       errorMessage: message,
+      success: false,
     });
   },
 };

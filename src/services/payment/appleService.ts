@@ -1,10 +1,16 @@
 // import PaymentSupport from "@/components/journey/step-four/paymentHelpers/PaymentSupport";
 //
 
-import { paymentsApi, type PaymentAuthData } from "@/services/api/payments";
+import { paymentsApi } from "@/services/api/payments";
+import type { AuthData } from "@/models/api-payments";
 
 export const appleService = {
-  processPayment: (authData: PaymentAuthData, tokenData: any, orderRef: string, paymentData: any) => {
+  processPayment: (
+    authData: AuthData,
+    tokenData: any,
+    orderRef: string,
+    paymentData: any,
+  ) => {
     return paymentsApi.processApple({
       authData,
       token: JSON.stringify(tokenData.token.paymentData),
@@ -21,7 +27,11 @@ export const appleService = {
     });
   },
 
-  logCancellation: (authData: PaymentAuthData, orderRef: string, paymentData: any) => {
+  logCancellation: (
+    authData: AuthData,
+    orderRef: string,
+    paymentData: any,
+  ) => {
     return paymentsApi.cancelApple({
       authData,
       paymentRef: orderRef,
@@ -29,7 +39,12 @@ export const appleService = {
     });
   },
 
-  logError: (authData: PaymentAuthData, message: string, orderRef: string, paymentData: any) => {
+  logError: (
+    authData: AuthData,
+    message: string,
+    orderRef: string,
+    paymentData: any,
+  ) => {
     return paymentsApi.errorApple({
       authData,
       paymentRef: orderRef,

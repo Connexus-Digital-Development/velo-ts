@@ -53,7 +53,7 @@ const DDForm = ({ formik }: DDFormProps) => {
           );
           setGState({ ...gState, DDFormIsValid: false }); // this flag is used to trigger the Bottom Line API call, it might be needed again
         },
-      }
+      },
     );
   }, [
     validateBankAccount,

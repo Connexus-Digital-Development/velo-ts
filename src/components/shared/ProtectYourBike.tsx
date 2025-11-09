@@ -1,9 +1,6 @@
 import CTAButton from "./CTAButton";
 import { useLocation } from "react-router-dom";
-import ProtectYourBikeBlueBicycle from "@/assets/svgs/protect-your-bike-blue-bicycle.svg?url";
-import ProtectYourBikeMultiBike from "@/assets/svgs/protect-your-bike-multi-bike.svg?url";
-import ProtectYourBikeEBike from "@/assets/svgs/protect-your-bike-e-bike.svg?url";
-import ProtectYourBikeMustardBicycle from "@/assets/svgs/protect-your-bike-mustard-bicycle.svg?url";
+
 import { BikeMulti } from "../icons/BikeMulti";
 import { BikeBlue } from "../icons/BikeBlue";
 import { BikeEBike } from "../icons/BikeEBike";

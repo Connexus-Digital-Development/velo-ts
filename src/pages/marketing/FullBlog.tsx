@@ -33,7 +33,7 @@ const FullBlog = () => {
   // Fetch article using React Query
   const { data, isLoading } = useArticle(id);
 
-  const articleData = data?.Value;
+  const articleData = data;
 
   // Handle SEO updates when article data changes
   useEffect(() => {

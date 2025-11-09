@@ -1,5 +1,5 @@
 import { type Article, type ArticleCategory } from "@/models/api";
-import { type BlogPost, type FAQItem } from "@/models/MarketingComponentTypes";
+import { type FAQItem } from "@/models/MarketingComponentTypes";
 import { veloApiClient } from "../apiClient";
 
 // API service functions for content operations (blogs, articles)
@@ -10,7 +10,7 @@ export const contentApi = {
     ),
 
   getAllArticles: (brand: string) =>
-    veloApiClient.get<BlogPost[]>(
+    veloApiClient.get<Article[]>(
       `/api/ConnexusCMS/Articles/GetArticles/${brand}`,
     ),
 
@@ -23,7 +23,7 @@ export const contentApi = {
     veloApiClient.get(`/api/ConnexusCMS/FAQs/GetFAQs/${brand}`),
 
   getArticleBySlug: (slug: string) =>
-    veloApiClient.get<BlogPost>(
+    veloApiClient.get<Article>(
       `/api/ConnexusCMS/Articles/GetArticleFromSlug/${slug}`,
     ),
 };

@@ -96,67 +96,71 @@ const StepThree = () => {
   // Handle quote generation mutation response
   useEffect(() => {
     if (generateQuoteMutation.isSuccess && generateQuoteMutation.data) {
-      const r = generateQuoteMutation.data;
+      const response = generateQuoteMutation.data;
       loggingService.logInfo(
-        `Quote generation successful: ${JSON.stringify(r)}`,
+        `Quote generation successful: ${JSON.stringify(response)}`,
       );
       setIsPending(false);
-      console.log("Quote response", r);
+      console.log("Quote response", response);
 
-      if (r.Value) {
-        const performanceQuote = r.Value.find(
+      if (response) {
+        const performanceQuote = response.find(
           (f: any) => !f.schemeName.toLowerCase().includes("core"),
         );
-        const coreQuote = r.Value.find((f: any) =>
+        const coreQuote = response.find((f: any) =>
           f.schemeName.toLowerCase().includes("core"),
         );
 
         setIsLoadingQuote(false);
 
-        if (performanceQuote.referralReason || performanceQuote.declineReason) {
+        if (
+          performanceQuote?.referralReason ||
+          performanceQuote?.declineReason
+        ) {
           if (showReferralPage) {
             return;
           }
           loggingService.logWarning(
-            `Quote ${performanceQuote?.quoteReference} referred or declined with reason: ${performanceQuote.referralReason} ${performanceQuote.declineReason}`,
+            `Quote ${performanceQuote?.quoteReference} referred or declined with reason: ${performanceQuote?.referralReason} ${performanceQuote?.declineReason}`,
           );
           setError(null);
           setGState({
             ...gState,
-            annualGrossPremium: performanceQuote.annualGrossPremium,
-            basePremium: performanceQuote.basePremium,
-            commission: performanceQuote.commission,
-            declineReason: performanceQuote.declineReason,
-            instalmentsApr: performanceQuote.instalmentsApr,
-            instalmentsFirstPayment: performanceQuote.instalmentsFirstPayment,
-            instalmentsGrossPremium: performanceQuote.instalmentsGrossPremium,
-            instalmentsInterestPc: performanceQuote.instalmentsInterestPc,
-            instalmentsServiceCharge: performanceQuote.instalmentsServiceCharge,
-            deposit: performanceQuote.deposit,
+            annualGrossPremium: performanceQuote?.annualGrossPremium,
+            basePremium: performanceQuote?.basePremium,
+            commission: performanceQuote?.commission,
+            declineReason: performanceQuote?.declineReason,
+            instalmentsApr: performanceQuote?.instalmentsApr,
+            instalmentsFirstPayment: performanceQuote?.instalmentsFirstPayment,
+            instalmentsGrossPremium: performanceQuote?.instalmentsGrossPremium,
+            instalmentsInterestPc: performanceQuote?.instalmentsInterestPc,
+            instalmentsServiceCharge:
+              performanceQuote?.instalmentsServiceCharge,
+            deposit: performanceQuote?.deposit,
             instalmentsSubsequentPayments:
-              performanceQuote.instalmentsSubsequentPayments,
-            ipt: performanceQuote.ipt,
-            netPremium: performanceQuote.netPremium,
-            quoteReference: performanceQuote.quoteReference,
-            referralReason: performanceQuote.referralReason,
-            schemeId: performanceQuote.schemeId,
-            schemeTable: performanceQuote.schemeTable,
-            annualGrossPremiumCore: coreQuote.annualGrossPremium,
-            basePremiumCore: coreQuote.basePremium,
-            commissionCore: coreQuote.commission,
+              performanceQuote?.instalmentsSubsequentPayments,
+            ipt: performanceQuote?.ipt,
+            netPremium: performanceQuote?.netPremium,
+            quoteReference: performanceQuote?.quoteReference,
+            referralReason: performanceQuote?.referralReason,
+            schemeId: performanceQuote?.schemeId,
+            schemeTable: performanceQuote?.schemeTable,
+            annualGrossPremiumCore: coreQuote?.annualGrossPremium,
+            basePremiumCore: coreQuote?.basePremium,
+            commissionCore: coreQuote?.commission,
             // TODO: Re-add decline reason core if needed
             // declineReasonCore: coreQuote.declineReason,
-            instalmentsAprCore: coreQuote.instalmentsApr,
-            instalmentsFirstPaymentCore: coreQuote.instalmentsFirstPayment,
-            instalmentsGrossPremiumCore: coreQuote.instalmentsGrossPremium,
-            instalmentsInterestPcCore: coreQuote.instalmentsInterestPc,
-            instalmentsServiceChargeCore: coreQuote.instalmentsServiceCharge,
+            instalmentsAprCore: coreQuote?.instalmentsApr,
+            instalmentsFirstPaymentCore: coreQuote?.instalmentsFirstPayment,
+            instalmentsGrossPremiumCore: coreQuote?.instalmentsGrossPremium,
+            instalmentsInterestPcCore: coreQuote?.instalmentsInterestPc,
+            instalmentsServiceChargeCore: coreQuote?.instalmentsServiceCharge,
             // TODO: Re-add deposit core if needed
             // depositCore: coreQuote.deposit,
             instalmentsSubsequentPaymentsCore:
-              coreQuote.instalmentsSubsequentPayments,
-            iptCore: coreQuote.ipt,
-            netPremiumCore: coreQuote.netPremium,
+              coreQuote?.instalmentsSubsequentPayments,
+            iptCore: coreQuote?.ipt,
+            netPremiumCore: coreQuote?.netPremium,
             coreQuote: coreQuote,
             paymentCrumb: 0,
             yourDetailsCrumb:
@@ -172,15 +176,15 @@ const StepThree = () => {
           return;
         }
 
-        if (performanceQuote.annualGrossPremium > 0) {
+        if (performanceQuote?.annualGrossPremium > 0) {
           setGState({
             ...gState,
             coreQuote: coreQuote,
             performanceQuote: performanceQuote,
             initQuote: performanceQuote,
-            annualGrossPremium: performanceQuote.annualGrossPremium,
+            annualGrossPremium: performanceQuote?.annualGrossPremium,
             instalmentsSubsequentPayments:
-              performanceQuote.instalmentsSubsequentPayments,
+              performanceQuote?.instalmentsSubsequentPayments,
             generateQuote: false,
             paymentCrumb: 0,
             yourDetailsCrumb:
@@ -198,14 +202,14 @@ const StepThree = () => {
           //send a quote email - only ONCE!!
           if (!emailSent) {
             loggingService.logInfo(
-              `Email sent ${sent} time(s) for Quotes: ${coreQuote.quoteReference} & ${performanceQuote.quoteReference}`,
+              `Email sent ${sent} time(s) for Quotes: ${coreQuote?.quoteReference} & ${performanceQuote?.quoteReference}`,
             );
             setSent(sent + 1);
             setEmailSent(true);
             transactorService.sendQuoteEmails({
               quoteReferences: [
-                performanceQuote.quoteReference,
-                coreQuote.quoteReference,
+                performanceQuote?.quoteReference,
+                coreQuote?.quoteReference,
               ],
             });
           }

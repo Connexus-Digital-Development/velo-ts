@@ -1,31 +1,22 @@
-import { type ApiResponse } from "@/models/api";
 import {
   bankValidationApi,
   type BankValidationData,
 } from "@/services/api/bankValidation";
 import {
   paymentsApi,
-  type AppleCancelData,
-  type AppleErrorData,
-  type ApplePaymentData,
-  type AppleValidationData,
-  type CardCancelData,
-  // type CardCancelData,
-  type CardPaymentData,
-  type GoogleCancelData,
-  type GoogleErrorData,
-  type GooglePaymentData,
-  type PaypalCancelData,
-  type PaypalErrorData,
-  type PaypalPaymentData,
+  type AppleValidationRequest,
+  type AppleValidationResponse,
+  type PaymentRequest,
+  type PaymentResponse,
+  type PaypalRequest,
 } from "@/services/api/payments";
 import { useMutation } from "@tanstack/react-query";
 
 // Mutation hook for processing PayPal payments
 export const useProcessPaypalPayment = () => {
   return useMutation({
-    mutationFn: (data: PaypalPaymentData) => paymentsApi.processPaypal(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaypalRequest) => paymentsApi.processPaypal(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("PayPal payment processed successfully:", data);
     },
     onError: (error: Error) => {
@@ -37,8 +28,8 @@ export const useProcessPaypalPayment = () => {
 // Mutation hook for canceling PayPal payments
 export const useCancelPaypalPayment = () => {
   return useMutation({
-    mutationFn: (data: PaypalCancelData) => paymentsApi.cancelPaypal(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaypalRequest) => paymentsApi.cancelPaypal(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("PayPal payment canceled successfully:", data);
     },
     onError: (error: Error) => {
@@ -50,8 +41,8 @@ export const useCancelPaypalPayment = () => {
 // Mutation hook for logging PayPal errors
 export const useLogPaypalError = () => {
   return useMutation({
-    mutationFn: (data: PaypalErrorData) => paymentsApi.errorPaypal(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaypalRequest) => paymentsApi.errorPaypal(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("PayPal error logged successfully:", data);
     },
     onError: (error: Error) => {
@@ -63,8 +54,8 @@ export const useLogPaypalError = () => {
 // Mutation hook for processing Google payments
 export const useProcessGooglePayment = () => {
   return useMutation({
-    mutationFn: (data: GooglePaymentData) => paymentsApi.processGoogle(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaymentRequest) => paymentsApi.processGoogle(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("Google payment processed successfully:", data);
     },
     onError: (error: Error) => {
@@ -76,8 +67,8 @@ export const useProcessGooglePayment = () => {
 // Mutation hook for canceling Google payments
 export const useCancelGooglePayment = () => {
   return useMutation({
-    mutationFn: (data: GoogleCancelData) => paymentsApi.cancelGoogle(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaymentRequest) => paymentsApi.cancelGoogle(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("Google payment canceled successfully:", data);
     },
     onError: (error: Error) => {
@@ -89,8 +80,8 @@ export const useCancelGooglePayment = () => {
 // Mutation hook for logging Google errors
 export const useLogGoogleError = () => {
   return useMutation({
-    mutationFn: (data: GoogleErrorData) => paymentsApi.errorGoogle(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaymentRequest) => paymentsApi.errorGoogle(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("Google error logged successfully:", data);
     },
     onError: (error: Error) => {
@@ -102,8 +93,8 @@ export const useLogGoogleError = () => {
 // Mutation hook for processing Apple payments
 export const useProcessApplePayment = () => {
   return useMutation({
-    mutationFn: (data: ApplePaymentData) => paymentsApi.processApple(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaymentRequest) => paymentsApi.processApple(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("Apple payment processed successfully:", data);
     },
     onError: (error: Error) => {
@@ -115,9 +106,9 @@ export const useProcessApplePayment = () => {
 // Mutation hook for validating Apple sessions
 export const useValidateAppleSession = () => {
   return useMutation({
-    mutationFn: (data: AppleValidationData) =>
+    mutationFn: (data: AppleValidationRequest) =>
       paymentsApi.validateAppleSession(data),
-    onSuccess: (data: ApiResponse) => {
+    onSuccess: (data: AppleValidationResponse) => {
       console.log("Apple session validated successfully:", data);
     },
     onError: (error: Error) => {
@@ -129,8 +120,8 @@ export const useValidateAppleSession = () => {
 // Mutation hook for canceling Apple payments
 export const useCancelApplePayment = () => {
   return useMutation({
-    mutationFn: (data: AppleCancelData) => paymentsApi.cancelApple(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaymentRequest) => paymentsApi.cancelApple(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("Apple payment canceled successfully:", data);
     },
     onError: (error: Error) => {
@@ -142,8 +133,8 @@ export const useCancelApplePayment = () => {
 // Mutation hook for logging Apple errors
 export const useLogAppleError = () => {
   return useMutation({
-    mutationFn: (data: AppleErrorData) => paymentsApi.errorApple(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaymentRequest) => paymentsApi.errorApple(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("Apple error logged successfully:", data);
     },
     onError: (error: Error) => {
@@ -155,8 +146,8 @@ export const useLogAppleError = () => {
 // Mutation hook for processing card payments
 export const useProcessCardPayment = () => {
   return useMutation({
-    mutationFn: (data: CardPaymentData) => paymentsApi.processCard(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaymentRequest) => paymentsApi.processCard(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("Card payment processed successfully:", data);
     },
     onError: (error: Error) => {
@@ -168,8 +159,8 @@ export const useProcessCardPayment = () => {
 // Mutation hook for canceling card payments
 export const useCancelCardPayment = () => {
   return useMutation({
-    mutationFn: (data: CardCancelData) => paymentsApi.cancelCard(data),
-    onSuccess: (data: ApiResponse) => {
+    mutationFn: (data: PaymentRequest) => paymentsApi.cancelCard(data),
+    onSuccess: (data: PaymentResponse) => {
       console.log("Card payment canceled successfully:", data);
     },
     onError: (error: Error) => {
@@ -183,7 +174,7 @@ export const useValidateBankAccount = () => {
   return useMutation({
     mutationFn: (data: BankValidationData) =>
       bankValidationApi.validateUkBankAccount(data),
-    onSuccess: (data: ApiResponse) => {
+    onSuccess: (data: any) => {
       console.log("Bank account validated successfully:", data);
     },
     onError: (error: Error) => {

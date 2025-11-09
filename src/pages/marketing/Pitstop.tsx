@@ -72,7 +72,7 @@ const Pitstop = () => {
   useEffect(() => {
     if (articles.length > 0 && !activeCategory) {
       setActiveCategory(0);
-      setLatestArticle(articles[0]);
+      setLatestArticle(articles[0] as any);
     }
   }, [articles, activeCategory]);
 

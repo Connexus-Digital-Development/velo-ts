@@ -1,15 +1,14 @@
-import { type RiskModel, type CoreQuote } from "@/models/QuoteTypes";
-import { type ExecResponse } from "@/models/api";
+import { type CoreQuote, type RiskModel } from "@/models/QuoteTypes";
 import { aggregatorApiClient, transactorApiClient } from "../apiClient";
 
 // API service functions for quote operations
 export const quotesApi = {
   // Generate quote - POST to transactor
-  generateQuote: (riskModel: RiskModel): Promise<ExecResponse<CoreQuote[]>> =>
+  generateQuote: (riskModel: RiskModel): Promise<CoreQuote[]> =>
     transactorApiClient.post("/PedalCycle/GetQuote", riskModel),
 
   // Retrieve quote by ID - POST to aggregator
-  retrieveQuote: (quoteId: string): Promise<ExecResponse<CoreQuote>> =>
+  retrieveQuote: (quoteId: string): Promise<CoreQuote> =>
     aggregatorApiClient.post("/AggregatorBackoffice/RetrieveQuote", {
       QuoteId: quoteId,
     }),
@@ -21,6 +20,6 @@ export const quotesApi = {
     postcode: string;
     policyDetailsID?: string;
     newDD: boolean;
-  }): Promise<ExecResponse<CoreQuote>> =>
+  }): Promise<CoreQuote> =>
     transactorApiClient.post("/PedalCycle/RetrieveQuote", data),
 };

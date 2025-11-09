@@ -53,7 +53,7 @@ const FAQSection = () => {
 
     const result = categories.map((category: CategoryItem) => {
       const filteredFaqs = faqs.filter(
-        (faq: FAQItem) => faq.category.id === category.id,
+        (faq) => faq.category.id === category.id,
       );
       return { name: category.name, faqs: filteredFaqs };
     });

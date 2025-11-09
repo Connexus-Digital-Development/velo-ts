@@ -134,8 +134,8 @@ const SinglePayment = ({
               } else {
                 uiLock(false);
                 paymentData.incrementRetries();
-                setPaymentError(result.responseMessage);
-                failureMethod(result.responseMessage);
+                setPaymentError(result.responseMessage || "Payment failed");
+                failureMethod(result.responseMessage || "Payment failed");
               }
             }
           }
@@ -146,7 +146,7 @@ const SinglePayment = ({
           uiLock(false);
           threeDS(false);
           failureMethod(err);
-          setPaymentError(err.message);
+          setPaymentError(err.message || "An error occurred");
         },
       });
     },
@@ -156,7 +156,7 @@ const SinglePayment = ({
     if (result.isErrored) {
       setPaymentError("Something went wrong, please try again");
       uiLock(false);
-      failureMethod(result.errorMessage);
+      failureMethod(result.errorMessage || "Something went wrong, please try again");
       return true;
     }
 
@@ -288,7 +288,7 @@ const SinglePayment = ({
               } else {
                 uiLock(false);
                 paymentData.incrementRetries();
-                setPaymentError(result.responseMessage);
+                setPaymentError(result.responseMessage || "Payment failed");
                 failureMethod(result.responseMessage);
               }
             }
@@ -300,7 +300,7 @@ const SinglePayment = ({
           uiLock(false);
           threeDS(false);
           failureMethod(err);
-          setPaymentError(err.message);
+          setPaymentError(err.message || "An error occurred");
         },
       });
 

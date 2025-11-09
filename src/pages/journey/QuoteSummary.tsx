@@ -36,7 +36,8 @@ const QuoteSummary = () => {
   const [showReQuoteCore, setShowReQuoteCore] = useState(false);
   const [showReQuoteMessage, setShowReQuoteMessage] = useState(false);
   const [showCoreReQuoteMessage, setShowCoreReQuoteMessage] = useState(false);
-  const [showPerformanceReQuoteMessage, setShowPerformanceReQuoteMessage] = useState(false);
+  const [showPerformanceReQuoteMessage, setShowPerformanceReQuoteMessage] =
+    useState(false);
   // React Query hook for retrieving quotes
   const {
     data: quoteData,
@@ -65,11 +66,11 @@ const QuoteSummary = () => {
     }
 
     if (quoteData) {
-      if (quoteData?.Value.coreQuote.inTransactor) {
+      if (quoteData?.Value?.coreQuote.inTransactor) {
         setIncepted(true);
         return;
       }
-      if (quoteData?.Value.coreQuote.expired) {
+      if (quoteData?.Value?.coreQuote.expired) {
         setExpired(true);
         return;
       }

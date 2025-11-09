@@ -8,8 +8,10 @@ export interface BankValidationData {
 // API service functions for bank validation operations
 export const bankValidationApi = {
   // Validate UK bank account details
-  validateUkBankAccount: (data: BankValidationData): Promise<any> =>
-    veloApiClient.get(`/api/BankDetails/ValidateUkBankAccount?sortCode=${encodeURIComponent(
-      data.sortCode
-    )}&accNo=${encodeURIComponent(data.accNo)}`),
+  validateUkBankAccount: (data: BankValidationData) =>
+    veloApiClient.get<any>(
+      `/api/BankDetails/ValidateUkBankAccount?sortCode=${encodeURIComponent(
+        data.sortCode,
+      )}&accNo=${encodeURIComponent(data.accNo)}`,
+    ),
 };
