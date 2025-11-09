@@ -3,7 +3,7 @@ import { HashLink } from "react-router-hash-link";
 
 export function FooterNav() {
   return (
-    <nav>
+    <>
       <div className="col-6 col-lg-2 offset-lg-1 mb-3">
         <h5>Our Cover</h5>
         <ul className="list-unstyled">
@@ -151,6 +151,6 @@ export function FooterNav() {
           </li>
         </ul>
       </div>
-    </nav>
+    </>
   );
 }

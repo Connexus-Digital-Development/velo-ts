@@ -1,6 +1,6 @@
 import { type FormikProps } from "formik";
 import { type AboutYouFormValues } from "@/models/JourneyComponentTypes";
-import type { AddressLookupResult } from "@/types/api";
+import type { AddressLookupResult } from "@/models/api";
 import AddressPreview from "../AddressPreview";
 import ManualAddressEntry from "../ManualAddressEntry";
 import Spinner from "@/components/shared/Spinner";
@@ -38,8 +38,7 @@ const AddressSection = ({
     <>
       {gState.hideAddressForm === false && (
         <div className="row">
-          {formik.touched.hideAddressForm &&
-          formik.errors.hideAddressForm ? (
+          {formik.touched.hideAddressForm && formik.errors.hideAddressForm ? (
             <small id="hideAddressForm" className="redFont mt-1">
               {formik.errors.hideAddressForm}
             </small>
@@ -71,8 +70,7 @@ const AddressSection = ({
                 // placeholder="Enter postcode to search"
                 value={formik.values.postalCode}
                 onChange={(e) => {
-                  e.currentTarget.value =
-                    e.currentTarget.value.toUpperCase();
+                  e.currentTarget.value = e.currentTarget.value.toUpperCase();
                   formik.handleChange(e);
                 }}
                 onBlur={formik.handleBlur}
@@ -138,12 +136,10 @@ const AddressSection = ({
                 {addressData?.Value?.map((address, index) => {
                   return (
                     <option key={index} id={`opt-${index}`} value={index}>
-                      {address.organisation !== null &&
-                        address.organisation}
+                      {address.organisation !== null && address.organisation}
                       {address.subHouseName !== null &&
                         address.subHouseName + ", "}
-                      {address.houseName !== null &&
-                        address.houseName + ", "}
+                      {address.houseName !== null && address.houseName + ", "}
                       {address.houseNumber} {address.street},{" "}
                       {address.townOrCity}
                     </option>
@@ -155,9 +151,7 @@ const AddressSection = ({
         </div>
       )}
 
-      {gState.hideAddressForm === true && (
-        <AddressPreview formik={formik} />
-      )}
+      {gState.hideAddressForm === true && <AddressPreview formik={formik} />}
     </>
   );
 };

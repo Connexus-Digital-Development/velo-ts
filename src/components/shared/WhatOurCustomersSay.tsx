@@ -1,4 +1,4 @@
-import CogIcon from '@/assets/svgs/what-our-customers-say-cog-icon.svg?url'
+import CogIcon from "@/assets/svgs/cog-icon.svg?url";
 
 const WhatOurCustomersSay = () => {
   return (
@@ -23,7 +23,11 @@ const WhatOurCustomersSay = () => {
         </div>
       </div>
 
-      <img src={CogIcon} alt="Decorative cog icon" className="whatOurCustomerssayCog" />
+      <img
+        src={CogIcon}
+        alt="Decorative cog icon"
+        className="whatOurCustomerssayCog"
+      />
     </div>
   );
 };

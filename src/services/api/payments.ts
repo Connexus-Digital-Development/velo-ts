@@ -95,7 +95,7 @@ export const paymentsApi = {
     paymentsApiClient.post("/CancelPaypal", data),
 
   // Log PayPal error
-  errorPaypal: (data: PaypalErrorData): Promise<any> =>
+  errorPaypal: (data: any): Promise<any> =>
     paymentsApiClient.post("/ErrorPaypal", data),
 
   // Process Google payment

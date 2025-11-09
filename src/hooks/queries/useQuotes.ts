@@ -1,6 +1,6 @@
+import { type ExecResponse } from "@/models/api";
 import { type RiskModel } from "@/models/QuoteTypes";
 import { quotesApi } from "@/services/api/quotes";
-import { type ExecResponse } from "@/types/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 // Mutation hook for generating quotes

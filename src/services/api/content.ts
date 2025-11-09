@@ -1,4 +1,4 @@
-import { type ExecResponse } from "@/types/api";
+import { type ExecResponse } from "@/models/api";
 import { veloApiClient } from "../apiClient";
 
 // API service functions for content operations (blogs, articles)

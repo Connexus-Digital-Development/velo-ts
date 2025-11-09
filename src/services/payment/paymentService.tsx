@@ -1,6 +1,6 @@
 //Service for processing payments
 
-import { restApiCommBaseService } from "./restApiCommBaseService";
+import { restApiCommBaseService } from "../restApiCommBaseService";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 
 import type {

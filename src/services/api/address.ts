@@ -1,4 +1,4 @@
-import { type AddressLookupResponse } from "@/types/api";
+import { type AddressLookupResponse } from "@/models/api";
 import { veloApiClient } from "../apiClient";
 
 // API service functions for address operations

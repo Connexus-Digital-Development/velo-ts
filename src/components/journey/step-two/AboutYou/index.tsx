@@ -10,7 +10,7 @@ import MarketingPreferences from "../MarketingPreferences";
 import { useAddressLookup } from "@/hooks/queries/useAddress";
 import { type AboutYouFormValues } from "@/models/JourneyComponentTypes";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
-import type { AddressLookupResult } from "@/types/api";
+import type { AddressLookupResult } from "@/models/api";
 import PersonalDetails from "./PersonalDetails";
 import AddressSection from "./AddressSection";
 import CoverSection from "./CoverSection";

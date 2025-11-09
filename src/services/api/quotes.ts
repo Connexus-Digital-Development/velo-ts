@@ -1,5 +1,5 @@
 import { type RiskModel } from "@/models/QuoteTypes";
-import { type ExecResponse } from "@/types/api";
+import { type ExecResponse } from "@/models/api";
 import { aggregatorApiClient, transactorApiClient } from "../apiClient";
 
 // API service functions for quote operations

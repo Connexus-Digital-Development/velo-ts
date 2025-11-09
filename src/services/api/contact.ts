@@ -1,4 +1,4 @@
-import { type EmailResponse } from "@/types/api";
+import { type EmailResponse } from "@/models/api";
 import { veloApiClient } from "../apiClient";
 
 // Types for contact form data
