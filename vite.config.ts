@@ -1,17 +1,21 @@
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
+import { imagetools } from "vite-imagetools";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+import mkcert from "vite-plugin-mkcert";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     ViteImageOptimizer({}),
+    imagetools(),
     react({
       babel: {
         plugins: [["babel-plugin-react-compiler"]],
       },
     }),
+    mkcert(),
   ],
   resolve: {
     alias: {

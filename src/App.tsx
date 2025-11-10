@@ -9,6 +9,7 @@ import CookieBar from "@/components/shared/CookieBar";
 import { Footer } from "@/components/shared/Footer";
 import Routes from "@/routes";
 import { queryClient } from "@/lib/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const App = () => {
   const theme: MantineThemeOverride = {
@@ -58,6 +59,8 @@ const App = () => {
             </div>
           </Router>
         </MantineProvider>
+
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </HelmetProvider>
   );

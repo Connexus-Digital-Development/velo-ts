@@ -1,6 +1,6 @@
-export function CheckmarkIcon({ currentColor }: { currentColor: string }) {
+export function CheckmarkIcon({ currentColor, width = 23, height = 23 }: { currentColor: string, width?: number, height?: number }) {
   return (
-    <svg width="23" height="23" viewBox="0 0 23 23">
+    <svg width={width} height={height} viewBox="0 0 23 23">
       <g transform="translate(-1125 -526)">
         <circle
           cx="11.5"

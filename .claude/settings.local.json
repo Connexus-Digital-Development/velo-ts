@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc --noEmit --skipLibCheck src/components/journey/step-three/*.tsx)",
+      "Bash(bun lint ./src/components/journey/step-three)",
+      "Bash(bun lint src/components/journey/step-three/)",
+      "Bash(bun lint src/components/journey/step-three/FeatureList_CORE.tsx)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
