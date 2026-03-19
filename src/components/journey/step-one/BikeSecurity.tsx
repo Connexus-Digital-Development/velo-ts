@@ -149,8 +149,8 @@ const BikeSecurity = ({ setLocationInvalid }: BikeSecurityProps) => {
   const style = { opacity: 0 };
 
   return (
-    <section className="container container_narrow mt-3">
-      <div className="content_section">
+    <section className="container container_narrow">
+      <div className="content_section w mt-3 mb-3">
         <h3 className="journey-section-titles">
           Bike<span className="blueFont"> security</span>.
         </h3>

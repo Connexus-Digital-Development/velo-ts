@@ -19,7 +19,7 @@ const VELO002CoreCycleInsurancePolicySchedule =
 const VELO002CycleInsurancePolicySchedule =
   "/documents/VELO205.-.Chubb.Performance.Velosure.IPID.pdf";
 const termsOfBusiness =
-  "/documents/VELO207.-.Velosure.Terms.of.Business.TM.V3.pdf";
+  "/documents/VELO207.-.Velosure.Chubb.Terms.of.Business.pdf";
 const veleosureCycleRescueIPID = "/documents/Velosure.Cycle.Policy.IPID.pdf";
 const privacyPolicyV1 = "/documents/Velosure_Privacy_Notice_V1_2023.pdf";
 

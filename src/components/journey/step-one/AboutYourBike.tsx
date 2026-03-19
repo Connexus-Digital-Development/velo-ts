@@ -252,7 +252,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
       {gState.currentlyAddingABike && <div id="add-new-bike"></div>}
 
       {(gState.bikes.length === 0 || gState.currentlyAddingABike) && (
-        <div className="content_section mt-3">
+        <div className="content_section mt-3 mb-3">
           <h3 className="journey-section-titles">
             About<span className="blueFont"> your bike</span>.
           </h3>
