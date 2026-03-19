@@ -30,12 +30,15 @@ const StepOne = (): React.JSX.Element => {
   const params = new URLSearchParams(search);
   const policyReference = params.get("policyReference");
   const offerRules = sessionStorage.getItem("OfferRules");
-  if (policyReference !== null) {
-    sessionStorage.removeItem("context");
-    setGState(initialJourneyState);
-    sessionStorage.removeItem("context");
-    navigate(`/get-a-quote`);
-  }
+
+  useEffect(() => {
+    if (policyReference !== null) {
+      sessionStorage.removeItem("context");
+      setGState(initialJourneyState);
+      sessionStorage.removeItem("context");
+      navigate(`/get-a-quote`);
+    }
+  }, [policyReference, navigate, setGState]);
 
   useEffect(() => {
     seoTags(
@@ -50,19 +53,35 @@ const StepOne = (): React.JSX.Element => {
 
   useEffect(() => {
     if (locationInvalid || gState.hasPreviousClaim) {
-      setGState({
-        ...gState,
+      setGState((prevState) => ({
+        ...prevState,
         paymentCrumb: 0,
         generateQuote: true,
         yourQuoteCrumb: 0,
         yourCoverCrumb: 2,
         yourDetailsCrumb: 0,
-      });
+      }));
     }
-  }, [locationInvalid, gState.hasPreviousClaim, gState, setGState]);
+  }, [locationInvalid, gState.hasPreviousClaim, setGState]);
+
+  useEffect(() => {
+    const updatedState =
+      modelAdaptorHelper.resetAssumptionsAndDeclarations(gState);
+    setGState({
+      ...updatedState,
+      paymentCrumb: 0,
+      generateQuote: true,
+      yourQuoteCrumb: gState.yourQuoteCrumb === 2 ? 1 : gState.yourQuoteCrumb,
+      yourCoverCrumb: 2,
+      yourDetailsCrumb:
+        gState.yourDetailsCrumb === 2 ? 1 : gState.yourDetailsCrumb,
+      currentlyEditingABike: false,
+      currentlyAddingABike: false,
+      selectedCoreScheme: null,
+    });
+  }, []);
 
   const handleNextButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
     setValidateNextButton(true);
     setTimeout(function () {
       setValidateNextButton(false);

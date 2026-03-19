@@ -334,7 +334,6 @@ const AboutYouView = () => {
       coverStartDate: date,
     });
   };
-
   const showSingleAddress = useCallback(
     (selectedAddress: AddressLookupResult): void => {
       //set the globalstate with these address details
@@ -547,22 +546,21 @@ const AboutYouView = () => {
     }
   }, [gState.bikes.length, navigate, search]);
 
-  //
-  // useEffect(() => {
-  //   const updatedState =
-  //     modelAdaptorHelper.resetAssumptionsAndDeclarations(gState);
-  //   setGState({
-  //     ...updatedState,
-  //     paymentCrumb: 0,
-  //     generateQuote: true,
-  //     yourQuoteCrumb: gState.yourQuoteCrumb === 2 ? 1 : gState.yourQuoteCrumb,
-  //     yourCoverCrumb: gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
-  //     yourDetailsCrumb: 2,
-  //     currentlyEditingABike: false,
-  //     currentlyAddingABike: false,
-  //     selectedCoreScheme: null,
-  //   });
-  // }, [gState, setGState]);
+  useEffect(() => {
+    const updatedState =
+      modelAdaptorHelper.resetAssumptionsAndDeclarations(gState);
+    setGState({
+      ...updatedState,
+      paymentCrumb: 0,
+      generateQuote: true,
+      yourQuoteCrumb: gState.yourQuoteCrumb === 2 ? 1 : gState.yourQuoteCrumb,
+      yourCoverCrumb: gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
+      yourDetailsCrumb: 2,
+      currentlyEditingABike: false,
+      currentlyAddingABike: false,
+      selectedCoreScheme: null,
+    });
+  }, []);
 
   // Auto-select address if only one match
   useEffect(() => {
@@ -570,7 +568,6 @@ const AboutYouView = () => {
       //console.log("no address data");
       return;
     }
-
     const filtered = addressData.Value?.filter((hn) => {
       return (
         `${hn.houseNumber} ${hn.street}`.startsWith(
@@ -585,7 +582,7 @@ const AboutYouView = () => {
       //we found one matching address so lets hide all the guff and show this address.
       showSingleAddress(filtered[0]);
     }
-  }, [addressData, formik.values.houseNumber, showSingleAddress]);
+  }, [addressData, formik.values.houseNumber, gState, setGState, formik, showSingleAddress]);
 
   // set form valid state in global state
   useEffect(() => {

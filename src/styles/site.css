@@ -86,9 +86,15 @@ ul.DD li::marker {
 .officialDocs td {
   font-family: Roboto;
 }
-.electricBikeModal {
-  /* Removed custom positioning and backdrop styling to use Mantine's built-in modal behavior */
+.mantine-Checkbox-input {
+  background: var(--velo-lightgrey);
+  cursor: pointer !important;
 }
+
+.mantine-Checkbox-root {
+  cursor: pointer !important;
+}
+
 .officialDocs a {
   /* color: var(--velo-black); */
   color: #0d6efd;
@@ -110,7 +116,7 @@ textarea {
 
 .container {
   position: relative;
-  z-index: 990;
+  /* z-index: 990; */
 }
 
 #cookie-bar-template,
@@ -610,6 +616,27 @@ label,
   border-radius: 11px !important;
   font-size: 21px !important;
   height: 48px !important;
+  background-color: var(--velo-white) !important;
+  color: var(--velo-footer-darkgrey) !important;
+}
+
+.form-control:focus,
+.form-control.is-valid,
+.was-validated .form-control:valid,
+.form-select:focus,
+.form-select.is-valid,
+.was-validated .form-select:valid {
+  background-color: var(--velo-white) !important;
+  color: var(--velo-footer-darkgrey) !important;
+}
+
+input.form-control:-webkit-autofill,
+input.form-control:-webkit-autofill:hover,
+input.form-control:-webkit-autofill:focus,
+textarea.form-control:-webkit-autofill,
+select.form-select:-webkit-autofill {
+  -webkit-text-fill-color: var(--velo-footer-darkgrey) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--velo-white) inset !important;
 }
 
 .faqBlock {

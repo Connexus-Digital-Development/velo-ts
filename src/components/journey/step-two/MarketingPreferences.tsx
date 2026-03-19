@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSafeContext } from "@/context/journeyStore";
-
+import { Checkbox } from "@mantine/core";
 interface MarketingPreferencesProps {
   formik: any; // TODO: Replace with proper Formik type when available
 }
@@ -263,33 +263,30 @@ const MarketingPreferences = ({ formik }: MarketingPreferencesProps) => {
         </p>
 
         {/* confirmation button - linked to Formik, that will need to be ticked to proceed */}
-        <div className="form-check mb-5 container">
-          <div className="row">
-            <div className="col-1">
-              <input
-                style={{ marginLeft: "0px" }}
-                className="form-check-input"
-                type="checkbox"
-                id="IConfirm"
-                name="iConfirm"
-                checked={iConfirm}
-                onChange={handleIConfirmClick}
-              />
-            </div>
-            <div className="col-11">
-              <p className="form-check-label lufga-light">
-                <strong>
-                  I confirm that I have read and understood the important
-                  information above.
-                </strong>
-              </p>
-              {formik.touched.iConfirm && formik.errors.iConfirm && (
-                <div className="text-danger small">
-                  {formik.errors.iConfirm}
-                </div>
-              )}
-            </div>
+        <div className="mb-4">
+          <div className="d-flex align-items-start">
+            <Checkbox
+              radius="md"
+              size="lg"
+              id="IConfirm"
+              name="iConfirm"
+              color="velo-blue"
+              className="cursorPointer"
+              checked={iConfirm}
+              onChange={handleIConfirmClick}
+            />
+            <label
+              htmlFor="IConfirm"
+              className="pl-2 pt-1 form-check-label lufga-light"
+              style={{ cursor: "pointer" }}
+            >
+              I confirm that I have read and understood the important
+              information above.
+            </label>
           </div>
+          {formik.touched.iConfirm && formik.errors.iConfirm && (
+            <div className="text-danger small">{formik.errors.iConfirm}</div>
+          )}
         </div>
       </div>
     </>

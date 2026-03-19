@@ -24,15 +24,16 @@ const AwayValue = ({ validateNextButton }: AwayValueProps) => {
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     if (gState.resetAwayValue) {
+      const highestValueBike = getHighestValueBike(gState.bikes);
       setHomeValue(modelAdaptorHelper.getHomeValue(gState.bikes));
-      setGState({
-        ...gState,
+      setGState((prevState) => ({
+        ...prevState,
         resetAwayValue: false,
-        awayValue: getHighestValueBike(gState.bikes),
-      });
-      setValue(getHighestValueBike(gState.bikes));
+        awayValue: highestValueBike,
+      }));
+      setValue(highestValueBike);
     }
-  }, [gState.resetAwayValue, gState, setGState]);
+  }, [gState.resetAwayValue]);
 
   useEffect(() => {
     if (

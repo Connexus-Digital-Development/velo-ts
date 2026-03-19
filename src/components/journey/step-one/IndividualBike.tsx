@@ -46,7 +46,6 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
   const [editMode, SetEditMode] = useState(false);
   const [showEditBikeMessage, setShowEditBikeMessage] = useState(false);
   const [opened, { close, open }] = useDisclosure(false);
-  const [isElectric, setIsElectric] = useState(false);
   const [electricAgreed, setElectricAgreed] = useState(false);
 
   function enforceMinMax(el: HTMLInputElement) {
@@ -77,7 +76,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
     },
     validationSchema: createValidationSchema(gState, bike),
     onSubmit: (values, { resetForm: _resetForm }) => {
-      if (isElectric && !electricAgreed) {
+      if (values.isElectric && !electricAgreed) {
         return open();
       }
       setElectricAgreed(false);
@@ -111,6 +110,9 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
         currentlyAddingABike: false,
         resetAwayValue: true,
         awayValue: 0,
+        generateQuote: true,
+        yourQuoteCrumb:
+          gState.validatedRules !== null ? 0 : gState.yourQuoteCrumb,
       });
       SetEditMode(false);
     },
@@ -119,8 +121,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setShowEditBikeMessage(false);
-    setIsElectric(bike.isElectric ?? false);
-    formik.values.isElectric = bike.isElectric;
+    formik.setFieldValue("isElectric", bike.isElectric ?? false, false);
     resetForm();
     formik.resetForm();
   };
@@ -135,8 +136,11 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
     setGState({
       ...gState,
       bikes: filtered,
+      currentlyEditingABike: false,
+      currentlyAddingABike: false,
       resetAwayValue: true,
       awayValue: 0,
+      generateQuote: true,
       yourQuoteCrumb:
         gState.validatedRules !== null ? 0 : gState.yourQuoteCrumb,
     }); // copy new version to the main object - dont change the state directly
@@ -157,6 +161,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
         currentlyEditingABike: true,
         resetAwayValue: true,
         awayValue: 0,
+        generateQuote: true,
       };
     });
 
@@ -191,21 +196,20 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
     flag: boolean,
   ) => {
     e.preventDefault();
-    setIsElectric(flag);
-    formik.values.isElectric = flag;
+    formik.setFieldValue("isElectric", flag, false);
   };
 
   return (
+    <>
     <section className="container container_narrow mt-3">
       <Modal
         opened={opened}
         onClose={close}
-        className="electricBikeModal"
-        centered
-        withCloseButton={true}
-        closeOnClickOutside={true}
+        size="lg"
+             centered
+        withCloseButton={false}
       >
-        <div className="row">
+        <div>
           <p>
             Please confirm the electric cycle maximum motor power does not
             exceed 250 Watts and the electric assistance cut-off speed does not
@@ -222,9 +226,10 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
             for further details.
           </p>
 
-          <div className="col-6 mt-3">
+          <div className="d-flex gap-2 mt-3">
+            <div className="flex-fill">
             <button
-              type="submit"
+              type="button"
               id="Add-this-bike"
               onClick={() => {
                 setElectricAgreed(true);
@@ -234,10 +239,11 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
             >
               Save Changes
             </button>
-          </div>
+            </div>
 
-          <div className="col-6  mt-3">
+            <div className="flex-fill">
             <button
+              type="button"
               onClick={(e) => {
                 handleCancel(e);
                 close();
@@ -246,6 +252,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
             >
               Cancel
             </button>
+            </div>
           </div>
         </div>
       </Modal>
@@ -395,6 +402,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                   <div className="row">
                     <div className="col-6 col-md-4">
                       <button
+                        type="button"
                         className={`btn btn-secondary btn-100 mb-2 mr-1 lufga ${
                           formik.values.isElectric === true
                             ? "primaryFocussed"
@@ -408,6 +416,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                     </div>
                     <div className="col-6 col-md-4">
                       <button
+                        type="button"
                         className={`btn btn-secondary btn-100 mb-2 mr-1 ${
                           formik.values.isElectric === false
                             ? "primaryFocussed"
@@ -451,6 +460,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                     </div>
                     <div className="col-6 col-md-4">
                       <button
+                        type="button"
                         onClick={handleCancel}
                         className="btn btn-secondary  mb-2 btn-100"
                       >
@@ -470,6 +480,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
         </div>
       )}
     </section>
+    </>
   );
 };
 

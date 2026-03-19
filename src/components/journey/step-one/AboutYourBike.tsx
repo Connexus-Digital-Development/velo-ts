@@ -27,19 +27,22 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
     }
   }, [validateNextButton, gState.currentlyAddingABike]);
 
-  // useEffect(() => {
-  //   // users could reset the page, clearing the journey context - if this happens we want them to be returned to the step one. We'll use the bike count to test for a reset
-  //   if (gState.bikes.length === 0) {
-  //     setGState({
-  //       ...gState,
-  //       yourCoverCrumb: 0,
-  //       paymentCrumb: 0,
-  //       yourQuoteCrumb: 0,
-  //       yourDetailsCrumb: 0,
-  //       generateQuote: true,
-  //     });
-  //   }
-  // }, [gState, setGState]);
+  useEffect(() => {
+    setGState((prevState) => {
+      if (prevState.bikes.length > 0) {
+        return prevState;
+      }
+
+      return {
+        ...prevState,
+        yourCoverCrumb: 0,
+        paymentCrumb: 0,
+        yourQuoteCrumb: 0,
+        yourDetailsCrumb: 0,
+        generateQuote: true,
+      };
+    });
+  }, [setGState]);
 
   const formik = useFormik<BikeFormValues>({
     initialValues: {
@@ -79,7 +82,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
       setElectricAgreed(false);
       close();
       const bike = {
-        id: gState.bikes.length + 1,
+        id: gState.bikes.length === 0 ? 1 : (gState.bikes.at(-1)?.id ?? 0) + 1,
         make: values.bikeMake,
         model: values.bikeModel,
         value: Number(values.bikeValue),
@@ -92,18 +95,17 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
       };
       setShowAddBikeMessage(false);
       //update state so that the bikes will be displayed
-      const newBikeList = gState.bikes;
-      newBikeList.push(bike);
-
       setGState((prevState) => {
         return {
           ...prevState,
-          bikes: newBikeList,
+          bikes: [...prevState.bikes, bike],
           currentlyAddingABike: false,
+          currentlyEditingABike: false,
           resetAwayValue: true,
           awayValue: 0,
+          generateQuote: true,
           yourQuoteCrumb:
-            gState.validatedRules !== null ? 0 : gState.yourQuoteCrumb,
+            prevState.validatedRules !== null ? 0 : prevState.yourQuoteCrumb,
         };
       });
 
@@ -189,9 +191,10 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
       <Modal
         opened={opened}
         onClose={close}
-        className="electricBikeModal"
+        size="lg"
         centered
         withCloseButton={false}
+        closeOnClickOutside={false}
       >
         <p>
           Please confirm the electric cycle maximum motor power does not exceed
@@ -208,10 +211,10 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
           </a>{" "}
           for further details.
         </p>
-        <div className="row">
-          <div className="col-6 mt-3">
+        <div className="d-flex gap-2 mt-3">
+          <div className="flex-fill">
             <button
-              type="submit"
+              type="button"
               id="Add-this-bike"
               onClick={() => {
                 setElectricAgreed(true);
@@ -223,8 +226,9 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
             </button>
           </div>
 
-          <div className="col-6  mt-3">
+          <div className="flex-fill">
             <button
+              type="button"
               onClick={(e) => {
                 handleCancel(e);
                 close();

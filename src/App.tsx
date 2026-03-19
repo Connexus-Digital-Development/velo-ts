@@ -39,6 +39,13 @@ const App = () => {
         "#86bb2f",
       ],
     },
+    components: {
+      Modal: {
+        defaultProps: {
+          zIndex: 10000,
+        },
+      },
+    },
   };
 
   return (

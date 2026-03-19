@@ -13,7 +13,7 @@ const BikeList = ({ validateNextButton }: BikeListProps) => {
   return gState.bikes.map((bike, index) => (
     <IndividualBike
       bike={bike}
-      key={index}
+      key={bike.id ?? index}
       validateNextButton={validateNextButton}
     />
   ));
