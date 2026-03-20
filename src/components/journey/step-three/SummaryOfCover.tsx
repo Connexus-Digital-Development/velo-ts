@@ -1,5 +1,5 @@
 import { useSafeContext } from "@/context/journeyStore";
-import * as moment from "moment";
+import moment from "moment";
 import { modelAdaptorHelper } from "@/utils/modelAdaptorHelper";
 import SimpleBikeList from "./SimpleBikeList";
 

@@ -1,37 +1,42 @@
+import type { FormikProps } from "formik";
 import { useSafeContext } from "@/context/journeyStore";
+import type { AboutYouFormValues } from "@/models";
 
 interface AddressPreviewProps {
-  formik: any; // TODO: Replace with proper Formik type when available
+  formik: FormikProps<AboutYouFormValues>;
 }
 
 const AddressPreview = ({ formik }: AddressPreviewProps) => {
   const [state, setState] = useSafeContext({
     componentName: "AddressPreview",
   });
-  const handleLinkClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    setState({ ...state, hideAddressForm: false });
-    formik.setFieldValue("showManualAddress", false);
-    formik.setFieldValue("hideAddressForm", false);
+
+  const handleLinkClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setState((previousState) => ({
+      ...previousState,
+      hideAddressForm: false,
+    }));
+    formik.setFieldValue("showManualAddress", false, false);
+    formik.setFieldValue("hideAddressForm", false, false);
   };
 
   return (
     <div className="col-12 col-sm-6 addressPreview">
       <address>
-        {state.organisation !== null && <p>{state.organisation}</p>}
+        {state.organisation && <p>{state.organisation}</p>}
         <p>
-          {state.subHouseName !== null && <>{state.subHouseName} </>}
-          {state.houseName !== null && <>{state.houseName}</>}
-          {(state.houseName == null || state.houseName?.length < 1) &&
-            state.houseNo !== null && <>{state.houseNo}</>}
+          {state.subHouseName && <>{state.subHouseName} </>}
+          {state.houseName && <>{state.houseName}</>}
+          {!state.houseName && state.houseNo && <>{state.houseNo}</>}
         </p>
-        {state.addressLine1 !== null && <p> {state.addressLine1} </p>}
-        {state.addressLine3 !== null && <p>{state.addressLine3} </p>}
-        {state.addressLine2 !== null && <p>{state.addressLine2} </p>}
-        {state.addressLine4 !== null && <p>{state.addressLine4} </p>}
+        {state.addressLine1 && <p>{state.addressLine1}</p>}
+        {state.addressLine3 && <p>{state.addressLine3}</p>}
+        {state.addressLine2 && <p>{state.addressLine2}</p>}
+        {state.addressLine4 && <p>{state.addressLine4}</p>}
         <p>{state.postcode}</p>
       </address>
-      <button className="btn-link" onClick={handleLinkClick}>
+      <button type="button" className="btn-link" onClick={handleLinkClick}>
         Change your address
       </button>
     </div>

@@ -240,49 +240,59 @@ const Features = ({
     );
     riskModel.newDD = true;
 
-    TransactorService.fetchQuoteForScheme(riskModel, gState).then((data) => {
-      const performanceQuote = data.value;
+    TransactorService.fetchQuoteForScheme(riskModel, gState)
+      .then((data) => {
+        const performanceQuote = data.value;
 
-      setPerformanceQuote(performanceQuote);
-      console.log("Updating performance quote:", performanceQuote);
-      setGState({
-        ...gState,
-        annualGrossPremium: performanceQuote.annualGrossPremium,
-        instalmentsSubsequentPayments:
-          performanceQuote.instalmentsSubsequentPayments,
-        schemeTable: 0,
-        performanceQuote: performanceQuote,
-        selectedCoreScheme: false,
-        personalAccidentPerformance: PCCheckbox,
-        worldwideCover: includeWorldwideCoverCheckBox,
-        sportsCover: sportsCoverCheckBox,
+        setPerformanceQuote(performanceQuote);
+        console.log("Updating performance quote:", performanceQuote);
+        setGState({
+          ...gState,
+          annualGrossPremium: performanceQuote.annualGrossPremium,
+          instalmentsSubsequentPayments:
+            performanceQuote.instalmentsSubsequentPayments,
+          schemeTable: 0,
+          performanceQuote: performanceQuote,
+          selectedCoreScheme: false,
+          personalAccidentPerformance: PCCheckbox,
+          worldwideCover: includeWorldwideCoverCheckBox,
+          sportsCover: sportsCoverCheckBox,
+        });
+        console.log("Updated performance quote:", performanceQuote);
+        unSelectAll();
+
+        setMonthlyPriceDifference(
+          performanceQuote.instalmentsSubsequentPayments -
+            initPerformanceQuote.instalmentsSubsequentPayments,
+        );
+        setAnnualPriceDifference(
+          performanceQuote.annualGrossPremium -
+            initPerformanceQuote.annualGrossPremium,
+        );
+        setShowPriceDifference(
+          performanceQuote.instalmentsSubsequentPayments -
+            initPerformanceQuote.instalmentsSubsequentPayments >
+            0,
+        );
+        setShowReQuote(false);
+
+        loggingService.logInfo(
+          `Email sent for requote for Quotes:& ${performanceQuote.quoteReference}`,
+        );
+        TransactorService.sendQuoteEmails({
+          quoteReferences: [performanceQuote.quoteReference],
+        });
+      })
+      .catch((error) => {
+        const message =
+          error instanceof Error
+            ? error.message
+            : "Failed to update performance quote";
+        loggingService.logError(message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-      console.log("Updated performance quote:", performanceQuote);
-      unSelectAll();
-
-      setMonthlyPriceDifference(
-        performanceQuote.instalmentsSubsequentPayments -
-          initPerformanceQuote.instalmentsSubsequentPayments,
-      );
-      setAnnualPriceDifference(
-        performanceQuote.annualGrossPremium -
-          initPerformanceQuote.annualGrossPremium,
-      );
-      setShowPriceDifference(
-        performanceQuote.instalmentsSubsequentPayments -
-          initPerformanceQuote.instalmentsSubsequentPayments >
-          0,
-      );
-      setIsLoading(false);
-      setShowReQuote(false);
-
-      loggingService.logInfo(
-        `Email sent for requote for Quotes:& ${performanceQuote.quoteReference}`,
-      );
-      TransactorService.sendQuoteEmails({
-        quoteReferences: [performanceQuote.quoteReference],
-      });
-    });
   };
 
   return (

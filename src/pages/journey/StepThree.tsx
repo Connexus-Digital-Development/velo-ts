@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSafeContext } from "@/context/journeyStore";
 import useRiskModelAdaptor from "@/hooks/useRiskModelAdaptor";
@@ -45,87 +45,55 @@ const StepThree = () => {
   );
   const [showReferralPage, setShowReferralPage] = useState<boolean>(false);
   // const riskModel = JSON.stringify(useRiskModelAdaptor(gState));
-  const [loadingQuote, setIsLoadingQuote] = useState<any>(gState.generateQuote);
+  const [_loadingQuote, setIsLoadingQuote] = useState<any>(gState.generateQuote);
+  const [isInitialQuoteLoading, setIsInitialQuoteLoading] = useState<boolean>(
+    Boolean(gState.generateQuote),
+  );
   const [showReQuoteCore, setShowReQuoteCore] = useState<boolean>(false);
   const [showReQuote, setShowReQuote] = useState<boolean>(false);
+  const hasRequestedInitialQuote = useRef(false);
+  const hasQuoteResults = Boolean(gState.performanceQuote || gState.coreQuote);
+  const shouldShowQuoteDetails = showQuoteDetails || hasQuoteResults;
+  const hasTerminalQuoteState =
+    shouldShowQuoteDetails || showReferralPage || Boolean(error);
+  const isOverlayVisible = !hasTerminalQuoteState && (isInitialQuoteLoading || loading);
   // Add function to clear the error
   const clearShowError = () => {
     setClickedButton(false);
   };
-  // const TRANSACTOR_AUTH_KEY =
-  //   "Velosure|0o4ymBa41mIsQCXDFzQx+c6ttkMrfmWrLdeGANwffgs=";
-
-  // const url = `${import.meta.env.VITE_TRANSACTOR_API_ENDPOINT}/PedalCycle/GetQuote`; // this method Generates the quote- poorly named!
-
-  // const options = {
-  //   method: "POST",
-  //   headers: {
-  //     authKey: TRANSACTOR_AUTH_KEY,
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: riskModel,
-  //   mode: "cors" as RequestMode,
-  // };
-  //
   const riskModel = useRiskModelAdaptor(gState);
 
-  useEffect(() => {
-    const updatedState =
-      modelAdaptorHelper.resetAssumptionsAndDeclarations(gState);
-    setGState({
-      ...updatedState,
-      paymentCrumb: 0,
-      yourDetailsCrumb:
-        gState.yourDetailsCrumb === 2 ? 1 : gState.yourDetailsCrumb,
-      yourCoverCrumb: gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
-      yourQuoteCrumb: 2,
-      currentlyEditingABike: false,
-      currentlyAddingABike: false,
-    });
+  const handleQuoteSuccess = useCallback(
+    (response: any) => {
+      const quotes = Array.isArray(response)
+        ? response
+        : ((response as any)?.Value ?? (response as any)?.value ?? []);
 
-    //console.log("about to get a full quote", gState);
-  }, []);
+      setGenerateQuote(false);
+      setIsInitialQuoteLoading(false);
+      setIsLoadingQuote(false);
+      setIsPending(false);
 
-  useEffect(() => {
-    if (generateQuote) {
-      // const _riskModel = JSON.stringify(riskModel);
-      generateQuoteMutation.mutate(riskModel as RiskModel);
-    }
-  }, [generateQuote]);
-
-  // Handle quote generation mutation response
-  useEffect(() => {
-    if (generateQuoteMutation.isSuccess && generateQuoteMutation.data) {
-      const response = generateQuoteMutation.data;
       loggingService.logInfo(
         `Quote generation successful: ${JSON.stringify(response)}`,
       );
-      setIsPending(false);
-      console.log("Quote response", response);
 
-      if (response) {
-        const performanceQuote = response.find(
-          (f: any) => !f.schemeName.toLowerCase().includes("core"),
+      if (Array.isArray(quotes) && quotes.length > 0) {
+        const performanceQuote = quotes.find(
+          (f: any) => !f.schemeName?.toLowerCase().includes("core"),
         );
-        const coreQuote = response.find((f: any) =>
-          f.schemeName.toLowerCase().includes("core"),
+        const coreQuote = quotes.find((f: any) =>
+          f.schemeName?.toLowerCase().includes("core"),
         );
-
-        setIsLoadingQuote(false);
+        const primaryQuote = performanceQuote ?? coreQuote;
 
         if (
           performanceQuote?.referralReason ||
           performanceQuote?.declineReason
         ) {
-          if (showReferralPage) {
-            return;
-          }
-          loggingService.logWarning(
-            `Quote ${performanceQuote?.quoteReference} referred or declined with reason: ${performanceQuote?.referralReason} ${performanceQuote?.declineReason}`,
-          );
           setError(null);
-          setGState({
-            ...gState,
+          setGState((previousState) => ({
+            ...previousState,
             annualGrossPremium: performanceQuote?.annualGrossPremium,
             basePremium: performanceQuote?.basePremium,
             commission: performanceQuote?.commission,
@@ -148,15 +116,11 @@ const StepThree = () => {
             annualGrossPremiumCore: coreQuote?.annualGrossPremium,
             basePremiumCore: coreQuote?.basePremium,
             commissionCore: coreQuote?.commission,
-            // TODO: Re-add decline reason core if needed
-            // declineReasonCore: coreQuote.declineReason,
             instalmentsAprCore: coreQuote?.instalmentsApr,
             instalmentsFirstPaymentCore: coreQuote?.instalmentsFirstPayment,
             instalmentsGrossPremiumCore: coreQuote?.instalmentsGrossPremium,
             instalmentsInterestPcCore: coreQuote?.instalmentsInterestPc,
             instalmentsServiceChargeCore: coreQuote?.instalmentsServiceCharge,
-            // TODO: Re-add deposit core if needed
-            // depositCore: coreQuote.deposit,
             instalmentsSubsequentPaymentsCore:
               coreQuote?.instalmentsSubsequentPayments,
             iptCore: coreQuote?.ipt,
@@ -164,42 +128,47 @@ const StepThree = () => {
             coreQuote: coreQuote,
             paymentCrumb: 0,
             yourDetailsCrumb:
-              gState.yourDetailsCrumb === 2 ? 1 : gState.yourDetailsCrumb,
+              previousState.yourDetailsCrumb === 2
+                ? 1
+                : previousState.yourDetailsCrumb,
             yourCoverCrumb:
-              gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
+              previousState.yourCoverCrumb === 2
+                ? 1
+                : previousState.yourCoverCrumb,
             yourQuoteCrumb: 2,
             currentlyEditingABike: false,
             currentlyAddingABike: false,
-          });
+          }));
           setShowReferralPage(true);
-          setIsLoadingQuote(false);
           return;
         }
 
-        if (performanceQuote?.annualGrossPremium > 0) {
-          setGState({
-            ...gState,
+        if (Number(primaryQuote?.annualGrossPremium ?? 0) > 0) {
+          setGState((previousState) => ({
+            ...previousState,
             coreQuote: coreQuote,
             performanceQuote: performanceQuote,
-            initQuote: performanceQuote,
-            annualGrossPremium: performanceQuote?.annualGrossPremium,
+            initQuote: primaryQuote,
+            annualGrossPremium: primaryQuote?.annualGrossPremium,
             instalmentsSubsequentPayments:
-              performanceQuote?.instalmentsSubsequentPayments,
+              primaryQuote?.instalmentsSubsequentPayments,
             generateQuote: false,
             paymentCrumb: 0,
             yourDetailsCrumb:
-              gState.yourDetailsCrumb === 2 ? 1 : gState.yourDetailsCrumb,
+              previousState.yourDetailsCrumb === 2
+                ? 1
+                : previousState.yourDetailsCrumb,
             yourCoverCrumb:
-              gState.yourCoverCrumb === 2 ? 1 : gState.yourCoverCrumb,
+              previousState.yourCoverCrumb === 2
+                ? 1
+                : previousState.yourCoverCrumb,
             yourQuoteCrumb: 2,
             currentlyEditingABike: false,
             currentlyAddingABike: false,
-          });
+          }));
           setError(null);
           setShowQuoteDetails(true);
-          setIsLoadingQuote(false);
 
-          //send a quote email - only ONCE!!
           if (!emailSent) {
             loggingService.logInfo(
               `Email sent ${sent} time(s) for Quotes: ${coreQuote?.quoteReference} & ${performanceQuote?.quoteReference}`,
@@ -216,22 +185,70 @@ const StepThree = () => {
           return;
         }
       }
-      setGenerateQuote(false);
-      setError(null);
-      setIsPending(false);
-    }
-  }, [generateQuoteMutation.isSuccess, generateQuoteMutation.data]);
 
-  // Handle quote generation mutation error
+      loggingService.logWarning(
+        "Quote generation succeeded but returned no usable quotes",
+      );
+      setShowQuoteDetails(false);
+      setError(
+        "Your request for a quote could not be completed at this time. Please try again.",
+      );
+    },
+    [emailSent, sent, setGState],
+  );
+
+  const handleQuoteError = useCallback((mutationError: unknown) => {
+    const error = mutationError as Error;
+    const rawMessage = error?.message ?? "Unknown error";
+    const isCancelledOrAborted = /cancel|abort|timeout/i.test(rawMessage);
+    const userMessage = isCancelledOrAborted
+      ? "Your request for a quote could not be completed at this time. Please try again."
+      : rawMessage;
+
+    loggingService.logInfo(`Quote generation failed: ${rawMessage}`);
+    setGenerateQuote(false);
+    setIsInitialQuoteLoading(false);
+    setError(userMessage);
+    setIsPending(false);
+    setIsLoading(false);
+    setIsLoadingQuote(false);
+    setShowQuoteDetails(false);
+  }, []);
+
   useEffect(() => {
-    if (generateQuoteMutation.isError) {
-      const error = generateQuoteMutation.error as Error;
-      loggingService.logInfo(`Quote generation failed: ${error.message}`);
-      setGenerateQuote(false);
-      setError(error.message);
-      setIsPending(false);
+    const updatedState =
+      modelAdaptorHelper.resetAssumptionsAndDeclarations(gState);
+    setGState((previousState) => ({
+      ...updatedState,
+      paymentCrumb: 0,
+      yourDetailsCrumb:
+        previousState.yourDetailsCrumb === 2 ? 1 : previousState.yourDetailsCrumb,
+      yourCoverCrumb:
+        previousState.yourCoverCrumb === 2 ? 1 : previousState.yourCoverCrumb,
+      yourQuoteCrumb: 2,
+      currentlyEditingABike: false,
+      currentlyAddingABike: false,
+    }));
+
+  }, []);
+
+  useEffect(() => {
+    if (generateQuote) {
+      if (hasRequestedInitialQuote.current) {
+        return;
+      }
+
+      hasRequestedInitialQuote.current = true;
+      setError(null);
+      setShowReferralPage(false);
+      setIsInitialQuoteLoading(true);
+      setIsLoadingQuote(true);
+      void generateQuoteMutation
+        .mutateAsync(riskModel as RiskModel)
+        .then(handleQuoteSuccess)
+        .catch(handleQuoteError);
     }
-  }, [generateQuoteMutation.isError, generateQuoteMutation.error]);
+  }, [generateQuote, generateQuoteMutation, handleQuoteError, handleQuoteSuccess, riskModel]);
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     // next button
@@ -282,27 +299,21 @@ const StepThree = () => {
           subheadlineLine2={""}
           hasCTA={"false"}
           CTAText={"Get a quote"}
-          rotate={
-            generateQuoteMutation.isPending || loading || loadingQuote === true
-          }
+          rotate={isOverlayVisible}
         />
-        <div
-          className={
-            generateQuoteMutation.isPending || loading || loadingQuote === true
-              ? "overlay"
-              : "overlay_hidden"
-          }
-        >
-          <h1 className="GettingQuoteOverlayH1">
-            {loading
-              ? "Getting your updated quote..."
-              : "Getting your quote..."}
-          </h1>
-        </div>
+        {isOverlayVisible && (
+          <div className="overlay">
+            <h1 className="GettingQuoteOverlayH1">
+              {loading
+                ? "Getting your updated quote..."
+                : "Getting your quote..."}
+            </h1>
+          </div>
+        )}
 
         <Breadcrumbs />
 
-        {!generateQuoteMutation.isPending && !showReferralPage && (
+        {shouldShowQuoteDetails && !showReferralPage && !error && (
           <YourQuote
             error={error}
             coreQuote={gState.coreQuote}
@@ -323,7 +334,26 @@ const StepThree = () => {
             setShowPerformanceReQuoteMessage={setShowPerformanceReQuoteMessage}
           />
         )}
-        {showQuoteDetails && (
+        {!showReferralPage && error && (
+          <section
+            className="container container_narrow pb-3"
+            id="quote-referral-section"
+          >
+            <div className="content_section">
+              <h4 className="">
+                Your request for a quote could not be completed at this time.
+              </h4>
+              <p>
+                Please try again or call our customer service team on{" "}
+                <a href="tel:08000833035" target="_blank" rel="noreferrer">
+                  <strong>0800 083 3035 </strong>
+                </a>
+                and they can help with getting you a full and accurate quote.
+              </p>
+            </div>
+          </section>
+        )}
+        {shouldShowQuoteDetails && (
           <>
             <SummaryOfCover />
 

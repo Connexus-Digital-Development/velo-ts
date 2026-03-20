@@ -1,21 +1,5 @@
-import { type FormikProps } from "formik";
-import { type AboutYouFormValues } from "@/models/JourneyComponentTypes";
-import type { AddressLookupResult } from "@/models/api";
 import Spinner from "@/components/shared/Spinner";
-
-interface AutomaticAddressEntryProps {
-  formik: FormikProps<AboutYouFormValues>;
-  gState: any;
-  setGState: (state: any) => void;
-  addressData: { Value?: AddressLookupResult[] } | undefined;
-  error: string | null;
-  addressesFound: boolean;
-  isPending: boolean;
-  postcodeRegex: RegExp;
-  handleFindAddress: (e: React.FormEvent) => void;
-  handleAddressSelect: (index: string) => void;
-  setShowManualAddress: (show: boolean) => void;
-}
+import type { AutomaticAddressEntryProps } from "./aboutYou.types";
 
 const AutomaticAddressEntry = ({
   formik,
@@ -30,7 +14,7 @@ const AutomaticAddressEntry = ({
 }: AutomaticAddressEntryProps) => {
   return (
     <>
-      {gState.hideAddressForm === false && (
+      {!gState.hideAddressForm && (
         <div className="row">
           {formik.touched.hideAddressForm && formik.errors.hideAddressForm ? (
             <small id="hideAddressForm" className="redFont mt-1">
@@ -61,21 +45,20 @@ const AutomaticAddressEntry = ({
                 id="postalCode"
                 autoComplete="off"
                 value={formik.values.postalCode}
-                onChange={(e) => {
-                  e.currentTarget.value = e.currentTarget.value.toUpperCase();
-                  formik.handleChange(e);
+                onChange={(event) => {
+                  event.currentTarget.value = event.currentTarget.value.toUpperCase();
+                  formik.handleChange(event);
                 }}
                 onBlur={formik.handleBlur}
               />
               {formik.touched.postalCode && formik.errors.postalCode ? (
-                <small className="redFont mt-1">
-                  {formik.errors.postalCode}
-                </small>
+                <small className="redFont mt-1">{formik.errors.postalCode}</small>
               ) : null}
             </div>
-            <div className="col-12 col-sm-12 ">
+            <div className="col-12 col-sm-12">
               <button
                 tabIndex={0}
+                type="button"
                 className="btn btn-primary btn-wider col-12 col-md-5 mb-1"
                 disabled={
                   formik.values.postalCode.length < 5 ||
@@ -91,11 +74,12 @@ const AutomaticAddressEntry = ({
                 type="button"
                 className="btn btn-green btn-wider col-12 col-md-5 offset-md-2"
                 onClick={() => {
-                  formik.setFieldValue("showManualAddress", true);
+                  formik.setFieldValue("showManualAddress", true, false);
                   formik.setFieldValue(
                     "addressIsValid",
-                    formik.values.houseNo?.length > 1 ||
-                      formik.values.addressLine1?.length > 1,
+                    formik.values.houseNo.length > 1 ||
+                      formik.values.addressLine1.length > 1,
+                    false,
                   );
                   setShowManualAddress(true);
                 }}
@@ -104,28 +88,25 @@ const AutomaticAddressEntry = ({
               </button>
             </div>
             {isPending && <Spinner colour="velo-blue" />}
-            {addressesFound === true && (
+            {addressesFound && (
               <select
                 className="form-control form-select mt-3"
                 id="AddressDD"
-                onChange={(e) => {
-                  handleAddressSelect(e.target.value);
+                defaultValue=""
+                onChange={(event) => {
+                  handleAddressSelect(event.target.value);
                 }}
                 onBlur={formik.handleBlur}
               >
-                <option>Please select</option>
-                {addressData?.Value?.map((address, index) => {
-                  return (
-                    <option key={index} id={`opt-${index}`} value={index}>
-                      {address.organisation !== null && address.organisation}
-                      {address.subHouseName !== null &&
-                        address.subHouseName + ", "}
-                      {address.houseName !== null && address.houseName + ", "}
-                      {address.houseNumber} {address.street},{" "}
-                      {address.townOrCity}
-                    </option>
-                  );
-                })}
+                <option value="">Please select</option>
+                {addressData?.Value?.map((address, index) => (
+                  <option key={index} id={`opt-${index}`} value={index}>
+                    {address.organisation !== null && address.organisation}
+                    {address.subHouseName !== null && `${address.subHouseName}, `}
+                    {address.houseName !== null && `${address.houseName}, `}
+                    {address.houseNumber} {address.street}, {address.townOrCity}
+                  </option>
+                ))}
               </select>
             )}
           </div>

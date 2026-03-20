@@ -201,75 +201,82 @@ const FeaturesCore: React.FC<FeaturesCoreProps> = ({
     riskModel.newDD = true;
     riskModel.includePersonalAccidentCoverCore = PCCheckboxCore;
     gState.personalAccidentCore = PCCheckboxCore;
-    TransactorService.fetchQuoteForScheme(riskModel, gState).then((data) => {
-      const coreQuote = data.value;
-      setCoreQuote(coreQuote);
+    TransactorService.fetchQuoteForScheme(riskModel, gState)
+      .then((data) => {
+        const coreQuote = data.value;
+        setCoreQuote(coreQuote);
 
-      // Ensure local state stays in sync after quote update
-      setGState({
-        ...gState,
+        // Ensure local state stays in sync after quote update
+        setGState({
+          ...gState,
 
-        coreQuote: coreQuote,
-        // Update the Core-specific pricing fields
-        annualGrossPremiumCore: coreQuote.annualGrossPremium,
-        instalmentsSubsequentPaymentsCore:
-          coreQuote.instalmentsSubsequentPayments,
-        basePremiumCore: coreQuote.basePremium,
-        commissionCore: coreQuote.commission,
-        // declineReasonCore: coreQuote.declineReason, // TODO: Check if needed
-        instalmentsAprCore: coreQuote.instalmentsApr,
-        instalmentsFirstPaymentCore: coreQuote.instalmentsFirstPayment,
-        instalmentsGrossPremiumCore: coreQuote.instalmentsGrossPremium,
-        instalmentsInterestPcCore: coreQuote.instalmentsInterestPc,
-        instalmentsServiceChargeCore: coreQuote.instalmentsServiceCharge,
-        // depositCore: coreQuote.deposit, // TODO: Check if needed
-        iptCore: coreQuote.ipt,
-        netPremiumCore: coreQuote.netPremium,
-        schemeTable: 0,
-        selectedCoreScheme: null,
-        personalAccidentCore: PCCheckboxCore,
-      });
+          coreQuote: coreQuote,
+          // Update the Core-specific pricing fields
+          annualGrossPremiumCore: coreQuote.annualGrossPremium,
+          instalmentsSubsequentPaymentsCore:
+            coreQuote.instalmentsSubsequentPayments,
+          basePremiumCore: coreQuote.basePremium,
+          commissionCore: coreQuote.commission,
+          // declineReasonCore: coreQuote.declineReason, // TODO: Check if needed
+          instalmentsAprCore: coreQuote.instalmentsApr,
+          instalmentsFirstPaymentCore: coreQuote.instalmentsFirstPayment,
+          instalmentsGrossPremiumCore: coreQuote.instalmentsGrossPremium,
+          instalmentsInterestPcCore: coreQuote.instalmentsInterestPc,
+          instalmentsServiceChargeCore: coreQuote.instalmentsServiceCharge,
+          // depositCore: coreQuote.deposit, // TODO: Check if needed
+          iptCore: coreQuote.ipt,
+          netPremiumCore: coreQuote.netPremium,
+          schemeTable: 0,
+          selectedCoreScheme: null,
+          personalAccidentCore: PCCheckboxCore,
+        });
 
-      // Update local checkbox to match what we just saved to global state
-      // setPCCheckboxCore(currentPCCheckboxCore);
+        // Update local checkbox to match what we just saved to global state
+        // setPCCheckboxCore(currentPCCheckboxCore);
 
-      console.log(
-        "Core: after requote - check the checkbox. Global state:",
-        PCCheckboxCore,
-        gState.personalAccidentCore,
-      );
-
-      if (!initCoreQuote) {
-        loggingService.logError(
-          "Initial Core Quote is undefined in FeatureListCore",
+        console.log(
+          "Core: after requote - check the checkbox. Global state:",
+          PCCheckboxCore,
+          gState.personalAccidentCore,
         );
+
+        if (!initCoreQuote) {
+          loggingService.logError(
+            "Initial Core Quote is undefined in FeatureListCore",
+          );
+          return;
+        }
+
+        unSelectAll();
+        setMonthlyPriceDifferenceCore(
+          coreQuote.instalmentsSubsequentPayments -
+            initCoreQuote.instalmentsSubsequentPayments,
+        );
+        setAnnualPriceDifferenceCore(
+          coreQuote.annualGrossPremium - initCoreQuote.annualGrossPremium,
+        );
+        setShowPriceDifference(
+          coreQuote.instalmentsSubsequentPayments -
+            initCoreQuote.instalmentsSubsequentPayments >
+            0,
+        );
+        setShowReQuoteCore(false);
+
+        loggingService.logInfo(
+          `Email sent for requote for Quotes:& ${coreQuote.quoteReference}`,
+        );
+        TransactorService.sendQuoteEmails({
+          quoteReferences: [coreQuote.quoteReference],
+        });
+      })
+      .catch((error) => {
+        const message =
+          error instanceof Error ? error.message : "Failed to update core quote";
+        loggingService.logError(message);
+      })
+      .finally(() => {
         setIsLoading(false);
-        return;
-      }
-
-      unSelectAll();
-      setMonthlyPriceDifferenceCore(
-        coreQuote.instalmentsSubsequentPayments -
-          initCoreQuote.instalmentsSubsequentPayments,
-      );
-      setAnnualPriceDifferenceCore(
-        coreQuote.annualGrossPremium - initCoreQuote.annualGrossPremium,
-      );
-      setShowPriceDifference(
-        coreQuote.instalmentsSubsequentPayments -
-          initCoreQuote.instalmentsSubsequentPayments >
-          0,
-      );
-      setIsLoading(false);
-      setShowReQuoteCore(false);
-
-      loggingService.logInfo(
-        `Email sent for requote for Quotes:& ${coreQuote.quoteReference}`,
-      );
-      TransactorService.sendQuoteEmails({
-        quoteReferences: [coreQuote.quoteReference],
       });
-    });
   };
 
   return (

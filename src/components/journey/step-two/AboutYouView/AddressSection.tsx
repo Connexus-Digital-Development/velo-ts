@@ -1,29 +1,12 @@
-import { type FormikProps } from "formik";
-import { type AboutYouFormValues } from "@/models/JourneyComponentTypes";
-import type { AddressLookupResult } from "@/models/api";
+import AutomaticAddressEntry from "../AutomaticAddressEntry";
 import AddressPreview from "../AddressPreview";
 import ManualAddressEntry from "../ManualAddressEntry";
-import AutomaticAddressEntry from "../AutomaticAddressEntry";
-
-interface AddressSectionProps {
-  formik: FormikProps<AboutYouFormValues>;
-  gState: any;
-  setGState: (state: any) => void;
-  addressData: { Value?: AddressLookupResult[] } | undefined;
-  error: string | null;
-  addressesFound: boolean;
-  showManualAddress: boolean;
-  setShowManualAddress: (show: boolean) => void;
-  isPending: boolean;
-  postcodeRegex: RegExp;
-  handleFindAddress: (e: React.FormEvent) => void;
-  handleAddressSelect: (index: string) => void;
-}
+import type { AddressSectionProps } from "../aboutYou.types";
 
 const AddressSection = ({
   formik,
   gState,
-  setGState,
+  updateJourneyState,
   addressData,
   error,
   addressesFound,
@@ -39,7 +22,7 @@ const AddressSection = ({
       <AutomaticAddressEntry
         formik={formik}
         gState={gState}
-        setGState={setGState}
+        updateJourneyState={updateJourneyState}
         addressData={addressData}
         error={error}
         addressesFound={addressesFound}
@@ -52,15 +35,16 @@ const AddressSection = ({
 
       {showManualAddress && (
         <div>
-          <p className="redFont mt-3">{error} </p>
+          <p className="redFont mt-3">{error}</p>
           <ManualAddressEntry
             formik={formik}
             gState={gState}
-            setGState={setGState}
+            updateJourneyState={updateJourneyState}
           />
         </div>
       )}
-      {gState.hideAddressForm === true && <AddressPreview formik={formik} />}
+
+      {gState.hideAddressForm && <AddressPreview formik={formik} />}
     </>
   );
 };

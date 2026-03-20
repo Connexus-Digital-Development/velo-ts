@@ -916,8 +916,11 @@ p {
 }
 
 .overlay_hidden {
+  display: none;
   opacity: 0;
   height: 0;
+  width: 0;
+  pointer-events: none;
 }
 
 .findOutMore {

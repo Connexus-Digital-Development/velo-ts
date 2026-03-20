@@ -1,235 +1,116 @@
-import { type FormikProps } from "formik";
-import { type AboutYouFormValues } from "@/models/JourneyComponentTypes";
+import type { ChangeEvent } from "react";
+import { TITLE_OPTIONS } from "../aboutYou.shared";
+import type { PersonalDetailsProps } from "../aboutYou.types";
+import type { JourneyState } from "@/models";
 
-interface PersonalDetailsProps {
-  formik: FormikProps<AboutYouFormValues>;
-  gState: any;
-  setGState: (state: any) => void;
-  days: number[];
-  months: number[];
-  years: number[];
-}
+const getValidationClass = (
+  formik: PersonalDetailsProps["formik"],
+  field:
+    | "title"
+    | "forename"
+    | "surname"
+    | "dob_d"
+    | "dob_m"
+    | "dob_y"
+    | "email"
+    | "telephoneNo",
+) => {
+  if (formik.errors[field]) {
+    return formik.touched[field] ? "is-invalid" : "";
+  }
+
+  return formik.touched[field] ? "is-valid" : "";
+};
 
 const PersonalDetails = ({
   formik,
-  gState,
-  setGState,
+  updateJourneyState,
   days,
   months,
   years,
 }: PersonalDetailsProps) => {
+  const handleTitleSelect = (title: string, titleId: string) => {
+    formik.setFieldValue("title", title, false);
+    updateJourneyState({ title, titleId });
+  };
+
+  const handleTextChange =
+    (field: "forename" | "surname" | "email" | "telephoneNo") =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const value =
+        field === "email" || field === "telephoneNo"
+          ? event.currentTarget.value.trim()
+          : event.currentTarget.value;
+
+      formik.handleChange(event);
+      updateJourneyState({ [field]: value } as Partial<JourneyState>);
+    };
+
+  const handleDatePartChange =
+    (field: "dob_d" | "dob_m" | "dob_y") =>
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const value = event.currentTarget.value;
+      const parsedValue = value === "" ? null : Number(value);
+
+      formik.setFieldValue(field, parsedValue, false);
+      updateJourneyState({
+        [field]: parsedValue === null ? "" : String(parsedValue),
+      } as Partial<JourneyState>);
+    };
+
   return (
     <div className="row">
       <div className="col-md-8">
         <div className="mb-3">
           <label className="form-label">Title*</label>
           <div className="row" id="title">
-            <div className="col-6 col-sm-2">
-              <button
-                id="title1"
-                type="button"
-                className={`btn mr-small btn-100 mb-1 ${
-                  gState.title === "Mr" ? "btn-primary" : "btn-secondary"
-                } ${
-                  formik.errors.title
-                    ? formik.touched.title && "is-invalid"
-                    : formik.touched.title && "is-valid"
-                }`}
-                onClick={() => {
-                  formik.setFieldValue("title", "Mr");
-                  setGState({
-                    ...gState,
-                    title: "Mr",
-                    titleId: 106,
-                    generateQuote: true,
-                    yourQuoteCrumb: 0,
-                  });
-                }}
-              >
-                Mr
-              </button>
-            </div>
-            <div className="col-6 col-sm-2">
-              <button
-                type="button"
-                id="title2"
-                className={`btn mr-small btn-100 mb-1 ${
-                  gState.title === "Mrs" ? "btn-primary" : "btn-secondary"
-                }  ${
-                  formik.errors.title
-                    ? formik.touched.title && "is-invalid"
-                    : formik.touched.title && "is-valid"
-                }`}
-                onClick={() => {
-                  formik.setFieldValue("title", "Mrs");
-                  setGState({
-                    ...gState,
-                    title: "Mrs",
-                    titleId: 107,
-                    generateQuote: true,
-                    yourQuoteCrumb: 0,
-                  });
-                }}
-              >
-                Mrs
-              </button>
-            </div>
-            <div className="col-6 col-sm-2">
-              <button
-                type="button"
-                id="title3"
-                className={`btn mr-small btn-100 mb-1 ${
-                  gState.title === "Ms" ? "btn-primary" : "btn-secondary"
-                }  ${
-                  formik.errors.title
-                    ? formik.touched.title && "is-invalid"
-                    : formik.touched.title && "is-valid"
-                }`}
-                onClick={() => {
-                  formik.setFieldValue("title", "Ms");
-                  setGState({
-                    ...gState,
-                    title: "Ms",
-                    titleId: 107,
-                    generateQuote: true,
-                    yourQuoteCrumb: 0,
-                  });
-                }}
-              >
-                Ms
-              </button>
-            </div>
-            <div className="col-6 col-sm-2">
-              <button
-                type="button"
-                id="title4"
-                className={`btn mr-small btn-100 mb-1 ${
-                  gState.title === "Miss" ? "btn-primary" : "btn-secondary"
-                } ${
-                  formik.errors.title
-                    ? formik.touched.title && "is-invalid"
-                    : formik.touched.title && "is-valid"
-                }`}
-                onClick={() => {
-                  formik.setFieldValue("title", "Miss");
-                  setGState({
-                    ...gState,
-                    title: "Miss",
-                    titleId: 107,
-                    generateQuote: true,
-                    yourQuoteCrumb: 0,
-                  });
-                }}
-              >
-                Miss
-              </button>
-            </div>
-            <div className="col-6 col-sm-2">
-              <button
-                type="button"
-                id="title5"
-                className={`btn mr-small btn-100 mb-1 ${
-                  gState.title === "Dr" ? "btn-primary" : "btn-secondary"
-                } ${
-                  formik.errors.title
-                    ? formik.touched.title && "is-invalid"
-                    : formik.touched.title && "is-valid"
-                }`}
-                onClick={() => {
-                  formik.setFieldValue("title", "Dr");
-                  setGState({
-                    ...gState,
-                    title: "Dr",
-                    titleId: 107,
-                    generateQuote: true,
-                    yourQuoteCrumb: 0,
-                  });
-                }}
-              >
-                Dr
-              </button>
-            </div>
-            <div className="col-6 col-sm-2">
-              <button
-                type="button"
-                id="title6"
-                className={`btn mr-small btn-100 mb-1 ${
-                  gState.title === "Mx" ? "btn-primary" : "btn-secondary"
-                }  ${
-                  formik.errors.title
-                    ? formik.touched.title && "is-invalid"
-                    : formik.touched.title && "is-valid"
-                }`}
-                onClick={() => {
-                  formik.setFieldValue("title", "Mx");
-
-                  setGState({
-                    ...gState,
-                    title: "Mx",
-                    titleId: 107,
-                    generateQuote: true,
-                    yourQuoteCrumb: 0,
-                  });
-                }}
-              >
-                Mx
-              </button>
-            </div>
+            {TITLE_OPTIONS.map(({ label, titleId, value }) => (
+              <div key={value} className="col-6 col-sm-2">
+                <button
+                  id={`title-${value.toLowerCase()}`}
+                  type="button"
+                  className={`btn mr-small btn-100 mb-1 ${
+                    formik.values.title === value ? "btn-primary" : "btn-secondary"
+                  } ${getValidationClass(formik, "title")}`}
+                  onClick={() => handleTitleSelect(value, titleId)}
+                >
+                  {label}
+                </button>
+              </div>
+            ))}
           </div>
           {formik.touched.title && formik.errors.title ? (
             <small className="redFont mt-1">{formik.errors.title}</small>
           ) : null}
         </div>
+
         <div className="mb-3">
           <label className="form-label">First name*</label>
           <input
             type="text"
-            className={`form-control ${
-              formik.errors.forename
-                ? formik.touched.forename && "is-invalid"
-                : formik.touched.forename && "is-valid"
-            }`}
+            className={`form-control ${getValidationClass(formik, "forename")}`}
             id="forename"
             required
             value={formik.values.forename}
             maxLength={40}
-            onChange={(e) => {
-              formik.handleChange(e);
-              setGState({
-                ...gState,
-                forename: e.currentTarget.value,
-                generateQuote: true,
-                yourQuoteCrumb: 0,
-              });
-            }}
+            onChange={handleTextChange("forename")}
             onBlur={formik.handleBlur}
           />
           {formik.touched.forename && formik.errors.forename ? (
             <small className="redFont mt-1">{formik.errors.forename}</small>
           ) : null}
         </div>
+
         <div className="mb-3">
           <label className="form-label">Last name*</label>
           <input
             type="text"
-            className={`form-control ${
-              formik.errors.surname
-                ? formik.touched.surname && "is-invalid"
-                : formik.touched.surname && "is-valid"
-            }`}
+            className={`form-control ${getValidationClass(formik, "surname")}`}
             id="surname"
             required
             value={formik.values.surname}
             maxLength={40}
-            onChange={(e) => {
-              formik.handleChange(e);
-              setGState({
-                ...gState,
-                surname: e.currentTarget.value,
-                generateQuote: true,
-                yourQuoteCrumb: 0,
-              });
-            }}
+            onChange={handleTextChange("surname")}
             onBlur={formik.handleBlur}
           />
           {formik.touched.surname && formik.errors.surname ? (
@@ -241,89 +122,48 @@ const PersonalDetails = ({
           <label className="form-label">Date of Birth*</label>
           <br />
           <select
-            // type="number"
             id="dob_d"
-            // placeholder="DD"
-            // min="1"
-            // max="31"
-            className={`form-control Individual_Dateparts Individual_Dateparts_Day ${
-              formik.errors.dob_d
-                ? formik.touched.dob_d && "is-invalid"
-                : formik.touched.dob_d && "is-valid"
-            }`}
-            value={formik.values.dob_d!}
-            onChange={(e) => {
-              formik.handleChange(e);
-              setGState({
-                ...gState,
-                dob_d: e.currentTarget.value,
-                generateQuote: true,
-                yourQuoteCrumb: 0,
-              });
-            }}
+            className={`form-control Individual_Dateparts Individual_Dateparts_Day ${getValidationClass(formik, "dob_d")}`}
+            value={formik.values.dob_d ?? ""}
+            onChange={handleDatePartChange("dob_d")}
             onBlur={formik.handleBlur}
           >
-            <option>DD</option>
-            {days.map((d, key) => {
-              return <option key={key}>{d}</option>;
-            })}
+            <option value="">DD</option>
+            {days.map((day) => (
+              <option key={day} value={day}>
+                {day}
+              </option>
+            ))}
           </select>
 
           <select
-            // type="number"
             id="dob_m"
-            // placeholder="MM"
-            // min="1"
-            // max="12"
-            className={`form-control Individual_Dateparts Individual_Dateparts_Month ${
-              formik.errors.dob_m
-                ? formik.touched.dob_m && "is-invalid"
-                : formik.touched.dob_m && "is-valid"
-            }`}
-            value={formik.values.dob_m!}
-            onChange={(e) => {
-              formik.handleChange(e);
-              setGState({
-                ...gState,
-                dob_m: Number(e.currentTarget.value!),
-                generateQuote: true,
-                yourQuoteCrumb: 0,
-              });
-            }}
+            className={`form-control Individual_Dateparts Individual_Dateparts_Month ${getValidationClass(formik, "dob_m")}`}
+            value={formik.values.dob_m ?? ""}
+            onChange={handleDatePartChange("dob_m")}
             onBlur={formik.handleBlur}
           >
-            <option>MM</option>
-            {months.map((month, mkey) => {
-              return <option key={mkey}>{month}</option>;
-            })}
+            <option value="">MM</option>
+            {months.map((month) => (
+              <option key={month} value={month}>
+                {month}
+              </option>
+            ))}
           </select>
+
           <select
-            // type="number"
             id="dob_y"
-            // placeholder="YYYY"
-            // min="1"
-            // max="31"
-            className={`form-control Individual_Dateparts_Year Individual_Dateparts  ${
-              formik.errors.dob_y
-                ? formik.touched.dob_y && "is-invalid"
-                : formik.touched.dob_y && "is-valid"
-            }`}
-            value={formik.values.dob_y!}
-            onChange={(e) => {
-              formik.handleChange(e);
-              setGState({
-                ...gState,
-                dob_y: e.currentTarget.value,
-                generateQuote: true,
-                yourQuoteCrumb: 0,
-              });
-            }}
+            className={`form-control Individual_Dateparts_Year Individual_Dateparts ${getValidationClass(formik, "dob_y")}`}
+            value={formik.values.dob_y ?? ""}
+            onChange={handleDatePartChange("dob_y")}
             onBlur={formik.handleBlur}
           >
-            <option>YYYY</option>
-            {years.map((year, ykey) => {
-              return <option key={ykey}>{year}</option>;
-            })}
+            <option value="">YYYY</option>
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -331,50 +171,27 @@ const PersonalDetails = ({
           <label className="form-label">Email address*</label>
           <input
             type="text"
-            className={`form-control ${
-              formik.errors.email
-                ? formik.touched.email && "is-invalid"
-                : formik.touched.email && "is-valid"
-            }`}
+            className={`form-control ${getValidationClass(formik, "email")}`}
             id="email"
             required
             value={formik.values.email}
-            onChange={(e) => {
-              formik.handleChange(e);
-              setGState({
-                ...gState,
-                email: e.currentTarget.value.trim(),
-                generateQuote: true,
-                yourQuoteCrumb: 0,
-              });
-            }}
+            onChange={handleTextChange("email")}
             onBlur={formik.handleBlur}
           />
           {formik.touched.email && formik.errors.email ? (
             <small className="redFont mt-1">{formik.errors.email}</small>
           ) : null}
         </div>
+
         <div className="mb-3">
           <label className="form-label">Telephone number*</label>
           <input
             type="text"
-            className={`form-control ${
-              formik.errors.telephoneNo
-                ? formik.touched.telephoneNo && "is-invalid"
-                : formik.touched.telephoneNo && "is-valid"
-            }`}
+            className={`form-control ${getValidationClass(formik, "telephoneNo")}`}
             id="telephoneNo"
             required
             value={formik.values.telephoneNo}
-            onChange={(e) => {
-              formik.handleChange(e);
-              setGState({
-                ...gState,
-                telephoneNo: e.currentTarget.value.trim(),
-                generateQuote: true,
-                yourQuoteCrumb: 0,
-              });
-            }}
+            onChange={handleTextChange("telephoneNo")}
             onBlur={formik.handleBlur}
           />
           {formik.touched.telephoneNo && formik.errors.telephoneNo ? (

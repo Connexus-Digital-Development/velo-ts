@@ -81,7 +81,7 @@ const StepOne = (): React.JSX.Element => {
     });
   }, []);
 
-  const handleNextButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleNextButton = async () => {
     setValidateNextButton(true);
     setTimeout(function () {
       setValidateNextButton(false);
@@ -216,9 +216,7 @@ const StepOne = (): React.JSX.Element => {
 
       <Breadcrumbs
         // currentPage="yourCover"
-        navigationAction={() =>
-          handleNextButton({} as React.MouseEvent<HTMLButtonElement>)
-        }
+        navigationAction={() => handleNextButton()}
       />
 
       <BikeList validateNextButton={validateNextButton} />
@@ -240,8 +238,8 @@ const StepOne = (): React.JSX.Element => {
               <button
                 id="move-to-step-two"
                 className="btn btn-wider btn-green float-end mb-2 lufga-medium"
-                onClick={async (e: React.MouseEvent<HTMLButtonElement>) => {
-                  await handleNextButton(e as any);
+                onClick={async () => {
+                  await handleNextButton();
                 }}
               >
                 Next step
