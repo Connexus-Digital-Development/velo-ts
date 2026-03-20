@@ -51,7 +51,7 @@ const Payments: React.FC<PaymentsProps> = ({
 
   const amendDetails = (
     <Link
-      className="btn btn-wider btn-red float-start"
+      className="btn btn-wider btn-red btn-100"
       to={`/get-a-quote`}
       id="amend-details"
       onClick={() => {
@@ -484,46 +484,48 @@ const Payments: React.FC<PaymentsProps> = ({
             <div className="" hidden={!fromExternalLink}>
               <div>{amendDetails}</div>
             </div>
-            <div className="" hidden={fromExternalLink}>
+            <div className="row" hidden={fromExternalLink}>
+              <div className="col-6 col-md-4 col-lg-3 mb-2">
               <Link
-                className="btn btn-wider btn-secondary  float-start mb-2"
+                className="btn btn-wider btn-secondary mb-2 btn-100"
                 to={`/stepThree${search}`}
               >
                 Back
               </Link>
-            </div>
-            <div className="">
-              <button
-                className="btn  btn-primary btn-wider float-end"
-                hidden={
-                  !showPaymentWindow ||
-                  gState.paymentTypeIsAnnual === true ||
-                  submittedDDDetails
-                }
-                onClick={async (e) => await handleBuyNowClick(e)}
-              >
-                Buy now
-              </button>
-              <button
-                className="btn btn-primary btn-wider float-end"
-                hidden={showPaymentWindow}
-                onClick={async (e) => await handleClickPayNow(e)}
-              >
-                Pay now
-              </button>
-              <button
-                hidden={
-                  !showPaymentWindow ||
-                  (gState.paymentTypeIsAnnual === false && !submittedDDDetails)
-                }
-                className="btn btn-primary btn-wider float-end "
-                id="rxp-primary-btn"
-                type="submit"
-                value="Pay Now"
-                form="card-payment"
-              >
-                <span className="hpp-pay"></span> Buy now
-              </button>
+              </div>
+              <div className="col-6 col-md-4 col-lg-3 offset-md-4 offset-lg-6 mb-2">
+                <button
+                  className="btn btn-primary btn-wider btn-100"
+                  hidden={
+                    !showPaymentWindow ||
+                    gState.paymentTypeIsAnnual === true ||
+                    submittedDDDetails
+                  }
+                  onClick={async (e) => await handleBuyNowClick(e)}
+                >
+                  Buy now
+                </button>
+                <button
+                  className="btn btn-primary btn-wider btn-100"
+                  hidden={showPaymentWindow}
+                  onClick={async (e) => await handleClickPayNow(e)}
+                >
+                  Pay now
+                </button>
+                <button
+                  hidden={
+                    !showPaymentWindow ||
+                    (gState.paymentTypeIsAnnual === false && !submittedDDDetails)
+                  }
+                  className="btn btn-primary btn-wider btn-100"
+                  id="rxp-primary-btn"
+                  type="submit"
+                  value="Pay Now"
+                  form="card-payment"
+                >
+                  <span className="hpp-pay"></span> Buy now
+                </button>
+              </div>
             </div>
           </div>
         </div>

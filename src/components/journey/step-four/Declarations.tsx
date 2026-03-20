@@ -93,13 +93,13 @@ const Declarations: React.FC<DeclarationsProps> = ({
           <span className="blueFont lufga-medium">Declarations</span>.
         </h4>
         <div className="row">
-          <div className="col-10 col-sm-11">
+          <div className="col-10 col-md-11">
             <h4 className="lufga-medium fs-23">
               I confirm I have been given the opportunity and understand the
               instruction, to read and consider the following documents.
             </h4>
           </div>
-          <div className="col-2 col-sm-1 " id="readDocumentsTicked">
+          <div className="col-2 col-md-1 " id="readDocumentsTicked">
             <Checkbox
               radius="md"
               size="lg"
@@ -174,10 +174,10 @@ const Declarations: React.FC<DeclarationsProps> = ({
         </ul>
 
         <div className="row">
-          <div className="col-10 col-sm-11">
+          <div className="col-10 col-md-11">
             {storageLocationSection(getLocation(gState.storageLocation))}
           </div>
-          <div className="col-2 col-sm-1" id="storageLocationTicked">
+          <div className="col-2 col-md-1" id="storageLocationTicked">
             <Checkbox
               radius="md"
               size="lg"

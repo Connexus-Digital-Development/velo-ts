@@ -1,34 +1,5 @@
-<svg width="17" height="17" viewBox="0 0 17 17">
-  <g id="Group_2221" data-name="Group 2221" transform="translate(-667 -1496)">
-    <g
-      id="Group_2191"
-      data-name="Group 2191"
-      transform="translate(666.581 1496)"
-    >
-      <circle
-        id="Ellipse_63"
-        data-name="Ellipse 63"
-        cx="8.5"
-        cy="8.5"
-        r="8.5"
-        transform="translate(0.419)"
-        fill="#bbb"
-      />
-    </g>
-    <g
-      id="Group_2210"
-      data-name="Group 2210"
-      transform="translate(671.317 1500.317)"
-    >
-      <g id="Group_2209" data-name="Group 2209" clipPath="url(#clip-path)">
-        <path
-          id="Path_2177"
-          data-name="Path 2177"
-          d="M5.521,4.183,8.09,1.614A.946.946,0,1,0,6.753.277L4.184,2.846,1.615.277A.946.946,0,0,0,.278,1.614L2.847,4.183.278,6.752A.946.946,0,1,0,1.615,8.089L4.184,5.521,6.753,8.089A.946.946,0,0,0,8.09,6.752Z"
-          transform="translate(-0.001 0)"
-          fill="#fff"
-        />
-      </g>
-    </g>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+  <circle cx="8.5" cy="8.5" r="8.5" fill="#BBB"/>
+  <path d="M5.1 5.1L11.9 11.9" stroke="#FFF" stroke-width="1.9" stroke-linecap="round"/>
+  <path d="M11.9 5.1L5.1 11.9" stroke="#FFF" stroke-width="1.9" stroke-linecap="round"/>
 </svg>

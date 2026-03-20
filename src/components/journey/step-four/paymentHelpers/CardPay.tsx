@@ -12,8 +12,7 @@ const CardPay = ({ formik }: CardPayProps) => {
   return (
     <form onSubmit={formik.handleSubmit} noValidate id="card-payment">
       <div className="row">
-        <h4>Card Details</h4>
-        <div className="col-md-8">
+        <div className="col-12">
           <div className="mb-3">
             <label className="form-label">Card Number*</label>
             <input

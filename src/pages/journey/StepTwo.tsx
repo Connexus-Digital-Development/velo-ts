@@ -747,18 +747,18 @@ const StepTwo = () => {
 
           <div className="container">
             <div className="row">
-              <div className="col-6 mb-4 mt-5">
+              <div className="col-6 col-md-4 col-lg-3 mb-4 mt-5">
                 <Link
                   to={`/stepOne${search}`}
-                  className="btn btn-wider btn-secondary float-start mb-2"
+                  className="btn btn-wider btn-secondary mb-2 btn-100"
                 >
                   Back
                 </Link>
               </div>
-              <div className="col-6 mb-4 mt-5">
+              <div className="col-6 col-md-4 col-lg-3 offset-md-4 offset-lg-6 mb-4 mt-5">
                 <button
                   type="submit"
-                  className="btn btn-wider btn-green float-end mb-2"
+                  className="btn btn-wider btn-green mb-2 btn-100"
                   id="move-to-step-three"
                 >
                   Next step

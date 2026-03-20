@@ -21,7 +21,7 @@ const AutomaticAddressEntry = ({
               {formik.errors.hideAddressForm}
             </small>
           ) : null}
-          <div id="left" className="col-12 col-sm-6">
+          <div id="left" className="col-12">
             <div className="col-12 col-sm-12 mb-3">
               <label className="form-label">House number or name</label>
               <input
@@ -37,11 +37,10 @@ const AutomaticAddressEntry = ({
               <label className="form-label mt-3">Postcode*</label>
               <input
                 type="text"
-                className={`form-control ${
-                  formik.errors.postalCode
-                    ? formik.touched.postalCode && "is-invalid"
-                    : formik.touched.postalCode && "is-valid"
-                }`}
+                className={`form-control ${formik.errors.postalCode
+                  ? formik.touched.postalCode && "is-invalid"
+                  : formik.touched.postalCode && "is-valid"
+                  }`}
                 id="postalCode"
                 autoComplete="off"
                 value={formik.values.postalCode}
@@ -55,37 +54,40 @@ const AutomaticAddressEntry = ({
                 <small className="redFont mt-1">{formik.errors.postalCode}</small>
               ) : null}
             </div>
-            <div className="col-12 col-sm-12">
-              <button
-                tabIndex={0}
-                type="button"
-                className="btn btn-primary btn-wider col-12 col-md-5 mb-1"
-                disabled={
-                  formik.values.postalCode.length < 5 ||
-                  !postcodeRegex.test(formik.values.postalCode)
-                }
-                onClick={handleFindAddress}
-              >
-                Find Address
-              </button>
-
-              <button
-                tabIndex={0}
-                type="button"
-                className="btn btn-green btn-wider col-12 col-md-5 offset-md-2"
-                onClick={() => {
-                  formik.setFieldValue("showManualAddress", true, false);
-                  formik.setFieldValue(
-                    "addressIsValid",
-                    formik.values.houseNo.length > 1 ||
+            <div className="row">
+              <div className=" col-6 col-md-3">
+                <button
+                  tabIndex={0}
+                  type="button"
+                  className="btn btn-primary btn-100 mb-1"
+                  disabled={
+                    formik.values.postalCode.length < 5 ||
+                    !postcodeRegex.test(formik.values.postalCode)
+                  }
+                  onClick={handleFindAddress}
+                >
+                  Find Address
+                </button>
+              </div>
+              <div className=" col-6 col-md-3">
+                <button
+                  tabIndex={0}
+                  type="button"
+                  className="btn btn-green btn-100 "
+                  onClick={() => {
+                    formik.setFieldValue("showManualAddress", true, false);
+                    formik.setFieldValue(
+                      "addressIsValid",
+                      formik.values.houseNo.length > 1 ||
                       formik.values.addressLine1.length > 1,
-                    false,
-                  );
-                  setShowManualAddress(true);
-                }}
-              >
-                Enter manually
-              </button>
+                      false,
+                    );
+                    setShowManualAddress(true);
+                  }}
+                >
+                  Enter manually
+                </button>
+              </div>
             </div>
             {isPending && <Spinner colour="velo-blue" />}
             {addressesFound && (

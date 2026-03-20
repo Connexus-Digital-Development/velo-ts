@@ -1,6 +1,11 @@
 export function BikeEBike() {
   return (
-    <svg width="91.374" height="92.083" viewBox="0 0 91.374 92.083">
+    <svg
+      className="footerRidingBlueBikeSVG_ebike"
+      width="91.374"
+      height="92.083"
+      viewBox="0 0 91.374 92.083"
+    >
       <defs>
         <clipPath id="clip-path323232">
           <rect
@@ -12,12 +17,16 @@ export function BikeEBike() {
           />
         </clipPath>
       </defs>
-      <g id="Group_1680" data-name="Group 1680" transform="translate(0 0)">
+      <g
+        id="Group_1680"
+        data-name="Group 1680"
+        transform="translate(0 0)"
+      >
         <g
           id="Group_1682"
           data-name="Group 1682"
           transform="translate(0 0)"
-          clip-path="url(#clip-path323232)"
+          clipPath="url(#clip-path323232)"
         >
           <path
             id="Path_2024"

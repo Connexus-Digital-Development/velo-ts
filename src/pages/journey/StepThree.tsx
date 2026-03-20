@@ -359,20 +359,20 @@ const StepThree = () => {
 
             <div className="container container_narrow">
               <div className="row">
-                <div className="col-6 mb-4 mt-5">
+                <div className="col-6 col-md-4 col-lg-3 mb-4 mt-5">
                   <Link
-                    className="btn btn-wider btn-secondary float-start"
+                    className="btn btn-wider btn-secondary btn-100"
                     to={`/stepTwo${search}`}
                   >
                     Back
                   </Link>
                 </div>
-                <div className="col-6 mb-4 mt-5 ">
+                <div className="col-6 col-md-4 col-lg-3 offset-md-4 offset-lg-6 mb-4 mt-5 ">
                   <button
                     id={`move-to-step-four#${
                       gState.selectedCoreScheme ? "core" : "performance"
                     }`}
-                    className="btn btn-wider btn-green float-end"
+                    className="btn btn-wider btn-green btn-100"
                     onClick={onClick}
                   >
                     Next step

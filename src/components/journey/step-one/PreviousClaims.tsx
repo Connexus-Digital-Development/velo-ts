@@ -29,7 +29,7 @@ const PreviousClaims = ({ validateNextButton }: PreviousClaimsProps) => {
           last 5 years?{" "}
         </p>
         <div className="row">
-          <div className="col-6 col-md-2" id="has-previous-claim">
+          <div className="col-6 col-md-4 col-lg-3" id="has-previous-claim">
             <button
               type="button"
               onClick={(_e) => {
@@ -48,7 +48,7 @@ const PreviousClaims = ({ validateNextButton }: PreviousClaimsProps) => {
               Yes
             </button>
           </div>
-          <div className="col-6 col-md-2">
+          <div className="col-6 col-md-4 col-lg-3">
             <button
               type="button"
               onClick={(_e) => {

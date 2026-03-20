@@ -15,18 +15,20 @@ interface PreferenceButtonProps {
 
 function PreferenceButton({ label, isActive, onClick }: PreferenceButtonProps) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="preferredMethodOfContact preference-icon"
-      style={
-        isActive
-          ? { backgroundColor: "#00a8ff", color: "white" }
-          : { backgroundColor: "#efefef" }
-      }
-    >
-      {label}
-    </button>
+    <div className="col-4 preference-option">
+      <button
+        type="button"
+        onClick={onClick}
+        className="preferredMethodOfContact preference-icon marketing-preference-button"
+        style={
+          isActive
+            ? { backgroundColor: "#00a8ff", color: "white" }
+            : { backgroundColor: "#efefef" }
+        }
+      >
+        {label}
+      </button>
+    </div>
   );
 }
 
@@ -127,8 +129,8 @@ const MarketingPreferences = ({ formik }: MarketingPreferencesProps) => {
           time. If you wish to receive this information, please select your
           preferred method (s) of contact:
         </p>
-        <div className="d-flex mb-5">
-          <div className="row">
+        <div className="mb-5">
+          <div className="row marketing-preference-buttons g-2">
             <PreferenceButton
               label="Telephone"
               isActive={adminPhone}

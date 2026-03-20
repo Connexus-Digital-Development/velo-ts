@@ -202,22 +202,22 @@ const QuoteSummary = () => {
           />
           <div className="container container_narrow">
             <div className="row my-5">
-              <div className="col-12 mb-4 mt-3">
+              <div className="col-6 col-md-4 col-lg-3 mb-4 mt-3">
                 <div
-                  className="btn btn-wider btn-red float-start"
+                  className="btn btn-wider btn-red btn-100"
                   id="amend-details"
                   onClick={amendDetails}
                 >
                   Amend details
                 </div>
-                <div className="col-12">
-                  <div
-                    id={`aggregator-proceed-to-payment#${gState.selectedCoreScheme ? "core" : "performance"}`}
-                    className="btn btn-wider btn-green float-end"
-                    onClick={onProceedToPayment}
-                  >
-                    Confirm details
-                  </div>
+              </div>
+              <div className="col-6 col-md-4 col-lg-3 offset-md-4 offset-lg-6 mb-4 mt-3">
+                <div
+                  id={`aggregator-proceed-to-payment#${gState.selectedCoreScheme ? "core" : "performance"}`}
+                  className="btn btn-wider btn-green btn-100"
+                  onClick={onProceedToPayment}
+                >
+                  Confirm details
                 </div>
               </div>
             </div>

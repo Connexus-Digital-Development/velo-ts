@@ -1,6 +1,6 @@
 export function BikeBlue() {
   return (
-    <svg width="41.476" height="42.31" viewBox="0 0 41.476 42.31">
+    <svg                 className="footerRidingBlueBikeSVG" width="41.476" height="42.31" viewBox="0 0 41.476 42.31">
       <defs>
         <clipPath id="clip-path54345">
           <rect

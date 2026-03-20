@@ -279,10 +279,10 @@ const QRLandingPage = () => {
             )}
           </div>
 
-          <div className="col-6 offset-6 mb-4 mt-5">
+          <div className="col-6 col-md-4 col-lg-3 offset-6 offset-md-8 offset-lg-9 mb-4 mt-5">
             <button
               type="submit"
-              className="btn btn-wider btn-green float-end mb-2"
+              className="btn btn-wider btn-green mb-2 btn-100"
               id="move-to-step-three"
             >
               Next step

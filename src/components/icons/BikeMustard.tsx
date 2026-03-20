@@ -1,6 +1,11 @@
 export function BikeMustard() {
   return (
-    <svg width="91.374" height="92.083" viewBox="0 0 91.374 92.083">
+    <svg
+      className="footerRidingBlueBikeSVG_mustard"
+      width="91.374"
+      height="92.083"
+      viewBox="0 0 91.374 92.083"
+    >
       <defs>
         <clipPath id="clip-path234234">
           <rect
@@ -12,12 +17,16 @@ export function BikeMustard() {
           />
         </clipPath>
       </defs>
-      <g id="Group_1680" data-name="Group 1680" transform="translate(0 0)">
+      <g
+        id="Group_1680"
+        data-name="Group 1680"
+        transform="translate(0 0)"
+      >
         <g
           id="Group_1682"
           data-name="Group 1682"
           transform="translate(0 0)"
-          clip-path="url(#clip-path234234)"
+          clipPath="url(#clip-path234234)"
         >
           <path
             id="Path_2024"

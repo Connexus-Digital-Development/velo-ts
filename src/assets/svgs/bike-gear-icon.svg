@@ -1,4 +1,5 @@
 <svg
+  xmlns="http://www.w3.org/2000/svg"
   id="Group_2890"
   data-name="Group 2890"
   width="35"
@@ -19,7 +20,7 @@
   <g
     id="Group_2435"
     data-name="Group 2435"
-    clipPath="url(#clipPath)"
+    clip-path="url(#clip-path)"
   >
     <path
       id="Path_2250"

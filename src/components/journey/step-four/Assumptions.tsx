@@ -70,13 +70,13 @@ const Assumptions: React.FC<AssumptionsProps> = ({ setShowPaymentWindow }) => {
           </li>
         </ul>
         <div className="row">
-          <div className="col-10 col-sm-11">
+          <div className="col-10 col-md-11">
             <h4 className="mb-3">
               <span className="blueFont">I have read and agree</span> that the
               assumptions made above are correct
             </h4>
           </div>
-          <div className="col-2 col-sm-1" id="assumptionsTicked">
+          <div className="col-2 col-md-1" id="assumptionsTicked">
             <Checkbox
               radius="md"
               size="lg"
@@ -133,7 +133,7 @@ const Assumptions: React.FC<AssumptionsProps> = ({ setShowPaymentWindow }) => {
               </li>
             </ul>
             <div className="row">
-              <div className="col-10 col-sm-11">
+              <div className="col-10 col-md-11">
                 <h4 className="mb-3">
                   <span className="blueFont">I confirm</span> the maximum motor
                   power for any cycle insured under this policy does not exceed
@@ -141,7 +141,7 @@ const Assumptions: React.FC<AssumptionsProps> = ({ setShowPaymentWindow }) => {
                   exceed 15.5mph.
                 </h4>
               </div>
-              <div className="col-2 col-sm-1" id="eBikeTicked">
+              <div className="col-2 col-md-1" id="eBikeTicked">
                 <Checkbox
                   radius="md"
                   size="lg"

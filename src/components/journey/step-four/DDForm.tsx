@@ -83,7 +83,7 @@ const DDForm = ({ formik }: DDFormProps) => {
         <h4>
           Bank details <span className="blueFont"> Direct Debit</span>
         </h4>
-        <div className="col-md-8">
+        <div className="col-12">
           <div className="mb-3">
             <label className="form-label">Name on account*</label>
             <input

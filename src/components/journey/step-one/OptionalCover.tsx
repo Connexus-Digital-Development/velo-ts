@@ -36,7 +36,7 @@ const OptionalCover = ({
           Optional<span className="blueFont"> extras</span>.
         </h3>
         <div className="row">
-          <div className="col-md-10">
+          <div className="col-12">
             <p className="lufga-regular">
               Please tick if you would like any of these optional extras:
             </p>

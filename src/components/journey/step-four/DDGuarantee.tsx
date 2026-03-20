@@ -9,7 +9,7 @@ const DDGuarantee: React.FC<DDGuaranteeProps> = () => {
     <section className="container container_narrow ">
       <div className="content_section mt-3">
         <div className="row">
-          <div className="col-8 col-md-12" id="left">
+          <div className="col-12" id="left">
             <div className="row">
               <div className="col-8 col-md-9">
                 <h2

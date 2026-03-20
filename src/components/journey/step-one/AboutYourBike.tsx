@@ -241,15 +241,17 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
         </div>
       </Modal>
       {gState.bikes.length > 0 && !gState.currentlyAddingABike && (
-        <div className="content_section_transparent mb-5 mt-2">
+        <div className="content_section_transparent mb-5 mt-2 form-group row">
+          <div className="col-6 col-md-4 col-lg-3">
           <button
             id="add-new-bike"
             disabled={gState.currentlyEditingABike}
-            className="btn btn-primary float-start lufga"
+            className="btn btn-primary lufga  btn-100"
             onClick={handleAddAnotherBike}
           >
             Add another bike
           </button>
+          </div>
         </div>
       )}
 
@@ -262,7 +264,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
           </h3>
           <div className="row">
             <form onSubmit={formik.handleSubmit} noValidate>
-              <div className="col-12 col-md-6">
+              <div className="col-12">
                 <div className="mb-3">
                   <label className="form-label">Make*</label>
                   <input
@@ -335,7 +337,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
                   <label className="form-label">Is this bike electric?*</label>
                   <br /> {}
                   <div className="row">
-                    <div className="col-6 col-md-4">
+                    <div className="col-6 col-md-4 col-lg-3">
                       <button
                         className={`btn btn-secondary btn-100 mb-2 mr-1 lufga ${
                           formik.values.isElectric === true
@@ -348,7 +350,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
                         Yes
                       </button>
                     </div>
-                    <div className="col-6 col-md-4">
+                    <div className="col-6 col-md-4 col-lg-3">
                       <button
                         className={`btn btn-secondary btn-100 mb-2 mr-1 ${
                           formik.values.isElectric === false
@@ -370,7 +372,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
                 ) : null}
               </div>
 
-              <div className="col-md-10">
+              <div className="">
                 <p className="bulletPoint">
                   Full information on our policy features can be found{" "}
                   <Link
@@ -385,7 +387,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
               </div>
 
               <div className="row">
-                <div className="col-6 col-md-2  mt-3">
+                <div className="col-6 col-md-4 col-lg-3  mt-3">
                   <button
                     type="submit"
                     id="Add-this-bike"
@@ -395,7 +397,7 @@ const AboutYourBike = ({ validateNextButton }: AboutYourBikeProps) => {
                   </button>
                 </div>
                 {gState.bikes?.length > 0 && (
-                  <div className="col-6 col-md-2  mt-3">
+                  <div className="col-6 col-md-4 col-lg-3  mt-3">
                     <button
                       onClick={handleCancel}
                       className="btn btn-secondary btn-100 pt-2 pb-2"

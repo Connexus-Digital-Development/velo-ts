@@ -19,7 +19,7 @@ const CoverSection = ({
 }: CoverSectionProps) => {
   return (
     <div className="row">
-      <div className="col-md-8">
+      <div className="col-12">
         <div className="mb-3">
           <label className="form-label">
             When would you like your cover to begin, within the next 45 days? *

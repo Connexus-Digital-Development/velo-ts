@@ -1,9 +1,14 @@
-<svg viewBox="0 0 859 467" class="whatOurCustomerssayCog">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 859 467" class="whatOurCustomerssayCog">
+  <defs>
+    <clipPath id="clip-path99999">
+      <rect width="859" height="467" transform="translate(1108 112)" />
+    </clipPath>
+  </defs>
   <g
     id="Mask_Group_33"
     data-name="Mask Group 33"
     transform="translate(-1108.021 -112)"
-    clipPath="url(#clip-path99999)"
+    clip-path="url(#clip-path99999)"
   >
     <g
       id="Group_1620"
@@ -15,7 +20,7 @@
         id="Group_1619"
         data-name="Group 1619"
         transform="translate(0 0)"
-        clipPath="url(#clip-path99999)"
+        clip-path="url(#clip-path99999)"
       >
         <path
           id="Path_2003"

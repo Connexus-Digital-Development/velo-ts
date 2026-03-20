@@ -60,7 +60,7 @@ const PersonalDetails = ({
 
   return (
     <div className="row">
-      <div className="col-md-8">
+      <div className="col-12">
         <div className="mb-3">
           <label className="form-label">Title*</label>
           <div className="row" id="title">

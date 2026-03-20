@@ -326,7 +326,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
           </h3>
           <div className="row">
             <form onSubmit={formik.handleSubmit} noValidate>
-              <div className="col-12 col-md-6">
+              <div className="col-12 ">
                 <div className="mb-3">
                   <label className="form-label">Make*</label>
                   <input
@@ -400,7 +400,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                 <div className="mb-3 mt-3">
                   <label className="form-label">Is this bike electric?*</label>
                   <div className="row">
-                    <div className="col-6 col-md-4">
+                    <div className="col-6 col-md-4 col-lg-3">
                       <button
                         type="button"
                         className={`btn btn-secondary btn-100 mb-2 mr-1 lufga ${
@@ -414,7 +414,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                         Yes
                       </button>
                     </div>
-                    <div className="col-6 col-md-4">
+                    <div className="col-6 col-md-4 col-lg-3">
                       <button
                         type="button"
                         className={`btn btn-secondary btn-100 mb-2 mr-1 ${
@@ -432,7 +432,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                 </div>
               </div>
 
-              <div className="col-md-10">
+              <div className="">
                 <p className="bulletPoint">
                   Full information on our policy features can be found{" "}
                   <Link
@@ -446,10 +446,10 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                 </p>
               </div>
 
-              <div className="col-12 col-md-6 mb-5 mt-3">
+              <div className="col-12 col-xl-6 mb-5 mt-3">
                 <div className="form-group">
                   <div className="row">
-                    <div className="col-6 col-md-4">
+                    <div className="col-6 col-md-4 col-lg-3">
                       <button
                         id="edit-this-bike"
                         type="submit"
@@ -458,7 +458,7 @@ const IndividualBike = ({ bike, validateNextButton }: IndividualBikeProps) => {
                         Save changes
                       </button>
                     </div>
-                    <div className="col-6 col-md-4">
+                    <div className="col-6 col-md-4 col-lg-3">
                       <button
                         type="button"
                         onClick={handleCancel}

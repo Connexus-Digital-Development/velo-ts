@@ -233,11 +233,11 @@ const StepOne = (): React.JSX.Element => {
 
       <div className="container container_narrow ">
         <div className="row">
-          <div className="col-12 mb-4 mt-5">
+          <div className="col-6 col-md-4 col-lg-3 offset-6 offset-md-8 offset-lg-9 mb-4 mt-5">
             {locationInvalid === false && gState.hasPreviousClaim !== null && (
               <button
                 id="move-to-step-two"
-                className="btn btn-wider btn-green float-end mb-2 lufga-medium"
+                className="btn btn-wider btn-green mb-2 lufga-medium btn-100"
                 onClick={async () => {
                   await handleNextButton();
                 }}

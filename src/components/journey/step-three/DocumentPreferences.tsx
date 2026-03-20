@@ -17,14 +17,14 @@ const DocumentPreferences = () => {
           Document<span className="blueFont"> preferences</span>.
         </h3>
         <div className="row">
-          <div className="col-10 col-sm-11">
+          <div className="col-10 col-md-11">
             <p className="lufga-light mt-3">
               Tick here if you want to receive your documents by post at no
               cost.
             </p>
           </div>
 
-          <div className="col-2 col-sm-1">
+          <div className="col-2 col-md-1">
             <Checkbox
               label=""
               radius="md"

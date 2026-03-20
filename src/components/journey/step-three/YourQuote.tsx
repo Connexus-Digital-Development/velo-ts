@@ -253,9 +253,8 @@ const YourQuote: React.FC<YourQuoteProps> = ({
             <div className="row gx-10 pr">
               <div className="col-lg-6 col-12 mb-4 mb-lg-0">
                 <div
-                  className={`AnnualQuote card annual-quote-card ${
-                    highlightCore ? "greenBorder" : "blueBorder"
-                  }`}
+                  className={`AnnualQuote card annual-quote-card ${highlightCore ? "greenBorder" : "blueBorder"
+                    }`}
                 >
                   <div
                     className={`card-header text-center text-white p-4
@@ -273,7 +272,7 @@ const YourQuote: React.FC<YourQuoteProps> = ({
                         £
                         {currency(
                           showCoreQuote?.instalmentsSubsequentPayments ||
-                            coreQuote?.instalmentsSubsequentPayments,
+                          coreQuote?.instalmentsSubsequentPayments,
                           {
                             symbol: "",
                             separator: ",",
@@ -296,7 +295,7 @@ const YourQuote: React.FC<YourQuoteProps> = ({
                           £
                           {currency(
                             showCoreQuote?.annualGrossPremium ||
-                              coreQuote?.annualGrossPremium,
+                            coreQuote?.annualGrossPremium,
                             {
                               symbol: "",
                               separator: ",",
@@ -334,54 +333,31 @@ const YourQuote: React.FC<YourQuoteProps> = ({
                   <div
                     className={
                       (!highlightCore &&
-                      !highlightPerformance &&
-                      showError &&
-                      showError
+                        !highlightPerformance &&
+                        showError &&
+                        showError
                         ? "coreLeftError "
                         : "coreLeft ") +
-                      "position-absolute bottom-0 d-lg-block d-none"
+                      "bottom-0 d-block"
                     }
                   >
-                    <div className="d-flex justify-content-center align-content-center mt-1 mb-4">
-                      <button
-                        className={`btn  btn-wider ${
-                          highlightCore ? "btn-green" : "btn-primary"
-                        }`}
-                        disabled={showReQuote || showReQuoteCore} // Disable when either has pending changes
-                        onClick={handleCoreSelected}
-                      >
-                        {highlightCore ? "Selected" : "Select"}
-                      </button>
+                    <div className="row justify-content-center  mt-1 mb-4">
+                      <div className="col-6 ">
+                        <button
+                          className={`btn  btn-100 ${highlightCore ? "btn-green" : "btn-primary"
+                            }`}
+                          disabled={showReQuote || showReQuoteCore} // Disable when either has pending changes
+                          onClick={handleCoreSelected}
+                        >
+                          {highlightCore ? "Selected" : "Select"}
+                        </button>
+                      </div>
                     </div>
+
                     {!highlightCore &&
                       !highlightPerformance &&
                       showError &&
                       !showReQuoteCore && (
-                        <div className="text-center">
-                          {" "}
-                          <small className="redFont my-1 ">
-                            Please select a cover type to proceed
-                          </small>
-                        </div>
-                      )}
-                  </div>
-                  <div className="d-lg-none d-block">
-                    <div className="d-flex justify-content-center align-content-center mt-1 mb-4">
-                      <button
-                        className={`btn  btn-wider ${
-                          highlightCore ? "btn-green" : "btn-primary"
-                        }`}
-                        disabled={showReQuote || showReQuoteCore}
-                        onClick={handleCoreSelected}
-                      >
-                        {highlightCore ? "Selected" : "Select"}
-                      </button>
-                    </div>
-                    {!highlightCore &&
-                      !highlightPerformance &&
-                      showError &&
-                      !showReQuoteCore &&
-                      !showReQuote && (
                         <div className="text-center">
                           {" "}
                           <small className="redFont my-1 ">
@@ -398,9 +374,8 @@ const YourQuote: React.FC<YourQuoteProps> = ({
               {/* ====performance===============================================================  */}
               <div className="col-lg-6 col-12">
                 <div
-                  className={`MonthlyQuote card monthly-quote-card ${
-                    highlightPerformance ? "greenBorder" : "blueBorder"
-                  }`}
+                  className={`MonthlyQuote card monthly-quote-card ${highlightPerformance ? "greenBorder" : "blueBorder"
+                    }`}
                 >
                   <div
                     className={`card-header text-center text-white p-4
@@ -484,16 +459,17 @@ const YourQuote: React.FC<YourQuoteProps> = ({
                       clearShowError={clearShowError} // Pass it down to Core
                     />{" "}
                   </div>
-                  <div className="d-flex justify-content-center align-content-center mt-1 mb-4">
-                    <button
-                      className={`btn  btn-wider ${
-                        highlightPerformance ? "btn-green" : "btn-primary"
-                      }`}
-                      disabled={showReQuote || showReQuoteCore} // Disable when either has pending changes
-                      onClick={(e: any) => handlePerformanceSelected(e)}
-                    >
-                      {highlightPerformance ? "Selected" : "Select"}
-                    </button>
+                  <div className="row justify-content-center  mt-1 mb-4">
+                    <div className="col-6 ">
+                      <button
+                        className={`btn  btn-100 ${highlightPerformance ? "btn-green" : "btn-primary"
+                          }`}
+                        disabled={showReQuote || showReQuoteCore} // Disable when either has pending changes
+                        onClick={(e: any) => handlePerformanceSelected(e)}
+                      >
+                        {highlightPerformance ? "Selected" : "Select"}
+                      </button>
+                    </div>
                   </div>
                   {!highlightCore &&
                     !highlightPerformance &&

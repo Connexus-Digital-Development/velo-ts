@@ -312,7 +312,7 @@ const SinglePayment = ({
     <div>
       <div className="d-flex justify-content-center">
         {!ddPayment && (
-          <h4>
+          <h4 className="journey-section-titles">
             {"Card Details "}{" "}
             <span className="blueFont">
               Annual Payment - £{" "}
@@ -324,7 +324,7 @@ const SinglePayment = ({
           </h4>
         )}
         {ddPayment && (
-          <h4>
+          <h4 className="journey-section-titles">
             {"Card Details "}{" "}
             <span className="blueFont">
               Deposit - £{" "}
