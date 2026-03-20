@@ -219,7 +219,7 @@
   .mustardBike {
     transform: scale(1);
     width: 100%;
-    z-index: -10;
+    
   }
 
   .mountainRoadImageTweaks {
@@ -606,7 +606,7 @@
     position: absolute;
     bottom: -100px;
     right: -100px;
-    z-index: -10;
+    
   }
 
   /* Refer a friend */
@@ -978,7 +978,7 @@
   .mustardBike {
     transform: scale(1);
     width: 100%;
-    z-index: -10;
+    
   }
 
   .mountainRoadImageTweaks {
@@ -1372,7 +1372,7 @@
     position: absolute;
     bottom: -100px;
     right: -100px;
-    z-index: -10;
+    
   }
 
   /* Refer a friend */
@@ -1682,7 +1682,7 @@
 
   .mustardBike {
     width: 400%;
-    z-index: -10;
+    
     margin-left: -50px;
   }
 
@@ -1993,7 +1993,7 @@
     position: absolute;
     bottom: -50px;
     right: -200px;
-    z-index: -10;
+    
   }
 
   .filterBlogButton {
@@ -2338,7 +2338,7 @@
 
   .mustardBike {
     width: 400%;
-    z-index: -10;
+    
     transform: scale(0.9);
     margin-left: -70px;
   }
@@ -2353,7 +2353,7 @@
     left: -600px;
     bottom: -270px;
     transform: scale(0.6);
-    z-index: -10;
+    
   }
 
   /* multibike cover page */
@@ -2383,7 +2383,7 @@
     right: -200px;
     bottom: -480px;
     transform: scale(0.5);
-    z-index: -10;
+    
   }
 
   .whyChooseveloEbikeImg {
@@ -2608,7 +2608,7 @@
     position: absolute;
     bottom: -100px;
     right: -300px;
-    z-index: -10;
+    
   }
 
   /* single bike cover */
@@ -2934,7 +2934,7 @@
     right: -800px;
     transform: scale(0.4);
     bottom: -380px;
-    z-index: -10;
+    
   }
 
   /* singleBikeCover page */
@@ -2943,7 +2943,7 @@
     left: -540px;
     bottom: -180px;
     transform: scale(0.75);
-    z-index: -10;
+    
   }
 
   /* multibike cover page */
@@ -3226,7 +3226,7 @@
     position: absolute;
     bottom: -250px;
     right: -500px;
-    z-index: -10;
+    
   }
 
   .filterBlogButton {
@@ -3490,7 +3490,7 @@
     position: absolute;
     bottom: -150px;
     left: -200px;
-    /* z-index: -10; */
+    /*  */
   }
 
   .responsiveAlign {
@@ -3523,7 +3523,7 @@
     right: -791px;
     transform: scale(0.6);
     bottom: -390px;
-    z-index: -10;
+    
   }
 
   /* singleBikeCover page */
@@ -3532,7 +3532,7 @@
     left: -440px;
     bottom: -180px;
     transform: scale(0.75);
-    z-index: -10;
+    
   }
 
   /* multibike cover page */
@@ -3795,7 +3795,7 @@
     position: absolute;
     bottom: -250px;
     right: -500px;
-    z-index: -10;
+    
   }
 
   .filterBlogButton {
@@ -4073,7 +4073,7 @@
     right: -759px;
     transform: scale(0.6);
     bottom: -420px;
-    z-index: -10;
+    
   }
 
   .bikeBox {
@@ -4094,7 +4094,7 @@
     left: -447px;
     bottom: -180px;
     transform: scale(0.9);
-    z-index: -10;
+    
   }
 
   /* multibike cover page */
@@ -4335,7 +4335,7 @@
     position: absolute;
     bottom: -350px;
     right: -700px;
-    z-index: -10;
+    
   }
 
   .filterBlogButton {

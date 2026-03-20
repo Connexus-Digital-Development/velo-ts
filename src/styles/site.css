@@ -887,7 +887,9 @@ p {
   accent-color: red;
 
 } */
-
+.left{
+  z-index: 1;
+}
 .overlay {
   position: fixed;
   /* Sit on top of the page content */
