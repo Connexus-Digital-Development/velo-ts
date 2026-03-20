@@ -1482,6 +1482,27 @@ label {
   z-index: 50;
 }
 
+.breadcrumbs-mobile {
+  display: none;
+}
+
+.breadcrumbSVG-mobile {
+  width: 100%;
+  height: 64px;
+  display: block;
+}
+
+@media (max-width: 991.98px) {
+  .breadcrumbs-mobile {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .breadcrumbSVG {
+    display: none;
+  }
+}
+
 svg .breadcrumbLink {
   border: 5px solid red;
   width: 100%;

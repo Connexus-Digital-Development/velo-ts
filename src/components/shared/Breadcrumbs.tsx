@@ -66,6 +66,134 @@ const Breadcrumbs = ({ navigationAction = null }: BreadcrumbsProps) => {
 
   return (
     <div className="container container_narrow">
+      <div className="breadcrumbs-mobile">
+        <svg
+          className="breadcrumbSVG-mobile"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 600 100"
+        >
+          <Link
+            to={state.yourDetailsCrumb > 0 ? `/stepOne${search}` : "#"}
+            className="breadcrumbLink"
+            style={{ textDecoration: "none" }}
+          >
+            <path
+              d="M27.21,0H269.182l20.5,32.152a10.69,10.69,0,0,1,0,11.494L269.182,75.8H27.21A27.21,27.21,0,0,1,0,48.588V27.209A27.21,27.21,0,0,1,27.21,0"
+              transform="translate(10.5 15.5)"
+              style={getStyle(state.yourCoverCrumb)}
+              strokeWidth="2"
+            />
+            <text
+              transform="translate(10 36)"
+              className="breadcrumb-text"
+              style={getFontStyle(state.yourCoverCrumb)}
+            >
+              <tspan x="80" y="29">
+                Your cover
+              </tspan>
+            </text>
+          </Link>
+
+          {navigationAction === null && (
+            <Link
+              to={state.yourDetailsCrumb > 0 ? `/stepTwo${search}` : "#"}
+              className="breadcrumbLink"
+              style={{ textDecoration: "none" }}
+            >
+              <path
+                d="M550.832,0H280.858l20.5,32.152a10.686,10.686,0,0,1,0,11.494L280.858,75.8H550.832l20.5-32.152a10.69,10.69,0,0,0,0-11.494Z"
+                transform="translate(10.5 15.5)"
+                style={getStyle(state.yourDetailsCrumb)}
+                strokeWidth="2"
+              />
+              <text
+                transform="translate(275 36)"
+                className="breadcrumb-text"
+                style={getFontStyle(state.yourDetailsCrumb)}
+              >
+                <tspan x="85" y="29">
+                  Your details
+                </tspan>
+              </text>
+            </Link>
+          )}
+
+          {navigationAction !== null && (
+            <a
+              onClick={navigationAction}
+              className="breadcrumbLink"
+              style={{ textDecoration: "none" }}
+            >
+              <path
+                d="M550.832,0H280.858l20.5,32.152a10.686,10.686,0,0,1,0,11.494L280.858,75.8H550.832l20.5-32.152a10.69,10.69,0,0,0,0-11.494Z"
+                transform="translate(10.5 15.5)"
+                style={getStyle(state.yourDetailsCrumb)}
+                strokeWidth="2"
+              />
+              <text
+                transform="translate(275 36)"
+                className="breadcrumb-text"
+                style={getFontStyle(state.yourDetailsCrumb)}
+              >
+                <tspan x="85" y="29">
+                  Your details
+                </tspan>
+              </text>
+            </a>
+          )}
+        </svg>
+
+        <svg
+          className="breadcrumbSVG-mobile"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 600 100"
+        >
+          <Link
+            to={state.yourQuoteCrumb > 0 ? `/stepThree${search}` : "#"}
+            className="breadcrumbLink"
+            style={{ textDecoration: "none" }}
+          >
+            <path
+              d="M832.505,0H562.531l20.5,32.152a10.69,10.69,0,0,1,0,11.494L562.531,75.8H832.505l20.5-32.152a10.69,10.69,0,0,0,0-11.494Z"
+              transform="translate(-552 16)"
+              style={getStyle(state.yourQuoteCrumb)}
+              strokeWidth="2"
+            />
+            <text
+              transform="translate(-2 36)"
+              className="breadcrumb-text"
+              style={getFontStyle(state.yourQuoteCrumb)}
+            >
+              <tspan x="90" y="29">
+                Your quote
+              </tspan>
+            </text>
+          </Link>
+
+          <Link
+            to={state.paymentCrumb > 0 ? `/StepFour${search}` : "#"}
+            className="breadcrumbLink"
+            style={{ textDecoration: "none" }}
+          >
+            <path
+              d="M1085.87,0H844.2l20.5,32.152a10.69,10.69,0,0,1,0,11.494L844.2,75.8H1085.87a27.21,27.21,0,0,0,27.21-27.209V27.209A27.21,27.21,0,0,0,1085.87,0"
+              transform="translate(-552 15.5)"
+              style={getStyle(state.paymentCrumb)}
+              strokeWidth="2"
+            />
+            <text
+              transform="translate(298 36)"
+              className="breadcrumb-text"
+              style={getFontStyle(state.paymentCrumb)}
+            >
+              <tspan x="80" y="29">
+                {state.paymentCrumb < 3 ? "Payment" : "Ready!"}
+              </tspan>
+            </text>
+          </Link>
+        </svg>
+      </div>
+
       <svg
         className="breadcrumbSVG"
         xmlns="http://www.w3.org/2000/svg"
